@@ -1,0 +1,47 @@
+﻿@using ERPAnimalia.Models;
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    @model IEnumerable<ProductModels>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Lista de Producto</title>
+   
+</head>
+<body>
+    <div class="container">
+        <table class="table table-striped">
+            @Html.DisplayNameFor(model => model.Name);
+            @Html.DisplayNameFor(model => model.Description);
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.kg)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.barCode)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.IdProduct }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.IdProduct }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.IdProduct })
+                    </td>
+                </tr>
+            }
+        </table>
+
+        </div>
+</body>
+</html>
