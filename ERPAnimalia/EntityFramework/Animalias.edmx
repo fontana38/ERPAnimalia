@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AnimaliaPetShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AnimaliaPetShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -91,13 +91,13 @@
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="Codigo" Type="nchar" MaxLength="20" />
-          <Property Name="Name" Type="nchar" MaxLength="20" />
-          <Property Name="Desciption" Type="nchar" MaxLength="50" />
+          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Desciption" Type="nvarchar(max)" />
           <Property Name="quantity" Type="int" />
-          <Property Name="Kg" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kg" Type="int" />
           <Property Name="IdProducto" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="BarCode" Type="nchar" MaxLength="10" />
+          <Property Name="BarCode" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_AmountProductAsoc_AmountListProduct">
           <End Role="AmountListProduct" Type="Self.AmountListProduct" Multiplicity="0..1" />
@@ -214,8 +214,7 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AnimaliaPetShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -247,7 +246,7 @@
           <Property Name="IdAmountList" Type="Guid" />
           <Property Name="IdAmountProduct" Type="Guid" Nullable="false" />
           <NavigationProperty Name="AmountListProduct" Relationship="Self.FK_AmountProductAsoc_AmountListProduct" FromRole="AmountProductAsoc" ToRole="AmountListProduct" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_AmountProductAsoc_Product" FromRole="AmountProductAsoc" ToRole="Product" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_AmountProductAsoc_Product" FromRole="AmountProductAsoc" ToRole="Product" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -302,19 +301,6 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="IdProducto" />
-          </Key>
-          <Property Name="Codigo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="Desciption" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="quantity" Type="Int32" />
-          <Property Name="Kg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdProducto" Type="Guid" Nullable="false" />
-          <Property Name="BarCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="AmountProductAsoc" Relationship="Self.FK_AmountProductAsoc_Product" FromRole="Product" ToRole="AmountProductAsoc" />
-        </EntityType>
         <Association Name="FK_AmountProductAsoc_AmountListProduct">
           <End Role="AmountListProduct" Type="Self.AmountListProduct" Multiplicity="0..1" />
           <End Role="AmountProductAsoc" Type="Self.AmountProductAsoc" Multiplicity="*" />
@@ -324,18 +310,6 @@
             </Principal>
             <Dependent Role="AmountProductAsoc">
               <PropertyRef Name="IdAmountList" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AmountProductAsoc_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="AmountProductAsoc" Type="Self.AmountProductAsoc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="AmountProductAsoc">
-              <PropertyRef Name="IdProduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -379,13 +353,8 @@
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <EntitySet Name="Product" EntityType="Self.Product" />
           <AssociationSet Name="FK_AmountProductAsoc_AmountListProduct" Association="Self.FK_AmountProductAsoc_AmountListProduct">
             <End Role="AmountListProduct" EntitySet="AmountListProduct" />
-            <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AmountProductAsoc_Product" Association="Self.FK_AmountProductAsoc_Product">
-            <End Role="Product" EntitySet="Product" />
             <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
@@ -400,7 +369,37 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Product" EntityType="AnimaliaPetShopModel.Product" />
+          <AssociationSet Name="FK_AmountProductAsoc_Product" Association="AnimaliaPetShopModel.FK_AmountProductAsoc_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="IdProducto" />
+          </Key>
+          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="Kg" Type="Int32" />
+          <Property Name="IdProducto" Type="Guid" Nullable="false" />
+          <Property Name="BarCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AmountProductAsoc" Relationship="AnimaliaPetShopModel.FK_AmountProductAsoc_Product" FromRole="Product" ToRole="AmountProductAsoc" />
+        </EntityType>
+        <Association Name="FK_AmountProductAsoc_Product">
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.AmountProductAsoc" Role="AmountProductAsoc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="AmountProductAsoc">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -485,19 +484,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Desciption" ColumnName="Desciption" />
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="Kg" ColumnName="Kg" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="AnimaliaPetShopModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetRoles">
               <ScalarProperty Name="Id" ColumnName="RoleId" />
@@ -506,6 +492,19 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Kg" ColumnName="Kg" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="Desciption" ColumnName="Desciption" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

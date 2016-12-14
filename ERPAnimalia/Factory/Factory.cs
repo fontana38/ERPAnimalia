@@ -13,26 +13,7 @@ namespace ERPAnimalia.Factory
 
 
 
-        public static List<ProductModels> CreateProductList(List<Product> product)
-        {
-            var list = new List<ProductModels>();
-            foreach (var item in product)
-            {
-                var NewProduct = new ProductModels();
-                NewProduct.IdProduct = item.IdProducto;
-                NewProduct.Description = item.Desciption;
-                NewProduct.Name = item.Name;
-                NewProduct.quantity = item.quantity;
-                NewProduct.kg = item.Kg;
-                NewProduct.barCode = item.BarCode;
-                NewProduct.Codigo = item.Codigo;
-                list.Add(NewProduct);
-            }
-            
-             
-          
-            return list;
-        }
+       
 
         public static ProductModels NewProduct()
         {
@@ -46,6 +27,13 @@ namespace ERPAnimalia.Factory
             var db = new AnimaliaPetShopEntities();
             return db;
         }
+
+        public static Product CreateProductdb()
+        {
+          
+            return new Product();
+        }
+
 
         public static ProductManager CreateProducManager()
         {

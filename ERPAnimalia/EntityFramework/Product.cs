@@ -24,7 +24,7 @@ namespace ERPAnimalia.EntityFramework
         public string Name { get; set; }
         public string Desciption { get; set; }
         public Nullable<int> quantity { get; set; }
-        public string Kg { get; set; }
+        public Nullable<int> Kg { get; set; }
         public System.Guid IdProducto { get; set; }
         public string BarCode { get; set; }
     

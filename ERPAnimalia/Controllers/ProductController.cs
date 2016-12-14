@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ERPAnimalia.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,13 +10,18 @@ namespace ERPAnimalia.Controllers
     [RoutePrefix("Product")]
     public class ProductController : Controller
     {
-       
+        public ProductManager Manager { get; set; }
+
+        public ProductController()
+        {
+            Manager = Factory.Factory.CreateProducManager();
+        }
+
         // GET: Product
         [Route("Product")]
         public ActionResult Index()
-        {
-            var manager =Factory.Factory.CreateProducManager();
-            var model=manager.GetAllProduct();
+        {   
+            var model= Manager.GetAllProduct();
             return View(model);
         }
 
@@ -27,10 +33,17 @@ namespace ERPAnimalia.Controllers
         }
 
         // GET: Product/Create
-        public ActionResult Create()
+        public ActionResult Create(ProductModels product)
         {
+            
+                return View("AddProduct"); 
+        }
 
-            return View();
+        
+        public ActionResult SaveProduct(ProductModels product)
+        {
+            Manager.SaveProduct(product);
+            return RedirectToAction("Index"); 
         }
 
         // POST: Product/Create
@@ -50,18 +63,19 @@ namespace ERPAnimalia.Controllers
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(Guid id)
         {
-            return View();
+           var productEdit = Manager.GetProductById(id);
+           return View(productEdit);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Guid id, ProductModels product)
         {
             try
             {
-                // TODO: Add update logic here
+                Manager.EditProduct(product);
 
                 return RedirectToAction("Index");
             }

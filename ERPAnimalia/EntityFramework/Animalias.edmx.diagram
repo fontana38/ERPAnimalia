@@ -12,12 +12,12 @@
         <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUsers" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_AmountProductAsoc_AmountListProduct" ManuallyRouted="false" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_AmountProductAsoc_Product" ManuallyRouted="false" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="AnimaliaPetShopModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="0.75" PointY="10.625" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_AmountProductAsoc_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
