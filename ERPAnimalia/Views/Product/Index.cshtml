@@ -1,81 +1,139 @@
 ﻿@using ERPAnimalia.Models;
-
+@using PagedList.Mvc;
+ 
 <!DOCTYPE html>
 <html>
 <head>
-
-    @model IEnumerable<ProductModels>
+    
+    @model PagedList.IPagedList<ProductModels>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Lista de Producto</title>
    
 </head>
 <body>
-    <div class="container">
-        <table class="table table-striped">
-            <thead class="thead-inverse">
-                <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Codigo)
-                </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.quantity)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.kg)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.barCode)
-                    </th>
-</tr>
-</thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+ @{
+     string currentFilter = ViewBag.CurrentFilter;
+     string currentSort = ViewBag.CurrentSort;
+     if (string.IsNullOrEmpty(currentSort))
+     {
+         currentSort = "date_desc";
+     }
+     Html.RenderPartial("SearchProduct",new ProductModels() );
 
-                    <tr>
+}
+    <div class="container-fluid">
 
-                        <th scope="row">
-                        
-                            @Html.DisplayFor(modelItem => item.Codigo)
-                        </th>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Lista Productos</div>
+            <div class="panel-body">
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
+                <table class="table table-striped">
+                    <thead class="thead-inverse">
+                        <tr>
+                            <th>
+                                @Html.ActionLink("Código", "Index",
+            new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.quantity)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.kg)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.barCode)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.IdProduct }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.IdProduct }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.IdProduct })
-                        </td>
+                            </th>
 
-                    </tr>
+                            <th>
+                                @Html.ActionLink("Descripción", "Index",
+            new { sortOrder = "descripcion", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Categoria", "Index",
+            new { sortOrder = "categoria", CurrentSort = ViewBag.CurrentSort })
+
+                            </th>
+                            <th>
+                                @Html.ActionLink("Sub Categoria", "Index",
+            new { sortOrder = "subCategoria", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Cantidad", "Index",
+            new { sortOrder = "cantidad", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Kg", "Index",
+            new { sortOrder = "Kg", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Precio Venta", "Index",
+            new { sortOrder = "PrecioVenta", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Precio Costo", "Index",
+            new { sortOrder = "PrecioCosto", CurrentSort = ViewBag.CurrentSort })
+
+                            </th>
+                            <th>
+                                @Html.ActionLink("Fecha", "Index",
+            new { sortOrder = "Fecha", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+
+                                <th scope="row">
+                                    @Html.HiddenFor(modelItem => item.IdProducto)
+                                    @Html.DisplayFor(modelItem => item.Codigo)
+                                </th>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CategoryItem.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SubCategoryItem.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.kg)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ListaPrecioItem.PrecioVenta)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ListaPrecioItem.PrecioCosto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ListaPrecioItem.FechaInicio)
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.IdProducto }) |
+                                    @Html.ActionLink("Details", "Details", new { id = item.IdProducto }) |
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.IdProducto })
+                                </td>
+
+                            </tr>
 
 
-                }
-                
-            </tbody>
-            
-</table>
-        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
+                        }
+
+                    </tbody>
+                </table>
+
+                <div id='Paging' style="text-align: center">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                    of @Model.PageCount
+
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                </div>
+            </div>
         </div>
+    </div>
+                
+            
 </body>
 </html>

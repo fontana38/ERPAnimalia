@@ -15,23 +15,6 @@
           <Property Name="Model" Type="varbinary(max)" Nullable="false" />
           <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
-        <EntityType Name="AmountListProduct">
-          <Key>
-            <PropertyRef Name="IdAmountList" />
-          </Key>
-          <Property Name="IdAmountList" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Amount" Type="float" />
-          <Property Name="DateInitial" Type="datetime" />
-        </EntityType>
-        <EntityType Name="AmountProductAsoc">
-          <Key>
-            <PropertyRef Name="IdAmountProduct" />
-          </Key>
-          <Property Name="IdProduct" Type="uniqueidentifier" />
-          <Property Name="IdAmountList" Type="uniqueidentifier" />
-          <Property Name="IdAmountProduct" Type="uniqueidentifier" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -87,39 +70,64 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="IdCategory" />
+          </Key>
+          <Property Name="IdCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="IdSubCategory" Type="int" />
+        </EntityType>
+        <EntityType Name="ListaPrecio">
+          <Key>
+            <PropertyRef Name="IdListaPrecio" />
+          </Key>
+          <Property Name="IdListaPrecio" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrecioCosto" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="PrecioVenta" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="FechaInicio" Type="datetime" />
+          <Property Name="FechaFinal" Type="datetime" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="Codigo" Type="nvarchar(max)" />
           <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="Desciption" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="quantity" Type="int" />
           <Property Name="Kg" Type="int" />
           <Property Name="IdProducto" Type="uniqueidentifier" Nullable="false" />
           <Property Name="BarCode" Type="nvarchar(max)" />
+          <Property Name="IdCategory" Type="int" />
+          <Property Name="IdSubCategory" Type="int" />
+          <Property Name="IdListaPrecio" Type="uniqueidentifier" />
         </EntityType>
-        <Association Name="FK_AmountProductAsoc_AmountListProduct">
-          <End Role="AmountListProduct" Type="Self.AmountListProduct" Multiplicity="0..1" />
-          <End Role="AmountProductAsoc" Type="Self.AmountProductAsoc" Multiplicity="*" />
+        <EntityType Name="ProductoLista">
+          <Key>
+            <PropertyRef Name="IdProductoLista" />
+          </Key>
+          <Property Name="IdProductoLista" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdProducto" Type="uniqueidentifier" />
+          <Property Name="IdListaPrecio" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="IdSubCategory" />
+          </Key>
+          <Property Name="IdSubCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_Category_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AmountListProduct">
-              <PropertyRef Name="IdAmountList" />
+            <Principal Role="SubCategory">
+              <PropertyRef Name="IdSubCategory" />
             </Principal>
-            <Dependent Role="AmountProductAsoc">
-              <PropertyRef Name="IdAmountList" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AmountProductAsoc_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="AmountProductAsoc" Type="Self.AmountProductAsoc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="AmountProductAsoc">
-              <PropertyRef Name="IdProduct" />
+            <Dependent Role="Category">
+              <PropertyRef Name="IdSubCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -179,23 +187,81 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ListaPrecio">
+          <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="IdListaPrecio" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdListaPrecio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_SubCategory">
+          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="IdSubCategory" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdSubCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoLista_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductoLista" Type="Self.ProductoLista" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="ProductoLista">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoLista_ProductoLista">
+          <End Role="ListaPrecio" Type="Self.ListaPrecio" Multiplicity="1" />
+          <End Role="ProductoLista" Type="Self.ProductoLista" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="IdListaPrecio" />
+            </Principal>
+            <Dependent Role="ProductoLista">
+              <PropertyRef Name="IdProductoLista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AnimaliaPetShopModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AmountListProduct" EntityType="Self.AmountListProduct" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AmountProductAsoc" EntityType="Self.AmountProductAsoc" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListaPrecio" EntityType="Self.ListaPrecio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AmountProductAsoc_AmountListProduct" Association="Self.FK_AmountProductAsoc_AmountListProduct">
-            <End Role="AmountListProduct" EntitySet="AmountListProduct" />
-            <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AmountProductAsoc_Product" Association="Self.FK_AmountProductAsoc_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
+          <EntitySet Name="ProductoLista" EntityType="Self.ProductoLista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Category_SubCategory" Association="Self.FK_Category_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Category" EntitySet="Category" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -213,6 +279,26 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ListaPrecio" Association="Self.FK_Product_ListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_SubCategory" Association="Self.FK_Product_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoLista_Product" Association="Self.FK_ProductoLista_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductoLista" EntitySet="ProductoLista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoLista_ProductoLista" Association="Self.FK_ProductoLista_ProductoLista">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="ProductoLista" EntitySet="ProductoLista" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -227,26 +313,6 @@
           <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AmountListProduct">
-          <Key>
-            <PropertyRef Name="IdAmountList" />
-          </Key>
-          <Property Name="IdAmountList" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Amount" Type="Double" />
-          <Property Name="DateInitial" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AmountProductAsoc" Relationship="Self.FK_AmountProductAsoc_AmountListProduct" FromRole="AmountListProduct" ToRole="AmountProductAsoc" />
-        </EntityType>
-        <EntityType Name="AmountProductAsoc">
-          <Key>
-            <PropertyRef Name="IdAmountProduct" />
-          </Key>
-          <Property Name="IdProduct" Type="Guid" />
-          <Property Name="IdAmountList" Type="Guid" />
-          <Property Name="IdAmountProduct" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="AmountListProduct" Relationship="Self.FK_AmountProductAsoc_AmountListProduct" FromRole="AmountProductAsoc" ToRole="AmountListProduct" />
-          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_AmountProductAsoc_Product" FromRole="AmountProductAsoc" ToRole="Product" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -301,18 +367,6 @@
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
         </EntityType>
-        <Association Name="FK_AmountProductAsoc_AmountListProduct">
-          <End Role="AmountListProduct" Type="Self.AmountListProduct" Multiplicity="0..1" />
-          <End Role="AmountProductAsoc" Type="Self.AmountProductAsoc" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AmountListProduct">
-              <PropertyRef Name="IdAmountList" />
-            </Principal>
-            <Dependent Role="AmountProductAsoc">
-              <PropertyRef Name="IdAmountList" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -347,16 +401,10 @@
         </Association>
         <EntityContainer Name="AnimaliaPetShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="AmountListProduct" EntityType="Self.AmountListProduct" />
-          <EntitySet Name="AmountProductAsoc" EntityType="Self.AmountProductAsoc" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
-          <AssociationSet Name="FK_AmountProductAsoc_AmountListProduct" Association="Self.FK_AmountProductAsoc_AmountListProduct">
-            <End Role="AmountListProduct" EntitySet="AmountListProduct" />
-            <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
-          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -369,34 +417,184 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="SubCategory" EntityType="AnimaliaPetShopModel.SubCategory" />
           <EntitySet Name="Product" EntityType="AnimaliaPetShopModel.Product" />
-          <AssociationSet Name="FK_AmountProductAsoc_Product" Association="AnimaliaPetShopModel.FK_AmountProductAsoc_Product">
+          <EntitySet Name="Category" EntityType="AnimaliaPetShopModel.Category" />
+          <AssociationSet Name="FK_Category_SubCategory" Association="AnimaliaPetShopModel.FK_Category_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
-            <End Role="AmountProductAsoc" EntitySet="AmountProductAsoc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_SubCategory" Association="AnimaliaPetShopModel.FK_Product_SubCategory">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="ProductoLista" EntityType="AnimaliaPetShopModel.ProductoLista" />
+          <AssociationSet Name="FK_ProductoLista_Product" Association="AnimaliaPetShopModel.FK_ProductoLista_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductoLista" EntitySet="ProductoLista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductoLista_ProductoLista" Association="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista">
+            <End Role="ProductoLista" EntitySet="ProductoLista" />
+            <End Role="ProductoLista1" EntitySet="ProductoLista" />
+          </AssociationSet>
+          <EntitySet Name="ListaPrecio" EntityType="AnimaliaPetShopModel.ListaPrecio" />
+          <AssociationSet Name="FK_ProductoLista_ProductoLista1" Association="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista1">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="ProductoLista" EntitySet="ProductoLista" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ListaPrecio" Association="AnimaliaPetShopModel.FK_Product_ListaPrecio">
+            <End Role="ListaPrecio" EntitySet="ListaPrecio" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="SubCategory">
+          <Key>
+            <PropertyRef Name="IdSubCategory" />
+          </Key>
+          <Property Name="IdSubCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category" Relationship="AnimaliaPetShopModel.FK_Category_SubCategory" FromRole="SubCategory" ToRole="Category" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_SubCategory" FromRole="SubCategory" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
           <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Desciption" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="quantity" Type="Int32" />
           <Property Name="Kg" Type="Int32" />
           <Property Name="IdProducto" Type="Guid" Nullable="false" />
           <Property Name="BarCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AmountProductAsoc" Relationship="AnimaliaPetShopModel.FK_AmountProductAsoc_Product" FromRole="Product" ToRole="AmountProductAsoc" />
+          <Property Name="IdCategory" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <Property Name="IdSubCategory" Type="Int32" />
+          <NavigationProperty Name="SubCategory" Relationship="AnimaliaPetShopModel.FK_Product_SubCategory" FromRole="Product" ToRole="SubCategory" />
+          <NavigationProperty Name="ProductoLista" Relationship="AnimaliaPetShopModel.FK_ProductoLista_Product" FromRole="Product" ToRole="ProductoLista" />
+          <Property Name="IdListaPrecio" Type="Guid" />
+          <NavigationProperty Name="ListaPrecio" Relationship="AnimaliaPetShopModel.FK_Product_ListaPrecio" FromRole="Product" ToRole="ListaPrecio" />
         </EntityType>
-        <Association Name="FK_AmountProductAsoc_Product">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="IdCategory" />
+          </Key>
+          <Property Name="IdCategory" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdSubCategory" Type="Int32" />
+          <NavigationProperty Name="SubCategory" Relationship="AnimaliaPetShopModel.FK_Category_SubCategory" FromRole="Category" ToRole="SubCategory" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Category_SubCategory">
+          <End Type="AnimaliaPetShopModel.SubCategory" Role="SubCategory" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="IdSubCategory" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="IdSubCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_SubCategory">
+          <End Type="AnimaliaPetShopModel.SubCategory" Role="SubCategory" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubCategory">
+              <PropertyRef Name="IdSubCategory" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdSubCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductoLista">
+          <Key>
+            <PropertyRef Name="IdProductoLista" />
+          </Key>
+          <Property Name="IdProductoLista" Type="Guid" Nullable="false" />
+          <Property Name="IdProducto" Type="Guid" />
+          <Property Name="IdListaPrecio" Type="Guid" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_ProductoLista_Product" FromRole="ProductoLista" ToRole="Product" />
+          <NavigationProperty Name="ProductoLista1" Relationship="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista" FromRole="ProductoLista" ToRole="ProductoLista1" />
+          <NavigationProperty Name="ProductoLista2" Relationship="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista" FromRole="ProductoLista1" ToRole="ProductoLista" />
+          <NavigationProperty Name="ListaPrecio" Relationship="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista1" FromRole="ProductoLista" ToRole="ListaPrecio" />
+        </EntityType>
+        <Association Name="FK_ProductoLista_Product">
           <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.AmountProductAsoc" Role="AmountProductAsoc" Multiplicity="*" />
+          <End Type="AnimaliaPetShopModel.ProductoLista" Role="ProductoLista" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="IdProducto" />
             </Principal>
-            <Dependent Role="AmountProductAsoc">
-              <PropertyRef Name="IdProduct" />
+            <Dependent Role="ProductoLista">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductoLista_ProductoLista">
+          <End Type="AnimaliaPetShopModel.ProductoLista" Role="ProductoLista" Multiplicity="1" />
+          <End Type="AnimaliaPetShopModel.ProductoLista" Role="ProductoLista1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProductoLista">
+              <PropertyRef Name="IdProductoLista" />
+            </Principal>
+            <Dependent Role="ProductoLista1">
+              <PropertyRef Name="IdProductoLista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ListaPrecio">
+          <Key>
+            <PropertyRef Name="IdListaPrecio" />
+          </Key>
+          <Property Name="IdListaPrecio" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrecioCosto" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="PrecioVenta" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FechaInicio" Type="DateTime" Precision="3" />
+          <Property Name="FechaFinal" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ProductoLista" Relationship="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista1" FromRole="ListaPrecio" ToRole="ProductoLista" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_ListaPrecio" FromRole="ListaPrecio" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_ProductoLista_ProductoLista1">
+          <End Type="AnimaliaPetShopModel.ListaPrecio" Role="ListaPrecio" Multiplicity="1" />
+          <End Type="AnimaliaPetShopModel.ProductoLista" Role="ProductoLista" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="IdListaPrecio" />
+            </Principal>
+            <Dependent Role="ProductoLista">
+              <PropertyRef Name="IdProductoLista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ListaPrecio">
+          <End Type="AnimaliaPetShopModel.ListaPrecio" Role="ListaPrecio" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListaPrecio">
+              <PropertyRef Name="IdListaPrecio" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdListaPrecio" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -413,25 +611,6 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AmountListProduct">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.AmountListProduct">
-              <MappingFragment StoreEntitySet="AmountListProduct">
-                <ScalarProperty Name="IdAmountList" ColumnName="IdAmountList" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="DateInitial" ColumnName="DateInitial" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AmountProductAsoc">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.AmountProductAsoc">
-              <MappingFragment StoreEntitySet="AmountProductAsoc">
-                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
-                <ScalarProperty Name="IdAmountList" ColumnName="IdAmountList" />
-                <ScalarProperty Name="IdAmountProduct" ColumnName="IdAmountProduct" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -492,16 +671,57 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="SubCategory">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.SubCategory">
+              <MappingFragment StoreEntitySet="SubCategory">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="IdListaPrecio" ColumnName="IdListaPrecio" />
+                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
                 <ScalarProperty Name="BarCode" ColumnName="BarCode" />
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Kg" ColumnName="Kg" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
-                <ScalarProperty Name="Desciption" ColumnName="Desciption" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductoLista">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.ProductoLista">
+              <MappingFragment StoreEntitySet="ProductoLista">
+                <ScalarProperty Name="IdListaPrecio" ColumnName="IdListaPrecio" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdProductoLista" ColumnName="IdProductoLista" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListaPrecio">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.ListaPrecio">
+              <MappingFragment StoreEntitySet="ListaPrecio">
+                <ScalarProperty Name="FechaFinal" ColumnName="FechaFinal" />
+                <ScalarProperty Name="FechaInicio" ColumnName="FechaInicio" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="PrecioCosto" ColumnName="PrecioCosto" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdListaPrecio" ColumnName="IdListaPrecio" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

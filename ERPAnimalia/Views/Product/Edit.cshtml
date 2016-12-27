@@ -10,13 +10,14 @@
 
 </head>
 <body>
-@using (Html.BeginForm())
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    @Html.HiddenFor(m => m.IdProduct)
+
+        @Html.HiddenFor(m => m.IdProducto)
         <div class="form-group">
             <label class="control-label col-sm-2">Código:</label>
             <div class="col-sm-10">
-               
                 @Html.EditorFor(m => m.Codigo, new { @class = "form-control", type = "text", placeholder = "Ingrese el código" })
             </div>
         </div>
@@ -31,6 +32,24 @@
             <label class="control-label col-sm-2" for="desc">Descripción:</label>
             <div class="col-sm-10">
                 @Html.EditorFor(m => m.Description, new { @class = "form-control", type = "text" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="desc">Categoria:</label>
+            <div class="col-sm-10">
+                @Html.DropDownListFor(model => model.Category.First().IdCategory,
+    new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="desc">Subcategoria:</label>
+            <div class="col-sm-10">
+                @Html.DropDownListFor(model => model.SubCategoryItem.IdSubCategory,
+    new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+
             </div>
         </div>
         <div class="form-group">
@@ -48,13 +67,10 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            <label for="pwd">Código de barra:</label>
-            @Html.TextBoxFor(m => m.barCode, new { @class = "form-control", type = "text")
-        </div>*@
 
-        <button type="submit"   class="btn btn-primary">Guardar Producto</button>
-}
+        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+        }
+  
 </body>
 
 </html>

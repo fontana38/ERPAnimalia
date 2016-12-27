@@ -12,20 +12,20 @@ namespace ERPAnimalia.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class AmountListProduct
+    public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AmountListProduct()
+        public Category()
         {
-            this.AmountProductAsoc = new HashSet<AmountProductAsoc>();
+            this.Product = new HashSet<Product>();
         }
     
-        public System.Guid IdAmountList { get; set; }
+        public int IdCategory { get; set; }
         public string Name { get; set; }
-        public Nullable<double> Amount { get; set; }
-        public Nullable<System.DateTime> DateInitial { get; set; }
+        public Nullable<int> IdSubCategory { get; set; }
     
+        public virtual SubCategory SubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AmountProductAsoc> AmountProductAsoc { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

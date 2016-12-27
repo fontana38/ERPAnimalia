@@ -12,13 +12,15 @@ namespace ERPAnimalia.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class AmountProductAsoc
+    public partial class ProductoLista
     {
-        public Nullable<System.Guid> IdProduct { get; set; }
-        public Nullable<System.Guid> IdAmountList { get; set; }
-        public System.Guid IdAmountProduct { get; set; }
+        public System.Guid IdProductoLista { get; set; }
+        public Nullable<System.Guid> IdProducto { get; set; }
+        public Nullable<System.Guid> IdListaPrecio { get; set; }
     
-        public virtual AmountListProduct AmountListProduct { get; set; }
         public virtual Product Product { get; set; }
+        public virtual ProductoLista ProductoLista1 { get; set; }
+        public virtual ProductoLista ProductoLista2 { get; set; }
+        public virtual ListaPrecio ListaPrecio { get; set; }
     }
 }

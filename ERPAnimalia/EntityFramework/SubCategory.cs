@@ -12,29 +12,21 @@ namespace ERPAnimalia.EntityFramework
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class SubCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public SubCategory()
         {
-            this.ProductoLista = new HashSet<ProductoLista>();
+            this.Category = new HashSet<Category>();
+            this.Product = new HashSet<Product>();
         }
     
-        public string Codigo { get; set; }
+        public int IdSubCategory { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> quantity { get; set; }
-        public Nullable<int> Kg { get; set; }
-        public System.Guid IdProducto { get; set; }
-        public string BarCode { get; set; }
-        public Nullable<int> IdCategory { get; set; }
-        public Nullable<int> IdSubCategory { get; set; }
-        public Nullable<System.Guid> IdListaPrecio { get; set; }
     
-        public virtual Category Category { get; set; }
-        public virtual SubCategory SubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductoLista> ProductoLista { get; set; }
-        public virtual ListaPrecio ListaPrecio { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

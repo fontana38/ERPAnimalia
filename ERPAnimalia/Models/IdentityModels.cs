@@ -32,8 +32,7 @@ namespace ERPAnimalia.Models
         }
 
         public virtual DbSet<ProductModels> Product { get; set; }
-        public virtual DbSet<ProductAndListModel> ProductAndList { get; set; }
-        public virtual DbSet<ListOfAmountModel> ListOfAmount { get; set; }
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -10,49 +10,71 @@
 
 </head>
 <body>
+    </br>
+    </br>
+        <div class="container-fluid">
+            <form action="SaveProduct" class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-4">Código:</label>
+                        @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control", type = "text", placeholder = "Ingrese el código" })
+                    </div>
 
-    <form action="SaveProduct" class="form-horizontal">
-        <div class="form-group">
-            <label class="control-label col-sm-2" >Código:</label>
-            <div class="col-sm-10">
-                @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control", type = "text" , placeholder = "Ingrese el código" })
-            </div>
-            </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="usr">Nombre:</label>
-            <div class="col-sm-10">
-                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", type = "text", placeholder = "Ingrese el Nombre" })
-                
-            </div>
-          </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="desc">Descripción:</label>
-            <div class="col-sm-10"> 
-                @Html.TextBoxFor(m => m.Description, new { @class = "form-control", type = "text", placeholder = "Ingrese Descripción" })
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="cant">Cantidad:</label>
-            <div class="col-sm-10">
-                @Html.TextBoxFor(m => m.quantity, new { @class = "form-control", type = "text", placeholder = "Ingrese Cantidad" })
-               
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="kg">Kg:</label>
-            <div class="col-sm-10">
-                @Html.TextBoxFor(m => m.kg, new { @class = "form-control", type = "text", placeholder = "Ingrese Kilos" })
-               
-            </div>
-        </div>
+                    <div class="form-group">
+                        <label class="col-md-4" for="usr">Nombre:</label>
 
-        <div class="form-group">
-            <label for="pwd">Código de barra:</label>
-            @Html.TextBoxFor(m => m.barCode, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra" })
-        </div>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", type = "text", placeholder = "Ingrese el Nombre" })
+                    </div>
 
-        <button type="submit" name="SaveProduct"  value="SaveProduct" class="btn btn-primary" onclick="location.href='@Url.Action("SaveProduct", "Product")'">Agregar Producto</button>
-    </form>
+                    <div class="form-group">
+                        <label class="col-md-4" for="desc">Descripción:</label>
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", type = "text", placeholder = "Ingrese Descripción" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4" for="desc">Categoria:</label>
+                        @Html.DropDownListFor(model => model.Category.First().IdCategory,
+    new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4" for="desc">Subcategoria:</label>
+                        @Html.DropDownListFor(model => model.SubCategory.First().IdSubCategory,
+    new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-md-4" for="cant">Cantidad:</label>
+                        @Html.TextBoxFor(m => m.quantity, new { @class = "form-control", type = "text", placeholder = "Ingrese Cantidad" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4" for="kg">Kg:</label>
+
+                        @Html.TextBoxFor(m => m.kg, new { @class = "form-control", type = "text", placeholder = "Ingrese Kilos" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4" for="pwd">Código de barra:</label>
+                        @Html.TextBoxFor(m => m.barCode, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra" })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4" for="pwd">Precio Costo</label>
+                        @Html.TextBoxFor(m => m.ListaPrecioItem.PrecioCosto, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra" })
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4" for="pwd">Precio Venta</label>
+                        @Html.TextBoxFor(m => m.ListaPrecioItem.PrecioVenta, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra" })
+                    </div>
+                </div>
+                <button type="submit" name="SaveProduct" value="SaveProduct" class="btn btn-primary" onclick="location.href='@Url.Action("SaveProduct", "Product")'">Agregar Producto</button>
+            </form>
+        </div>
 </body>
 
 </html>

@@ -1,0 +1,55 @@
+﻿@using ERPAnimalia.Models;
+@model ProductModels
+
+@{
+
+    var viewDataCategory = ViewData["Category"] as List<CategoryModel>;
+    var viewDataSubCategory = ViewData["SubCategory"] as List<SubCategoryModel>;
+}
+</br>
+<div class="container-fluid">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Buscar Productos</div>
+        <div class="panel-body">
+
+            <form action="SearchProduct" class="form-inline">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Código:</label>
+                    <div >
+                        @Html.TextBoxFor(m => m.Codigo, new { @class = "form-control", type = "text", placeholder = "Ingrese el código" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3">Nombre:</label>
+                    <div>
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", type = "text", placeholder = "Ingrese el código" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="desc">Categoria:</label>
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(model => model.IdCategory,
+              new SelectList(@viewDataCategory, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-3" for="desc">SubCategoria:</label>
+                    <div class="col-sm-10">
+                        @Html.DropDownListFor(model => model.IdSubCategory,
+              new SelectList(@viewDataSubCategory, "IdSubCategory", "Name"), new { @class = "form-control", id = "idSubcategory", type = "text", placeholder = "Seleccione Subcategoria" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" name="searchProduct" value="searchProduct" class="btn btn-primary" onclick="location.href='@Url.Action("SearchProduct", "Product")'">Buscar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+

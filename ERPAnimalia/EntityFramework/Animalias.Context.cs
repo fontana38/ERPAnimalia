@@ -26,12 +26,14 @@ namespace ERPAnimalia.EntityFramework
         }
     
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<AmountListProduct> AmountListProduct { get; set; }
-        public virtual DbSet<AmountProductAsoc> AmountProductAsoc { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<ProductoLista> ProductoLista { get; set; }
+        public virtual DbSet<ListaPrecio> ListaPrecio { get; set; }
     }
 }

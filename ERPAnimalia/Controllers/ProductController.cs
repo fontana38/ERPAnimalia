@@ -1,4 +1,5 @@
 ﻿using ERPAnimalia.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,40 @@ namespace ERPAnimalia.Controllers
     [RoutePrefix("Product")]
     public class ProductController : Controller
     {
-        public ProductManager Manager { get; set; }
+        public ProductManager ProductManagers { get; set; }
+        public ManagerListOfAmount ManagerList { get; set; }
 
         public ProductController()
         {
-            Manager = Factory.Factory.CreateProducManager();
+            ProductManagers = Factory.Factory.CreateProducManager();
+            ManagerList = Factory.Factory.CreateManagerListOfAmount();
         }
 
         // GET: Product
         [Route("Product")]
-        public ActionResult Index()
-        {   
-            var model= Manager.GetAllProduct();
-            return View(model);
+        public ActionResult Index(string sortOrder, string CurrentSort, int? page, int pageSize = 25)
+        {
+            ViewData["Category"] = ProductManagers.GetCategory();
+
+            ViewData["SubCategory"] = ProductManagers.GetSubCategory();
+
+            page = page > 0 ? page : 1;
+            pageSize = pageSize > 0 ? pageSize : 25;
+
+            sortOrder = String.IsNullOrEmpty(sortOrder) ? "date" : sortOrder;
+
+
+            ViewBag.CurrentSort = sortOrder;
+
+            var model = ProductManagers.SortGrid(sortOrder, CurrentSort);
+            
+            
+            int pageNumber = (page ?? 1);
+          
+            IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(model, pageSize + 1, 5, 25);
+            
+            return View(productModel);
+            
         }
 
         // GET: Product/Details/5
@@ -35,14 +57,20 @@ namespace ERPAnimalia.Controllers
         // GET: Product/Create
         public ActionResult Create(ProductModels product)
         {
-            
-                return View("AddProduct"); 
+           product.Category= ProductManagers.GetCategory();
+           product.SubCategory = ProductManagers.GetSubCategory();
+           product.ListaPrecio = ManagerList.GetListOfAmount();
+            var lista = product.ListaPrecio.Find(x => x.IdLitaPrecio== product.IdListaPrecio);
+            product.ListaPrecioItem = lista;
+
+           return View("Add",product); 
         }
 
         
         public ActionResult SaveProduct(ProductModels product)
         {
-            Manager.SaveProduct(product);
+
+            ProductManagers.SaveProduct(product);
             return RedirectToAction("Index"); 
         }
 
@@ -65,7 +93,7 @@ namespace ERPAnimalia.Controllers
         // GET: Product/Edit/5
         public ActionResult Edit(Guid id)
         {
-           var productEdit = Manager.GetProductById(id);
+           var productEdit = ProductManagers.GetProductById(id);
            return View(productEdit);
         }
 
@@ -75,7 +103,7 @@ namespace ERPAnimalia.Controllers
         {
             try
             {
-                Manager.EditProduct(product);
+                ProductManagers.EditProduct(product);
 
                 return RedirectToAction("Index");
             }
@@ -91,6 +119,15 @@ namespace ERPAnimalia.Controllers
             return View();
         }
 
+        public ActionResult SearchProduct(ProductModels product)
+        {
+            ViewData["Category"] = ProductManagers.GetCategory();
+            ViewData["SubCategory"] = ProductManagers.GetSubCategory();
+            product.Category= ViewData["Category"] as List<CategoryModel>;
+            product.SubCategory= ViewData["SubCategory"] as List<SubCategoryModel>;
+            var productList = ProductManagers.SearchProduct(product);
+            return View("Index",productList);
+        }
         // POST: Product/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
