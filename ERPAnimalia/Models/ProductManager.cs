@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using System.Web.Http.ModelBinding;
 
 namespace ERPAnimalia.Models
 {
-    public class ProductManager
+    public  class ProductManager
     {
         public static AnimaliaPetShopEntities db { get; set; }
+
+        public TransferToFreeProductManager ProductOpenManagers { get; set; }
 
         public ProductManager()
         {
@@ -52,7 +55,9 @@ namespace ERPAnimalia.Models
             {
                 db = Factory.Factory.CreateContextDataBase();
                 var productDb = MapperObject.CreateProductDb(product);
+
                 db.Product.Add(productDb);
+
                 db.SaveChanges();
             }
             catch (Exception)
@@ -122,7 +127,7 @@ namespace ERPAnimalia.Models
 
         }
 
-        public ProductModels GetProductById (Guid id)
+        public virtual ProductModels GetProductById (Guid id)
         {
             db = Factory.Factory.CreateContextDataBase();
             var  productById = db.Product.Find(id);
@@ -143,7 +148,6 @@ namespace ERPAnimalia.Models
 
         }
 
-
         public List<CategoryModel> GetCategory()
         {
             db = Factory.Factory.CreateContextDataBase();
@@ -151,7 +155,6 @@ namespace ERPAnimalia.Models
            
             return MapperObject.CreateCategoryList(category);
         }
-
 
         public List<SubCategoryModel> GetSubCategory()
         {
@@ -166,7 +169,7 @@ namespace ERPAnimalia.Models
            return Factory.Factory.NewProductModel();
         }
 
-        public List<ProductModels> SortGrid(string currentSort,string sortOrder)
+        public virtual List<ProductModels> SortGrid(string currentSort,string sortOrder)
         {
             var model = GetAllProduct();
 
@@ -216,9 +219,6 @@ namespace ERPAnimalia.Models
            
         }
 
-
-
-
         public List<ProductModels> SearchProduct(ProductModels search)
         {
             try
@@ -246,6 +246,15 @@ namespace ERPAnimalia.Models
 
                 throw new Exception(e.Message.ToString());
             }
+        }
+
+        public void RemoveModelView(ModelStateDictionary modelState)
+        {
+            modelState.Remove("Codigo");
+            modelState.Remove("Description");
+            modelState.Remove("quantity");
+            modelState.Remove("IdCategory");
+            modelState.Remove("IdSubCategory");
         }
            
     }

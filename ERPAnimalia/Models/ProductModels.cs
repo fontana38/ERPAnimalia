@@ -9,28 +9,39 @@ namespace ERPAnimalia.Models
     public class ProductModels
     {
         public Guid IdProducto { get; set; }
-
+        [Required(ErrorMessage = "Por favor Ingrese el Código")]
+        [MaxLength(50)]
         [Display(Name = "Código")]
         public string Codigo { get; set; }
 
-        [Display(Name = "Nombre")]
-        public string Name { get; set; }
-
         [MaxLength(50)]
-        [Display(Name = "Descripción")]
+        [Display(Name = "Marca")]
+        public string Marca { get; set; }
 
-        public string Description { get; set; }
+        [Required(ErrorMessage = "Por favor Ingrese la Descripción1")]
+        [MaxLength(50)]
+        [Display(Name = "Descripción1")]
+        public string Descripcion1 { get; set; }
+
+        [Required(ErrorMessage = "Por favor Ingrese la Descripción2")]
+        [MaxLength(50)]
+        [Display(Name = "Descripción2")]
+        public string Descripcion2 { get; set; }
+
         [MaxLength(50)]
         [Display(Name = "Código de Barra")]
-        public string barCode { get; set; }
+        public string CodigoBarra { get; set; }
 
         [Display(Name = "Cantidad")]
-        public int? quantity { get; set; }
+        [Required(ErrorMessage = "Por favor Ingrese la Cantidad")]
+        public int? Cantidad { get; set; }
 
         public int? kg { get; set; }
 
-        public int? IdCategory { get; set; }
+        [Required(ErrorMessage = "Por favor Ingrese la Categoria")]
 
+        public int? IdCategory { get; set; }
+        [Required(ErrorMessage = "Por favor Ingrese la SubCategoria")]
         public int? IdSubCategory { get; set; }
 
         public Guid? IdListaPrecio { get; set; }

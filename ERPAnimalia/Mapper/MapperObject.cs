@@ -212,14 +212,15 @@ namespace ERPAnimalia
            
                 
                 NewProduct.IdProducto = Guid.NewGuid();
-                NewProduct.Description = product.Description;
-                NewProduct.Name = "Animalias";
-                NewProduct.quantity = product.quantity;
+                NewProduct.Descriocion1 = product.Descripcion1;
+                NewProduct.Descripcion2 = product.Descripcion2;
+                
+                NewProduct.Cantidad = product.Cantidad;
                 NewProduct.Kg = product.kg;
-                NewProduct.BarCode = product.barCode;
+                NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
-                NewProduct.IdCategory = product.IdCategory;
-            NewProduct.IdSubCategory = product.IdSubCategory;
+                NewProduct.IdCategoria = product.IdCategory;
+                NewProduct.IdSubCategoria = product.IdSubCategory;
                 return NewProduct;
         }
 
@@ -228,14 +229,15 @@ namespace ERPAnimalia
             try
             {
                 productDb.IdProducto = product.IdProducto;
-                productDb.Description = product.Description;
-                productDb.Name = "Animalia";
-                productDb.quantity = product.quantity;
+                productDb.Descripcion1 = product.Descripcion1;
+                productDb.Descripcion2 = product.Descripcion2;
+                productDb.Marca = product.Marca;
+                productDb.Cantidad = product.Cantidad;
                 productDb.Kg = product.kg;
-                productDb.BarCode = product.barCode;
+                productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
-                productDb.IdCategory = product.IdCategory;
-                productDb.IdSubCategory = product.IdSubCategory;
+                productDb.IdCategoria = product.IdCategory;
+                productDb.IdSubCategoria = product.IdSubCategory;
                 return productDb;
             }
             catch (Exception e)

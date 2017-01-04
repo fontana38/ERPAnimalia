@@ -14,18 +14,20 @@
         <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="AnimaliaPetShopModel.AspNetUserRoles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="0.75" PointY="18.25" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="3" PointY="14.625" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="5" PointY="19.5" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Category_SubCategory" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.ProductoLista" Width="1.5" PointX="6.25" PointY="15.75" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_Product" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.ListaPrecio" Width="1.5" PointX="6.25" PointY="9.125" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista1" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.ProductDetail" Width="1.5" PointX="5.25" PointY="12.5" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="8.5" PointY="13" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_ListaPrecio" />
-      </Diagram>
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductDetail_Product" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_Product" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

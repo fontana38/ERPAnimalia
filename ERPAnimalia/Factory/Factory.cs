@@ -55,6 +55,12 @@ namespace ERPAnimalia.Factory
             return new Product();
         }
 
+        public static TransferToFreeProductManager CreateTransferToFreeProductManager()
+        {
+
+            return new TransferToFreeProductManager();
+        }
+
 
         public static ManagerListOfAmount CreateManagerListOfAmount()
         {

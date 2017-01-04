@@ -4,7 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    
+
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
     @model PagedList.IPagedList<ProductModels>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Lista Productos</div>
             <div class="panel-body">
-                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
+                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
                 <table class="table table-striped">
                     <thead class="thead-inverse">
                         <tr>
@@ -111,8 +112,11 @@
                                 </td>
 
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.IdProducto }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.IdProducto }) |
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.IdProducto }) 
+                                    @Html.ActionLink("Pasar Suelto", "TransferToFreeProduct", "TransferToFreeProduct",
+                                    null, new { id = item.IdProducto, @class = "modal-link btn btn-success" })
+                                    
+                                  
                                     @Html.ActionLink("Delete", "Delete", new { id = item.IdProducto })
                                 </td>
 
@@ -137,3 +141,6 @@
             
 </body>
 </html>
+<script>
+
+

@@ -57,21 +57,44 @@ namespace ERPAnimalia.Controllers
         // GET: Product/Create
         public ActionResult Create(ProductModels product)
         {
-           product.Category= ProductManagers.GetCategory();
-           product.SubCategory = ProductManagers.GetSubCategory();
-           product.ListaPrecio = ManagerList.GetListOfAmount();
-            var lista = product.ListaPrecio.Find(x => x.IdLitaPrecio== product.IdListaPrecio);
-            product.ListaPrecioItem = lista;
+            try
+            {
+                product.Category = ProductManagers.GetCategory();
+                product.SubCategory = ProductManagers.GetSubCategory();
+                product.ListaPrecio = ManagerList.GetListOfAmount();
 
-           return View("Add",product); 
+                ModelState.Remove("Codigo");
+                ModelState.Remove("Description");
+                ModelState.Remove("quantity");
+                ModelState.Remove("IdCategory");
+                ModelState.Remove("IdSubCategory");
+
+                var lista = product.ListaPrecio.Find(x => x.IdLitaPrecio == product.IdListaPrecio);
+                product.ListaPrecioItem = lista;
+
+
+                return View("Add", product);
+            }
+            catch (Exception)
+            {
+                return View();
+            }
+               
+            
         }
 
         
         public ActionResult SaveProduct(ProductModels product)
         {
-
-            ProductManagers.SaveProduct(product);
-            return RedirectToAction("Index"); 
+            if (ModelState.IsValid)
+            {
+                ProductManagers.SaveProduct(product);
+                return RedirectToAction("Index");
+            }
+            product.Category = ProductManagers.GetCategory();
+            product.SubCategory = ProductManagers.GetSubCategory();
+            product.ListaPrecio = ManagerList.GetListOfAmount();
+            return View("Add", product);
         }
 
         // POST: Product/Create

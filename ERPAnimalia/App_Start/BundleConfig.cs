@@ -23,9 +23,27 @@ namespace ERPAnimalia
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+                        "~/Scripts/jquery.unobtrusive*",
+                        "~/Scripts/jquery.validate*"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/themes/base").Include(
+               "~/Content/themes/base/images",
+                "~/Content/themes/base/core.css",
+                "~/Content/themes/base/accordion.css",
+                "~/Content/themes/base/all.css",
+                "~/Content/themes/base/autocomplete.css",
+                "~/Content/themes/base/base.css",
+                "~/Content/themes/base/button.css",
+                "~/Content/themes/base/datepicker.css",
+                 "~/Content/themes/base/dialog.css",
+                 "~/Content/themes/base/draggable.css",
+                  "~/Content/themes/base/jquery-ui.css",
+                   "~/Content/themes/base/jquery-ui.min.css"
+                ));
         }
     }
 }

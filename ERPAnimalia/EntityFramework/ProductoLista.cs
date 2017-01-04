@@ -18,9 +18,9 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<System.Guid> IdProducto { get; set; }
         public Nullable<System.Guid> IdListaPrecio { get; set; }
     
-        public virtual Product Product { get; set; }
         public virtual ProductoLista ProductoLista1 { get; set; }
         public virtual ProductoLista ProductoLista2 { get; set; }
         public virtual ListaPrecio ListaPrecio { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

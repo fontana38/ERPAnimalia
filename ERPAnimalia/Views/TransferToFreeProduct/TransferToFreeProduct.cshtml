@@ -1,0 +1,95 @@
+﻿@using ERPAnimalia.Models;
+@using PagedList.Mvc;
+  @model PagedList.IPagedList<ProductModels>
+  
+
+    @{
+        string currentFilter = ViewBag.CurrentFilter;
+        string currentSort = ViewBag.CurrentSort;
+        if (string.IsNullOrEmpty(currentSort))
+        {
+            currentSort = "date_desc";
+        }
+       
+
+    }
+    <div id="modal-container" class="modal fade hidden-print" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">Lista Productos</div>
+                            <div class="panel-body">
+                                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
+                                <table class="table table-striped">
+                                    <thead class="thead-inverse">
+                                        <tr>
+                                            <th>
+                                                @Html.ActionLink("Código", "Index",
+            new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
+
+                                            </th>
+
+                                            <th>
+                                                @Html.ActionLink("Descripción", "Index",
+            new { sortOrder = "descripcion", CurrentSort = ViewBag.CurrentSort })
+                                            </th>
+                                            <th>
+                                                @Html.ActionLink("Categoria", "Index",
+            new { sortOrder = "categoria", CurrentSort = ViewBag.CurrentSort })
+
+                                            </th>
+                                            <th>
+                                                @Html.ActionLink("Sub Categoria", "Index",
+            new { sortOrder = "subCategoria", CurrentSort = ViewBag.CurrentSort })
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+
+                                            <tr>
+
+                                                <th scope="row">
+                                                    @Html.HiddenFor(modelItem => item.IdProducto)
+                                                    @Html.DisplayFor(modelItem => item.Codigo)
+                                                </th>
+
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Description)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.CategoryItem.Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SubCategoryItem.Name)
+                                                </td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                                <div id='Paging' style="text-align: center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+
+                                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+

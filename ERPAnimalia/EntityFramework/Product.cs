@@ -17,24 +17,31 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
+            this.ProductDetail = new HashSet<ProductDetail>();
             this.ProductoLista = new HashSet<ProductoLista>();
         }
     
         public string Codigo { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> quantity { get; set; }
+        public string Marca { get; set; }
+        public string Descripcion1 { get; set; }
+        public Nullable<int> Cantidad { get; set; }
         public Nullable<int> Kg { get; set; }
         public System.Guid IdProducto { get; set; }
-        public string BarCode { get; set; }
-        public Nullable<int> IdCategory { get; set; }
-        public Nullable<int> IdSubCategory { get; set; }
+        public string CodigoBarra { get; set; }
+        public Nullable<int> IdCategoria { get; set; }
+        public Nullable<int> IdSubCategoria { get; set; }
         public Nullable<System.Guid> IdListaPrecio { get; set; }
+        public string Descripcion2 { get; set; }
+        public string Presentacion { get; set; }
+        public Nullable<decimal> RentabilidadPesos { get; set; }
+        public Nullable<decimal> Rentabilidad { get; set; }
     
         public virtual Category Category { get; set; }
+        public virtual ListaPrecio ListaPrecio { get; set; }
         public virtual SubCategory SubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductDetail> ProductDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoLista> ProductoLista { get; set; }
-        public virtual ListaPrecio ListaPrecio { get; set; }
     }
 }
