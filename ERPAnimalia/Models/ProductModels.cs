@@ -18,6 +18,10 @@ namespace ERPAnimalia.Models
         [Display(Name = "Marca")]
         public string Marca { get; set; }
 
+        [MaxLength(50)]
+        [Display(Name = "Presentacion")]
+        public string Presentacion { get; set; }
+
         [Required(ErrorMessage = "Por favor Ingrese la Descripción1")]
         [MaxLength(50)]
         [Display(Name = "Descripción1")]
@@ -34,14 +38,20 @@ namespace ERPAnimalia.Models
 
         [Display(Name = "Cantidad")]
         [Required(ErrorMessage = "Por favor Ingrese la Cantidad")]
-        public int? Cantidad { get; set; }
+        public decimal? Cantidad { get; set; }
+
+        [Display(Name = "Rentabilidad Pesos")]
+        public decimal? RentabilidadPesos { get; set; }
+
+        [Display(Name = "Rentabilidad %")]
+        public decimal? RentabilidadPorcentaje { get; set; }
 
         public int? kg { get; set; }
 
         [Required(ErrorMessage = "Por favor Ingrese la Categoria")]
 
         public int? IdCategory { get; set; }
-        [Required(ErrorMessage = "Por favor Ingrese la SubCategoria")]
+       
         public int? IdSubCategory { get; set; }
 
         public Guid? IdListaPrecio { get; set; }

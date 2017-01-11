@@ -9,8 +9,8 @@ namespace ERPAnimalia
     {
         public enum Category : int
         {
-            Bolsa =1,
-            Suelto=2
+            Alimento =1,
+            Accesorios=2
 
         }
     }

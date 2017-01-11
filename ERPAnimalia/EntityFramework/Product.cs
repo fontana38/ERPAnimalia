@@ -24,7 +24,7 @@ namespace ERPAnimalia.EntityFramework
         public string Codigo { get; set; }
         public string Marca { get; set; }
         public string Descripcion1 { get; set; }
-        public Nullable<int> Cantidad { get; set; }
+        public Nullable<decimal> Cantidad { get; set; }
         public Nullable<int> Kg { get; set; }
         public System.Guid IdProducto { get; set; }
         public string CodigoBarra { get; set; }

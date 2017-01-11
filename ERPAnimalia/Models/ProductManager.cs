@@ -24,12 +24,7 @@ namespace ERPAnimalia.Models
         {
             db = Factory.Factory.CreateContextDataBase();
             var listProduct=  db.Product.ToList();
-            
-            //Create the mapping between AutomobileDM to CarVM
-          
-            //As a next step define the mapping for the nested Invoice objects
-            
-          
+ 
             return MapperObject.CreateProductList(listProduct).ToList();
         }
 
@@ -183,16 +178,16 @@ namespace ERPAnimalia.Models
                         model = model.OrderBy
                                 (p => p.Codigo).ToList();
                     break;
-                case "descripcion":
+                case "descripcion1":
                     if (sortOrder.Equals(currentSort))
                         model = model.OrderByDescending
-                                (p => p.Description).ToList();
+                                (p => p.Descripcion1).ToList();
                     else
                         model = model.OrderBy
-                                (p => p.Description).ToList();
+                                (p => p.Descripcion1).ToList();
                     break;
                    
-                case "categoria":
+                case "Categoria":
                     if (sortOrder.Equals(currentSort))
                         model = model.OrderByDescending
                                 (p => p.CategoryItem.Name).ToList();
@@ -200,13 +195,37 @@ namespace ERPAnimalia.Models
                         model = model.OrderBy
                                 (p => p.CategoryItem.Name).ToList();
                     break;
-                case "subCategoria":
+                case "Descripcion2":
                     if (sortOrder.Equals(currentSort))
                         model = model.OrderByDescending
-                                (p => p.SubCategoryItem.Name).ToList();
+                                (p => p.Descripcion2).ToList();
                     else
                         model = model.OrderBy
-                                (p => p.SubCategoryItem.Name).ToList();
+                                (p => p.Descripcion2).ToList();
+                    break;
+                case "Cantidad":
+                    if (sortOrder.Equals(currentSort))
+                        model = model.OrderByDescending
+                                (p => p.Cantidad).ToList();
+                    else
+                        model = model.OrderBy
+                                (p => p.Cantidad).ToList();
+                    break;
+                case "Presentacion":
+                    if (sortOrder.Equals(currentSort))
+                        model = model.OrderByDescending
+                                (p => p.Presentacion).ToList();
+                    else
+                        model = model.OrderBy
+                                (p => p.Presentacion).ToList();
+                    break;
+                case "RentabilidadPesos":
+                    if (sortOrder.Equals(currentSort))
+                        model = model.OrderByDescending
+                                (p => p.RentabilidadPesos).ToList();
+                    else
+                        model = model.OrderBy
+                                (p => p.Presentacion).ToList();
                     break;
 
 
@@ -230,9 +249,9 @@ namespace ERPAnimalia.Models
                 var product = db.Product.ToList();
 
                 if (!String.IsNullOrWhiteSpace(search.Codigo)) product = product.Where(u => u.Codigo.Contains(search.Codigo)).ToList();
-                if (!String.IsNullOrWhiteSpace(search.Name)) product = product.Where(u => u.Name.Contains(search.Name)).ToList();
+                if (!String.IsNullOrWhiteSpace(search.Descripcion1)) product = product.Where(u => u.Descripcion1.Contains(search.Descripcion1)).ToList();
                 if ((search.IdCategory != null)) product = product.Where(u => u.Category.IdCategory == search.IdCategory).ToList();
-                if ((search.IdSubCategory != null)) product = product.Where(u => u.SubCategory.IdSubCategory == search.IdSubCategory).ToList();
+                if ((search.Descripcion2 != null)) product = product.Where(u => u.Descripcion2 == search.Descripcion2).ToList();
 
                 //product = db.Product.Where(b => b.Codigo.Contains(codigo) || b.Name.Contains(name) || b.IdCategory ==category || b.IdSubCategory == subCategory).ToList();
 

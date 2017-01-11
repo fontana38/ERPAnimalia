@@ -96,7 +96,7 @@
           <Property Name="Codigo" Type="nvarchar(max)" />
           <Property Name="Marca" Type="nvarchar(max)" />
           <Property Name="Descripcion1" Type="nvarchar(max)" />
-          <Property Name="Cantidad" Type="int" />
+          <Property Name="Cantidad" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Kg" Type="int" />
           <Property Name="IdProducto" Type="uniqueidentifier" Nullable="false" />
           <Property Name="CodigoBarra" Type="nvarchar(max)" />
@@ -585,7 +585,7 @@
           <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Marca" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Descripcion1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Cantidad" Type="Int32" />
+          <Property Name="Cantidad" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Kg" Type="Int32" />
           <Property Name="IdProducto" Type="Guid" Nullable="false" />
           <Property Name="CodigoBarra" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />

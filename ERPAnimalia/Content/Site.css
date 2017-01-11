@@ -9,6 +9,15 @@
     padding-right: 15px;
 }
 
+
+    
+.container-fluid {
+    padding: 0 15px;
+  
+}
+.panel-primary {
+    width: 2000px;
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

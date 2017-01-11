@@ -64,10 +64,11 @@ namespace ERPAnimalia.Controllers
                 product.ListaPrecio = ManagerList.GetListOfAmount();
 
                 ModelState.Remove("Codigo");
-                ModelState.Remove("Description");
-                ModelState.Remove("quantity");
+                ModelState.Remove("Description1");
+                ModelState.Remove("Cantidad");
                 ModelState.Remove("IdCategory");
-                ModelState.Remove("IdSubCategory");
+                ModelState.Remove("Descripcion2");
+                ModelState.Remove("marca");
 
                 var lista = product.ListaPrecio.Find(x => x.IdLitaPrecio == product.IdListaPrecio);
                 product.ListaPrecioItem = lista;

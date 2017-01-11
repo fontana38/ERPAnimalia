@@ -11,9 +11,9 @@ namespace ERPAnimalia.Models
         public Guid IdLitaPrecio { get; set; }
         [MaxLength(50)]
         public string Nombre { get; set; }
-        [Range(1, 100), DataType(DataType.Currency)]
+        [ DataType(DataType.Currency)]
         public decimal PrecioCosto { get; set; }
-        [Range(1, 100), DataType(DataType.Currency)]
+        [ DataType(DataType.Currency)]
         public decimal PrecioVenta { get; set; }
         [Display(Name = "FechaInicio"), DataType(DataType.Date)]
         public DateTime FechaInicio { get; set; }

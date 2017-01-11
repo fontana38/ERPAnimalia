@@ -212,15 +212,15 @@ namespace ERPAnimalia
            
                 
                 NewProduct.IdProducto = Guid.NewGuid();
-                NewProduct.Descriocion1 = product.Descripcion1;
+                NewProduct.Descripcion1 = product.Descripcion1;
                 NewProduct.Descripcion2 = product.Descripcion2;
-                
+                NewProduct.Marca = product.Marca;
                 NewProduct.Cantidad = product.Cantidad;
                 NewProduct.Kg = product.kg;
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
                 NewProduct.IdCategoria = product.IdCategory;
-                NewProduct.IdSubCategoria = product.IdSubCategory;
+                
                 return NewProduct;
         }
 
@@ -234,10 +234,11 @@ namespace ERPAnimalia
                 productDb.Marca = product.Marca;
                 productDb.Cantidad = product.Cantidad;
                 productDb.Kg = product.kg;
+               
                 productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
                 productDb.IdCategoria = product.IdCategory;
-                productDb.IdSubCategoria = product.IdSubCategory;
+               
                 return productDb;
             }
             catch (Exception e)

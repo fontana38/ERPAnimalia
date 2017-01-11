@@ -4,8 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+   
+    
     @model PagedList.IPagedList<ProductModels>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,58 +23,60 @@
      {
          currentSort = "date_desc";
      }
-     Html.RenderPartial("SearchProduct",new ProductModels() );
+     Html.RenderPartial("SearchProduct", new ProductModels());
 
 }
-    <div class="container-fluid">
+    <div class="container-fluid scroll-table-container">
 
         <div class="panel panel-primary">
             <div class="panel-heading">Lista Productos</div>
             <div class="panel-body">
                 <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
-                <table class="table table-striped">
+                <table id="producto" class="table scroll-table"  cellspacing="0" width="100%">
                     <thead class="thead-inverse">
                         <tr>
+
                             <th>
-                                @Html.ActionLink("Código", "Index",
-            new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Código", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
 
                             </th>
 
                             <th>
-                                @Html.ActionLink("Descripción", "Index",
-            new { sortOrder = "descripcion", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Categoria", "Index", new { sortOrder = "Categoria", CurrentSort = ViewBag.CurrentSort })
                             </th>
                             <th>
-                                @Html.ActionLink("Categoria", "Index",
-            new { sortOrder = "categoria", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Marca", "Index",new { sortOrder = "Marca", CurrentSort = ViewBag.CurrentSort })
 
                             </th>
                             <th>
-                                @Html.ActionLink("Sub Categoria", "Index",
-            new { sortOrder = "subCategoria", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Descripcion1", "Index",new { sortOrder = "Descripcion1", CurrentSort = ViewBag.CurrentSort })
                             </th>
                             <th>
-                                @Html.ActionLink("Cantidad", "Index",
-            new { sortOrder = "cantidad", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Descripcion2", "Index",new { sortOrder = "Descripcion2", CurrentSort = ViewBag.CurrentSort })
                             </th>
                             <th>
-                                @Html.ActionLink("Kg", "Index",
-            new { sortOrder = "Kg", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Presentacion", "Index",new { sortOrder = "Presentacion", CurrentSort = ViewBag.CurrentSort })
                             </th>
                             <th>
-                                @Html.ActionLink("Precio Venta", "Index",
-            new { sortOrder = "PrecioVenta", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Kg", "Index", new { sortOrder = "Kg", CurrentSort = ViewBag.CurrentSort })
                             </th>
                             <th>
-                                @Html.ActionLink("Precio Costo", "Index",
-            new { sortOrder = "PrecioCosto", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Cantidad", "Index", new { sortOrder = "Cantidad", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Precio Venta", "Index",new { sortOrder = "PrecioVenta", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Precio Costo", "Index",new { sortOrder = "PrecioCosto", CurrentSort = ViewBag.CurrentSort })
 
                             </th>
                             <th>
-                                @Html.ActionLink("Fecha", "Index",
-            new { sortOrder = "Fecha", CurrentSort = ViewBag.CurrentSort })
+                                @Html.ActionLink("Rentabilidad Pesos", "Index", new { sortOrder = "RentabilidadPeso", CurrentSort = ViewBag.CurrentSort })
                             </th>
+                            <th>
+                                @Html.ActionLink("Rentabilidad %", "Index", new { sortOrder = "Rentabilidad%", CurrentSort = ViewBag.CurrentSort })
+                            </th>
+                           
 
                         </tr>
                     </thead>
@@ -85,39 +90,46 @@
                                     @Html.HiddenFor(modelItem => item.IdProducto)
                                     @Html.DisplayFor(modelItem => item.Codigo)
                                 </th>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CategoryItem.Name)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.SubCategoryItem.Name)
+                                    @Html.DisplayFor(modelItem => item.Marca)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.quantity)
+                                    @Html.DisplayFor(modelItem => item.Descripcion1)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Descripcion2)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Presentacion)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.kg)
                                 </td>
+                               
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cantidad)
+                                </td>
+                               
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ListaPrecioItem.PrecioVenta)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ListaPrecioItem.PrecioCosto)
                                 </td>
+                                
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.ListaPrecioItem.FechaInicio)
+                                    @Html.DisplayFor(modelItem => item.RentabilidadPesos)
                                 </td>
-
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.IdProducto }) 
-                                    @Html.ActionLink("Pasar Suelto", "TransferToFreeProduct", "TransferToFreeProduct",
-                                    null, new { id = item.IdProducto, @class = "modal-link btn btn-success" })
-                                    
-                                  
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.IdProducto })
+                                    @Html.DisplayFor(modelItem => item.RentabilidadPorcentaje)
+                                </td>
+                                
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.IdProducto })                                   
                                 </td>
 
                             </tr>
@@ -141,6 +153,14 @@
             
 </body>
 </html>
-<script>
+<SCRIPT  type="text/javascript">
+    debugger;
+    $(document).ready(function () {
+        $('#producto').DataTable({
+            "scrollX": true
+        });
+    });
+
+</SCRIPT>
 
 
