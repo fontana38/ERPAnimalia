@@ -1,0 +1,156 @@
+﻿@using ERPAnimalia.Models;
+@model ICollection<ClienteModel>
+<link rel="stylesheet" type="text/css" href="http://www.prepbootstrap.com/Content/shieldui-lite/dist/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.prepbootstrap.com/Content/shieldui-lite/dist/js/shieldui-lite-all.min.js"></script>
+<script type="text/javascript" src="http://www.prepbootstrap.com/Content/data/shortGridData.js"></script>
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+<script src="~/Scripts/jquery-1.12.4.min.js"></script>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <table class="table table-bordered table-hover" id="tab_logic">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            @Html.ActionLink("Código", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Nombre", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Apellido", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Dirección", "Index", new { sortOrder = "Direccion", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Telefono", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Mascota", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Fecha Compra", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Fecha Próxima Compra", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                        <th class="text-center">
+                            @Html.ActionLink("Producto", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                        <tr>
+
+                            <th scope="row">
+                                @Html.HiddenFor(modelItem => item.IdCliente, new { id = "idCliente" })
+                                @Html.DisplayFor(modelItem => item.Codigo)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Apellido)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Direccion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefono)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mascota)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaCompra)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaProximaCompra)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Productos)
+                            </td>
+                           
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <a id="add_row" class="btn btn-default pull-left">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
+    <a id="save" class="btn btn-default pull-left">Guardar Cliente</a>
+</div>
+<script type="text/javascript">
+
+     $(document).ready(function () {
+         debugger;
+      var i=0;
+     $("#add_row").click(function(){
+         $('#addr' + i).html("<td><input  id='codigo" + i + "'" + "name='codigo' type='text' placeholder='codigo' class='form-control input-md' /> </td><td><input id='nombre" + i + "'" + "name='nombre' type='text' placeholder='Nombre' class='form-control input-md'></td><td><input id='apellido" + i + "'" + "name='Apellido" + i + "' type='text' placeholder='Apellido' class='form-control input-md'></td><td><input id='direccion" + i + "'"  + "type='text' placeholder='Direccion' class='form-control input-md' /> </td><td><input  id='telefono" + i + "'" + "name='Telefono'" + i + "' type='text' placeholder='Telefono' class='form-control input-md' /> </td><td><input  id='mascota" + i + "'" + "name='Mascota'" + i + "' type='text' placeholder='Mascota' class='form-control input-md' /> </td><td><input id='fechaCompra" + i + "'" + "name='FechaCompra'" + i + "' type='text' placeholder='Fecha compra' class='form-control input-md' /> </td><td><input id='fechaProximaCompra" + i + "'" + "name='FechaProximaCompra'" + i + "' type='text' placeholder='Fecha Proxima Compra' class='form-control input-md' /> </td><td><a  id='save' name='SaveCliente'" + i + "class='btn btn-default pull-left'>Agregar Producto </a>");
+
+      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+      i++;
+  });
+     $("#delete_row").click(function(){
+    	 if(i>1){
+		 $("#addr"+(i-1)).html('');
+		 i--;
+		 }
+     });
+
+     $("#save").click(function () {
+         debugger;
+         j = i - 1;
+         var codigo = $("#codigo" + j).val();
+         var tr = $(this).find('tr:first');
+         var nombre = $("#nombre" + j).val();
+         var apellido = $("#apellido" + j).val();
+         var direccion = $("#direccion" + j).val();
+         var telefono = $("#telefono" + j).val();
+         var mascota = $("#mascota" + j).val();
+         var fechaCompra = $("#fechaCompra" + j).val();
+         var fechaProximaCompra = $("#fechaProximaCompra" + j).val();
+       
+         var isSuccess = -1;
+
+                 var ClienteModels =
+           {
+              
+               "Codigo": codigo,
+               "nombre":nombre,
+               "Apellido": apellido,
+               "Direccion": direccion,
+               "telefono": telefono,
+               "mascota": mascota,
+               "fechaCompra": fechaCompra,
+               "fechaProximaCompra":fechaProximaCompra
+           };
+         $.ajax({
+          
+             url: '/Cliente/GuardarCliente',
+             data: JSON.stringify(ClienteModels),
+             type: 'POST',
+             contentType: 'application/json; charset=utf-8',
+             success: function (data) {
+                 tr.find('.edit-mode, .display-mode').toggle();
+                 alert('Record updated Successfully!!');
+             }
+         });
+     });
+
+     
+   
+   
+
+  });
+  </script>

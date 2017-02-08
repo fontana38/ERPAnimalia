@@ -78,6 +78,28 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="IdSubCategory" Type="int" />
         </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mascota" Type="nvarchar" MaxLength="50" />
+          <Property Name="FechaCompra" Type="datetime" />
+          <Property Name="IdProducto" Type="uniqueidentifier" />
+          <Property Name="FechaProximaCompra" Type="datetime" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Comprobante">
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="IdComprobante" Type="nchar" MaxLength="10" />
+          <Property Name="Numero" Type="nvarchar" MaxLength="50" />
+        </EntityType>-->
         <EntityType Name="ListaPrecio">
           <Key>
             <PropertyRef Name="IdListaPrecio" />
@@ -126,6 +148,17 @@
           <Property Name="IdProducto" Type="uniqueidentifier" />
           <Property Name="IdListaPrecio" Type="uniqueidentifier" />
         </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dirección" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Codigo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="SubCategory">
           <Key>
             <PropertyRef Name="IdSubCategory" />
@@ -142,6 +175,18 @@
             </Principal>
             <Dependent Role="Category">
               <PropertyRef Name="IdSubCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -281,14 +326,20 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ListaPrecio" EntityType="Self.ListaPrecio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductoLista" EntityType="Self.ProductoLista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Category_SubCategory" Association="Self.FK_Category_SubCategory">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Product" Association="Self.FK_Cliente_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -465,10 +516,16 @@
             <End Role="ProductoLista" EntitySet="ProductoLista" />
           </AssociationSet>
           <EntitySet Name="ProductDetail" EntityType="AnimaliaPetShopModel.ProductDetail" />
+          <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
+          <EntitySet Name="Cliente" EntityType="AnimaliaPetShopModel.Cliente" />
           <EntitySet Name="Product" EntityType="AnimaliaPetShopModel.Product" />
           <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Cliente_Product" Association="AnimaliaPetShopModel.FK_Cliente_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_ListaPrecio" Association="AnimaliaPetShopModel.FK_Product_ListaPrecio">
             <End Role="ListaPrecio" EntitySet="ListaPrecio" />
@@ -578,6 +635,33 @@
           <Property Name="CantidadKilos" Type="Double" />
           <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_ProductDetail_Product" FromRole="ProductDetail" ToRole="Product" />
         </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dirección" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mascota" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCompra" Type="DateTime" Precision="3" />
+          <Property Name="IdProducto" Type="Guid" />
+          <Property Name="FechaProximaCompra" Type="DateTime" Precision="3" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Cliente_Product" FromRole="Cliente" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -597,6 +681,7 @@
           <Property Name="RentabilidadPesos" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Rentabilidad" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Category" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Cliente_Product" FromRole="Product" ToRole="Cliente" />
           <NavigationProperty Name="ListaPrecio" Relationship="AnimaliaPetShopModel.FK_Product_ListaPrecio" FromRole="Product" ToRole="ListaPrecio" />
           <NavigationProperty Name="SubCategory" Relationship="AnimaliaPetShopModel.FK_Product_SubCategory" FromRole="Product" ToRole="SubCategory" />
           <NavigationProperty Name="ProductDetail" Relationship="AnimaliaPetShopModel.FK_ProductDetail_Product" FromRole="Product" ToRole="ProductDetail" />
@@ -611,6 +696,18 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cliente_Product">
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -781,6 +878,34 @@
                 <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
                 <ScalarProperty Name="IdProductDetail" ColumnName="IdProductDetail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="FechaProximaCompra" ColumnName="FechaProximaCompra" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+                <ScalarProperty Name="Mascota" ColumnName="Mascota" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

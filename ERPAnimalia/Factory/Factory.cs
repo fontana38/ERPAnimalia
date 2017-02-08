@@ -20,6 +20,11 @@ namespace ERPAnimalia.Factory
             return new ProductoLista();
         }
 
+        public static PersonaModels NewClienteModels()
+        {
+            return new PersonaModels();
+        }
+
         public static ListaPrecioModel NewListaPrecioModel()
         {
             return new ListaPrecioModel();
@@ -109,6 +114,18 @@ namespace ERPAnimalia.Factory
         public static ProductoLista NewProductoListaDB()
         {
             return new ProductoLista();
+
+        }
+
+        public static List<Cliente> ClienteDb()
+        {
+            return new List<Cliente>();
+
+        }
+
+        public static List<ClienteModel> Cliente()
+        {
+            return new List<ClienteModel>();
 
         }
 

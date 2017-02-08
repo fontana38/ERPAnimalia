@@ -50,7 +50,6 @@ namespace ERPAnimalia.Models
             {
                 db = Factory.Factory.CreateContextDataBase();
                 var productDb = MapperObject.CreateProductDb(product);
-
                 db.Product.Add(productDb);
 
                 db.SaveChanges();

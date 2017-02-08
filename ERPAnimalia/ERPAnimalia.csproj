@@ -229,6 +229,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\SearchProductController.cs" />
     <Compile Include="Controllers\TransferToFreeProductController.cs" />
     <Compile Include="DataBase\TransactionBase.cs" />
@@ -272,6 +273,9 @@
     <Compile Include="EntityFramework\Category.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\Cliente.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\C__MigrationHistory.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
@@ -282,6 +286,9 @@
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\ProductoLista.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\Proveedor.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\SubCategory.cs">
@@ -296,7 +303,10 @@
     <Compile Include="Mapper\AutoMapperConfig.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CategoryModel.cs" />
-    <Compile Include="Models\ClienteModels.cs" />
+    <Compile Include="Models\ClienteManager.cs" />
+    <Compile Include="Models\ClienteModel.cs" />
+    <Compile Include="Models\IClinteManager.cs" />
+    <Compile Include="Models\PersonaModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ListaPrecioModel.cs" />
     <Compile Include="Models\ManagerListOfAmount.cs" />
@@ -533,6 +543,7 @@
     <Content Include="Views\Product\Edit.cshtml" />
     <Content Include="Views\Shared\SearchProduct.cshtml" />
     <Content Include="Views\TransferToFreeProduct\TransferToFreeProduct.cshtml" />
+    <Content Include="Views\Cliente\Cliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

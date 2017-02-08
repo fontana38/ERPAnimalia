@@ -5,8 +5,9 @@ using System.Web;
 
 namespace ERPAnimalia.Models
 {
-    public class ClienteModels
+    public interface IClinteManager
     {
-
+        void GuardarCliente(ClienteModel cliente);
+        List<ClienteModel> ObtenerCliente();
     }
 }

@@ -23,8 +23,8 @@ namespace ERPAnimalia.Mapper
                 .ForMember(t => t.ListaPrecio, opt => opt.Ignore());
                 cfg.CreateMap<ListaPrecio, ListaPrecioModel>();
                 cfg.CreateMap<ListaPrecioModel, ListaPrecio>();
-
-
+                cfg.CreateMap<Cliente, ClienteModel>();
+                cfg.CreateMap<ClienteModel,Cliente >();
 
 
             });

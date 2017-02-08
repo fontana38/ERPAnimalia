@@ -35,6 +35,8 @@ namespace ERPAnimalia.EntityFramework
         public virtual DbSet<ProductoLista> ProductoLista { get; set; }
         public virtual DbSet<ListaPrecio> ListaPrecio { get; set; }
         public virtual DbSet<ProductDetail> ProductDetail { get; set; }
+        public virtual DbSet<Proveedor> Proveedor { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Product> Product { get; set; }
     }
 }

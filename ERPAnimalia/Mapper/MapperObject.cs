@@ -12,8 +12,13 @@ namespace ERPAnimalia
 {
     public  class MapperObject
     {
-        
 
+        //public static List<ClienteModels> CreateClientesList(Cliente cli)
+        //{
+        //    var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+        //    var cliente = mapper.Map<ClienteModels>(cli);
+        //    return cliente;
+        //}
         public static List<ProductModels> CreateProductList(List<Product> product)
         {
             try
@@ -81,6 +86,24 @@ namespace ERPAnimalia
            
         }
 
+        public static Cliente CreateClienteDb(ClienteModel cliente)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+
+                var clienteMap = mapper.Map<Cliente>(cliente);
+
+                return clienteMap;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+
+        }
+
         public static List<CategoryModel> CreateCategoryList(List<Category> category)
         {
             try
@@ -104,8 +127,31 @@ namespace ERPAnimalia
 
                 throw new Exception(e.Message.ToString());
             }
-        }    
+        }
 
+        public static List<ClienteModel> CreateClienteList(List<Cliente> cliente)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+                var list = Factory.Factory.Cliente();
+
+                foreach (var item in list)
+                {
+                    var listaMap = mapper.Map<ClienteModel>(item);
+
+                    list.Add(listaMap);
+                }
+
+                return list;
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+        }
         public static List<ListaPrecioModel> CreateListAmountMap(List<ListaPrecio> lista)
         {
             try
