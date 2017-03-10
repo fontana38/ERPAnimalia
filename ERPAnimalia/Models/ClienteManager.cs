@@ -28,17 +28,8 @@ namespace ERPAnimalia.Models
                     try
                     {
                         db = Factory.Factory.CreateContextDataBase();
-
-                        foreach (var item in clienteModel.IdsProduct)
-                        {
-                            var IdClienteIdProducto = new IdClienteIdProducto();
-                            IdClienteIdProducto.IdClienteProducto= Guid.NewGuid();
-                            IdClienteIdProducto.IdCliente = clienteModel.IdCliente;
-                            IdClienteIdProducto.IdProducto = new Guid("1B04AE93-44F5-4511-869E-27A36C809D59");
-                            db.IdClienteIdProducto.Add(IdClienteIdProducto);
-
-
-                        }
+                        
+                            
 
 
                         clienteModel.FechaCompra = DateTime.Parse(clienteModel.FechaCompra1).Date;
@@ -51,6 +42,20 @@ namespace ERPAnimalia.Models
                             clienteDb.IdCliente = Guid.NewGuid();
 
                             db.Cliente.Add(clienteDb);
+
+                            if (clienteModel.IdsProduct != null)
+                            {
+                                foreach (var item in clienteModel.IdsProduct)
+                                {
+                                    var IdClienteIdProducto = new IdClienteIdProducto();
+                                    IdClienteIdProducto.IdClienteProducto = Guid.NewGuid();
+                                    IdClienteIdProducto.IdCliente = clienteDb.IdCliente;
+                                    IdClienteIdProducto.IdProducto = new Guid("1B04AE93-44F5-4511-869E-27A36C809D59");
+                                    db.IdClienteIdProducto.Add(IdClienteIdProducto);
+
+
+                                }
+                            }
                             db.SaveChanges();
                             dbContextTransaction.Commit();
                         }

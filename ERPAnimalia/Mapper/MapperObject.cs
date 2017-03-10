@@ -135,16 +135,27 @@ namespace ERPAnimalia
             {
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
                 var list = Factory.Factory.Cliente();
-                var productItem = new ProductModels();  
+                
+
                 var listaMap = mapper.Map<ClienteModel>(cliente);
-                if(product != null && product.Count > 0)
+
+                listaMap.Productos = Factory.Factory.CreateListProduct();
+
+                if (product != null && product.Count > 0)
                 {
                     foreach (var item in product)
                     {
-                        productItem = mapper.Map<ProductModels>(item);
+                        var category = CreateCategory(item.Category);
+                        var productMap = mapper.Map<ProductModels>(item);
+                        var subCategoryMap = CreateSubCategory(item.Category.SubCategory);
+                        var listPriceMap = CreateListMap(item.ListaPrecio);
+                        productMap.CategoryItem = category;
+                        productMap.SubCategoryItem = subCategoryMap;
+                        productMap.ListaPrecioItem = listPriceMap;
+                        listaMap.Productos.Add(productMap);
                     }
 
-                    listaMap.Productos.Add(productItem);
+                    
                 }
                     
 

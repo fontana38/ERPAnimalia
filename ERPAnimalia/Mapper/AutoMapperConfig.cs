@@ -21,7 +21,9 @@ namespace ERPAnimalia.Mapper
                 cfg.CreateMap<Product, ProductModels>().ForMember(t => t.Category, opt => opt.Ignore())
                 .ForMember(t => t.SubCategory, opt => opt.Ignore())
                 .ForMember(t => t.IsSelect, opt => opt.Ignore())
-                .ForMember(t => t.ListaPrecio, opt => opt.Ignore());
+                .ForMember(t => t.ListaPrecio, opt => opt.Ignore())
+                .ForMember(t => t.SubCategoryItem, opt => opt.Ignore())
+                 .ForMember(t => t.Cantidad, opt => opt.Ignore());
                 cfg.CreateMap<ListaPrecio, ListaPrecioModel>();
                 cfg.CreateMap<ListaPrecioModel, ListaPrecio>();
                 cfg.CreateMap<Cliente, ClienteModel>()

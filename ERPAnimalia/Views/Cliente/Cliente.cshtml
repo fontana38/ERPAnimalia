@@ -15,9 +15,10 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
-        @*<script src= @Url.Content("/Scripts/jquery-3.1.1.min.js")></script>
-       
-            <script src=@Url.Content("/Scripts/jquery-3.1.1.js")></script>*@
+          
+
+        <script src="~/Scripts/moment.js"></script>
+                   
     <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
@@ -27,8 +28,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     
-   
-
 
         <script type="text/javascript">
             ids = new Array();
@@ -50,6 +49,7 @@
 
             function Edit(e) {
 
+                debugger;
                 var dateNext = e.data.record.FechaProximaCompra;
                 var dateBuy = e.data.record.FechaCompra;
 
@@ -100,8 +100,6 @@
             function Save() {
                 debugger;
                 var selections = gridProduct.getSelections();
-              
-
                 var cliente = {
                     IdCliente: $("#idCliente").val(),
                     Codigo: $("#codigo").val(),
@@ -209,6 +207,41 @@
                 $("#btnSearchGridProduct").on("click", SearchProduct);
             });
 
+            function CalculateDate()
+            {
+                debugger;
+                $('#fechaCompra')
+                 .datepicker({
+                     autoclose: true,    // It is false, by default
+                     format: 'dd/mm/yyyy'
+                 })
+
+                var tt = $('#fechaCompra').val();
+                
+                var date = new Date(tt);
+                var newdate = new Date(date);
+
+                var dd = newdate.getDate();
+                var mm = newdate.getMonth() + 1;
+                var y = newdate.getFullYear();
+                var dateNew = dd + '/' + mm + '/' + y;
+
+                var date = new Date(dateNew);
+                var newdate = new Date(date);
+                
+                var days = $("#numberDays").val();
+                newdate.setDate(newdate.getDate() + parseInt(days));
+                
+
+                var dd = newdate.getDate();
+                var mm = newdate.getMonth() + 1;
+                var y = newdate.getFullYear();
+
+                var someFormattedDate = dd + '/' + mm + '/' + y;
+                $("#fechaProximaCompra").val(someFormattedDate);
+
+                
+            }
         </script>
 
 </head>
