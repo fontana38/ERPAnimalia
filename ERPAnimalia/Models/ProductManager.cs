@@ -249,13 +249,12 @@ namespace ERPAnimalia.Models
 
                 if (!String.IsNullOrWhiteSpace(search.Codigo)) product = product.Where(u => u.Codigo.Contains(search.Codigo)).ToList();
                 if (!String.IsNullOrWhiteSpace(search.Descripcion1)) product = product.Where(u => u.Descripcion1.Contains(search.Descripcion1)).ToList();
-                if ((search.IdCategory != null)) product = product.Where(u => u.Category.IdCategory == search.IdCategory).ToList();
+                if ((search.IdCategory != 0)) product = product.Where(u => u.Category.IdCategory == search.IdCategory).ToList();
                 if ((search.Descripcion2 != null)) product = product.Where(u => u.Descripcion2 == search.Descripcion2).ToList();
 
                 //product = db.Product.Where(b => b.Codigo.Contains(codigo) || b.Name.Contains(name) || b.IdCategory ==category || b.IdSubCategory == subCategory).ToList();
 
                 var productModel = MapperObject.CreateProductList(product);
-
                 return productModel;
             }
 
@@ -264,6 +263,44 @@ namespace ERPAnimalia.Models
 
                 throw new Exception(e.Message.ToString());
             }
+        }
+
+        public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        {
+            db = Factory.Factory.CreateContextDataBase();
+            var productList = db.Product.ToList();
+
+          
+
+            var map = MapperObject.CreateProductList(productList);
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                map = map.Where(p => p.Codigo.Contains(searchString) || p.Descripcion1.Contains(searchString)).ToList();
+            }
+            total = productList.Count();
+            var productQueryable = map.AsQueryable();
+
+            if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
+            {
+
+                if (direction.Trim().ToLower() == "asc")
+                {
+                    productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
+                }
+                else
+                {
+                    productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
+                }
+            }
+
+            if (page.HasValue && limit.HasValue)
+            {
+                int start = (page.Value - 1) * limit.Value;
+                productQueryable = productQueryable.Skip(start).Take(limit.Value);
+            }
+
+            return productQueryable.ToList();
         }
 
         public void RemoveModelView(ModelStateDictionary modelState)

@@ -9,10 +9,14 @@ namespace ERPAnimalia.Models
     {
         public Guid IdCliente { get; set; }
         public string Mascota { get; set; }
+        public string FechaCompra1 { get; set; }
+        public string FechaCompra2 { get; set; }
         public DateTime FechaCompra { get; set; }
         public DateTime FechaProximaCompra { get; set; }
-        public Guid IdProducto { get; set; }
+        public Guid[] IdsProduct { get; set; }
+
         public string NombreProducto { get; set; }
-        public ICollection<ProductModels> Productos { get; set; }
+        public int CantidadDias { get; set; }
+        public List<ProductModels> Productos { get; set; }
     }
 }

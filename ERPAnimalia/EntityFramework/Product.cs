@@ -17,9 +17,9 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.Cliente = new HashSet<Cliente>();
             this.ProductDetail = new HashSet<ProductDetail>();
             this.ProductoLista = new HashSet<ProductoLista>();
+            this.IdClienteIdProducto = new HashSet<IdClienteIdProducto>();
         }
     
         public string Codigo { get; set; }
@@ -38,13 +38,13 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<decimal> Rentabilidad { get; set; }
     
         public virtual Category Category { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cliente> Cliente { get; set; }
         public virtual ListaPrecio ListaPrecio { get; set; }
         public virtual SubCategory SubCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductDetail> ProductDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductoLista> ProductoLista { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
     }
 }

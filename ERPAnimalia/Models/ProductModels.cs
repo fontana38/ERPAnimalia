@@ -71,6 +71,8 @@ namespace ERPAnimalia.Models
         public List<ListaPrecioModel> ListaPrecio { get; set; }
 
         public ListaPrecioModel ListaPrecioItem { get; set; }
+
+        public bool IsSelect { get; set; }
     }
 
 

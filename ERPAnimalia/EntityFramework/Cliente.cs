@@ -14,6 +14,12 @@ namespace ERPAnimalia.EntityFramework
     
     public partial class Cliente
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Cliente()
+        {
+            this.IdClienteIdProducto = new HashSet<IdClienteIdProducto>();
+        }
+    
         public System.Guid IdCliente { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
@@ -21,10 +27,10 @@ namespace ERPAnimalia.EntityFramework
         public string Apellido { get; set; }
         public string Mascota { get; set; }
         public Nullable<System.DateTime> FechaCompra { get; set; }
-        public Nullable<System.Guid> IdProducto { get; set; }
         public Nullable<System.DateTime> FechaProximaCompra { get; set; }
         public string Codigo { get; set; }
     
-        public virtual Product Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
     }
 }

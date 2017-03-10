@@ -129,23 +129,28 @@ namespace ERPAnimalia
             }
         }
 
-        public static List<ClienteModel> CreateClienteList(List<Cliente> cliente)
+        public static ClienteModel CreateClienteProductModel(Cliente cliente, List<Product> product)
         {
             try
             {
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
                 var list = Factory.Factory.Cliente();
-
-                foreach (var item in list)
+                var productItem = new ProductModels();  
+                var listaMap = mapper.Map<ClienteModel>(cliente);
+                if(product != null && product.Count > 0)
                 {
-                    var listaMap = mapper.Map<ClienteModel>(item);
+                    foreach (var item in product)
+                    {
+                        productItem = mapper.Map<ProductModels>(item);
+                    }
 
-                    list.Add(listaMap);
+                    listaMap.Productos.Add(productItem);
                 }
+                    
 
-                return list;
-
+                return listaMap;
             }
+
             catch (Exception e)
             {
 

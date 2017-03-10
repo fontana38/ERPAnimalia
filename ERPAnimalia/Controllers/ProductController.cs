@@ -150,7 +150,19 @@ namespace ERPAnimalia.Controllers
             product.Category= ViewData["Category"] as List<CategoryModel>;
             product.SubCategory= ViewData["SubCategory"] as List<SubCategoryModel>;
             var productList = ProductManagers.SearchProduct(product);
-            return View("Index",productList);
+
+            int pageSize = 25;
+
+            
+            IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(productList, pageSize + 1, 5, 25);
+            if(productModel.Count == 0)
+            {
+                RedirectToAction("Index");
+            }
+           
+                return View("Index", productModel);
+            
+            
         }
         // POST: Product/Delete/5
         [HttpPost]

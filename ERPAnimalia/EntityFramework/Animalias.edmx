@@ -89,7 +89,6 @@
           <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
           <Property Name="Mascota" Type="nvarchar" MaxLength="50" />
           <Property Name="FechaCompra" Type="datetime" />
-          <Property Name="IdProducto" Type="uniqueidentifier" />
           <Property Name="FechaProximaCompra" Type="datetime" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -100,6 +99,14 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="IdComprobante" Type="nchar" MaxLength="10" />
           <Property Name="Numero" Type="nvarchar" MaxLength="50" />
         </EntityType>-->
+        <EntityType Name="IdClienteIdProducto">
+          <Key>
+            <PropertyRef Name="IdClienteProducto" />
+          </Key>
+          <Property Name="IdClienteProducto" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdCliente" Type="uniqueidentifier" />
+          <Property Name="IdProducto" Type="uniqueidentifier" />
+        </EntityType>
         <EntityType Name="ListaPrecio">
           <Key>
             <PropertyRef Name="IdListaPrecio" />
@@ -178,18 +185,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Cliente_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Cliente">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -243,6 +238,30 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdClienteIdProducto_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="IdClienteIdProducto" Type="Self.IdClienteIdProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="IdClienteIdProducto">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdClienteIdProducto_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="IdClienteIdProducto" Type="Self.IdClienteIdProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="IdClienteIdProducto">
+              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -327,6 +346,7 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdClienteIdProducto" EntityType="Self.IdClienteIdProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ListaPrecio" EntityType="Self.ListaPrecio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetail" EntityType="Self.ProductDetail" Schema="dbo" store:Type="Tables" />
@@ -336,10 +356,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <AssociationSet Name="FK_Category_SubCategory" Association="Self.FK_Category_SubCategory">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Category" EntitySet="Category" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Product" Association="Self.FK_Cliente_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -356,6 +372,14 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdClienteIdProducto_Cliente" Association="Self.FK_IdClienteIdProducto_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdClienteIdProducto_Product" Association="Self.FK_IdClienteIdProducto_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
             <End Role="Category" EntitySet="Category" />
@@ -517,15 +541,10 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           </AssociationSet>
           <EntitySet Name="ProductDetail" EntityType="AnimaliaPetShopModel.ProductDetail" />
           <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
-          <EntitySet Name="Cliente" EntityType="AnimaliaPetShopModel.Cliente" />
           <EntitySet Name="Product" EntityType="AnimaliaPetShopModel.Product" />
           <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Cliente_Product" Association="AnimaliaPetShopModel.FK_Cliente_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cliente" EntitySet="Cliente" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_ListaPrecio" Association="AnimaliaPetShopModel.FK_Product_ListaPrecio">
             <End Role="ListaPrecio" EntitySet="ListaPrecio" />
@@ -542,6 +561,16 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <AssociationSet Name="FK_ProductoLista_Product" Association="AnimaliaPetShopModel.FK_ProductoLista_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductoLista" EntitySet="ProductoLista" />
+          </AssociationSet>
+          <EntitySet Name="IdClienteIdProducto" EntityType="AnimaliaPetShopModel.IdClienteIdProducto" />
+          <AssociationSet Name="FK_IdClienteIdProducto_Product" Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
+          </AssociationSet>
+          <EntitySet Name="Cliente" EntityType="AnimaliaPetShopModel.Cliente" />
+          <AssociationSet Name="FK_IdClienteIdProducto_Cliente" Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubCategory">
@@ -646,22 +675,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="Cliente">
-          <Key>
-            <PropertyRef Name="IdCliente" />
-          </Key>
-          <Property Name="IdCliente" Type="Guid" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Mascota" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FechaCompra" Type="DateTime" Precision="3" />
-          <Property Name="IdProducto" Type="Guid" />
-          <Property Name="FechaProximaCompra" Type="DateTime" Precision="3" />
-          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Cliente_Product" FromRole="Cliente" ToRole="Product" />
-        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -681,11 +694,11 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="RentabilidadPesos" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Rentabilidad" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Category" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Cliente_Product" FromRole="Product" ToRole="Cliente" />
           <NavigationProperty Name="ListaPrecio" Relationship="AnimaliaPetShopModel.FK_Product_ListaPrecio" FromRole="Product" ToRole="ListaPrecio" />
           <NavigationProperty Name="SubCategory" Relationship="AnimaliaPetShopModel.FK_Product_SubCategory" FromRole="Product" ToRole="SubCategory" />
           <NavigationProperty Name="ProductDetail" Relationship="AnimaliaPetShopModel.FK_ProductDetail_Product" FromRole="Product" ToRole="ProductDetail" />
           <NavigationProperty Name="ProductoLista" Relationship="AnimaliaPetShopModel.FK_ProductoLista_Product" FromRole="Product" ToRole="ProductoLista" />
+          <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" FromRole="Product" ToRole="IdClienteIdProducto" />
         </EntityType>
         <Association Name="FK_Product_Category">
           <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="0..1" />
@@ -696,18 +709,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="IdCategoria" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Cliente_Product">
-          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="Cliente">
-              <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -756,6 +757,55 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
             </Principal>
             <Dependent Role="ProductoLista">
               <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="IdClienteIdProducto">
+          <Key>
+            <PropertyRef Name="IdClienteProducto" />
+          </Key>
+          <Property Name="IdClienteProducto" Type="Guid" Nullable="false" />
+          <Property Name="IdCliente" Type="Guid" />
+          <Property Name="IdProducto" Type="Guid" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" FromRole="IdClienteIdProducto" ToRole="Product" />
+          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" FromRole="IdClienteIdProducto" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK_IdClienteIdProducto_Product">
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.IdClienteIdProducto" Role="IdClienteIdProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="IdClienteIdProducto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mascota" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCompra" Type="DateTime" Precision="3" />
+          <Property Name="FechaProximaCompra" Type="DateTime" Precision="3" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" FromRole="Cliente" ToRole="IdClienteIdProducto" />
+        </EntityType>
+        <Association Name="FK_IdClienteIdProducto_Cliente">
+          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.IdClienteIdProducto" Role="IdClienteIdProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="IdClienteIdProducto">
+              <PropertyRef Name="IdCliente" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -893,22 +943,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cliente">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Cliente">
-              <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="FechaProximaCompra" ColumnName="FechaProximaCompra" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
-                <ScalarProperty Name="Mascota" ColumnName="Mascota" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -926,6 +960,30 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
                 <ScalarProperty Name="Descripcion1" ColumnName="Descripcion1" />
                 <ScalarProperty Name="Marca" ColumnName="Marca" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdClienteIdProducto">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.IdClienteIdProducto">
+              <MappingFragment StoreEntitySet="IdClienteIdProducto">
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdClienteProducto" ColumnName="IdClienteProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="FechaProximaCompra" ColumnName="FechaProximaCompra" />
+                <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+                <ScalarProperty Name="Mascota" ColumnName="Mascota" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

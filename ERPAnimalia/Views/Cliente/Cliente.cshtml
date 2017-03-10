@@ -1,156 +1,331 @@
-﻿@using ERPAnimalia.Models;
-@model ICollection<ClienteModel>
-<link rel="stylesheet" type="text/css" href="http://www.prepbootstrap.com/Content/shieldui-lite/dist/css/light/all.min.css" />
-<script type="text/javascript" src="http://www.prepbootstrap.com/Content/shieldui-lite/dist/js/shieldui-lite-all.min.js"></script>
-<script type="text/javascript" src="http://www.prepbootstrap.com/Content/data/shortGridData.js"></script>
-<script src="~/Scripts/jquery-1.12.4.js"></script>
-<script src="~/Scripts/jquery-1.12.4.min.js"></script>
-
-<div class="container">
-    <div class="row clearfix">
-        <div class="col-md-12 column">
-            <table class="table table-bordered table-hover" id="tab_logic">
-                <thead>
-                    <tr>
-                        <th class="text-center">
-                            @Html.ActionLink("Código", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Nombre", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Apellido", "Index", new { sortOrder = "codigo", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Dirección", "Index", new { sortOrder = "Direccion", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Telefono", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Mascota", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Fecha Compra", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Fecha Próxima Compra", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                        <th class="text-center">
-                            @Html.ActionLink("Producto", "Index", new { sortOrder = "Telefono", CurrentSort = ViewBag.CurrentSort })
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-
-                        <tr>
-
-                            <th scope="row">
-                                @Html.HiddenFor(modelItem => item.IdCliente, new { id = "idCliente" })
-                                @Html.DisplayFor(modelItem => item.Codigo)
-                            </th>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Apellido)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Direccion)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Telefono)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Mascota)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FechaCompra)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FechaProximaCompra)
-                            </td>
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Productos)
-                            </td>
-                           
-                        </tr>
-                    }
-
-                </tbody>
-
-            </table>
-        </div>
-    </div>
-    <a id="add_row" class="btn btn-default pull-left">Add Row</a><a id='delete_row' class="pull-right btn btn-default">Delete Row</a>
-    <a id="save" class="btn btn-default pull-left">Guardar Cliente</a>
-</div>
-<script type="text/javascript">
-
-     $(document).ready(function () {
-         debugger;
-      var i=0;
-     $("#add_row").click(function(){
-         $('#addr' + i).html("<td><input  id='codigo" + i + "'" + "name='codigo' type='text' placeholder='codigo' class='form-control input-md' /> </td><td><input id='nombre" + i + "'" + "name='nombre' type='text' placeholder='Nombre' class='form-control input-md'></td><td><input id='apellido" + i + "'" + "name='Apellido" + i + "' type='text' placeholder='Apellido' class='form-control input-md'></td><td><input id='direccion" + i + "'"  + "type='text' placeholder='Direccion' class='form-control input-md' /> </td><td><input  id='telefono" + i + "'" + "name='Telefono'" + i + "' type='text' placeholder='Telefono' class='form-control input-md' /> </td><td><input  id='mascota" + i + "'" + "name='Mascota'" + i + "' type='text' placeholder='Mascota' class='form-control input-md' /> </td><td><input id='fechaCompra" + i + "'" + "name='FechaCompra'" + i + "' type='text' placeholder='Fecha compra' class='form-control input-md' /> </td><td><input id='fechaProximaCompra" + i + "'" + "name='FechaProximaCompra'" + i + "' type='text' placeholder='Fecha Proxima Compra' class='form-control input-md' /> </td><td><a  id='save' name='SaveCliente'" + i + "class='btn btn-default pull-left'>Agregar Producto </a>");
-
-      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-      i++;
-  });
-     $("#delete_row").click(function(){
-    	 if(i>1){
-		 $("#addr"+(i-1)).html('');
-		 i--;
-		 }
-     });
-
-     $("#save").click(function () {
-         debugger;
-         j = i - 1;
-         var codigo = $("#codigo" + j).val();
-         var tr = $(this).find('tr:first');
-         var nombre = $("#nombre" + j).val();
-         var apellido = $("#apellido" + j).val();
-         var direccion = $("#direccion" + j).val();
-         var telefono = $("#telefono" + j).val();
-         var mascota = $("#mascota" + j).val();
-         var fechaCompra = $("#fechaCompra" + j).val();
-         var fechaProximaCompra = $("#fechaProximaCompra" + j).val();
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>How to use jQuery Grid with ASP.NET MVC</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/gijgo.min.js"></script>
+    <link href="~/Content/css/gijgo.css" rel="stylesheet" />
+    <script src="~/Scripts/gijgo.js"></script>
+    <link href="~/Content/css/gijgo.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+    <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
+        @*<script src= @Url.Content("/Scripts/jquery-3.1.1.min.js")></script>
        
-         var isSuccess = -1;
+            <script src=@Url.Content("/Scripts/jquery-3.1.1.js")></script>*@
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
+   
 
-                 var ClienteModels =
-           {
+
+        <script type="text/javascript">
+            ids = new Array();
+            var grid;
+            var gridProduct;
+            function Add() {
+                $("#idCliene").val("");
+                $("#codigo").val("");
+                $("#fechaCompra").val("");
+                $("#fechaProximaCompra").val("");
+                $("#nombre").val("");
+                $("#apellido").val("");
+                $("#direccion").val("");
+                $("#telefono").val("");
+                $("#mascota").val("");
+                $("#numberDays").val("")
+                $("#clienteModal").modal("show");
+            }
+
+            function Edit(e) {
+
+                var dateNext = e.data.record.FechaProximaCompra;
+                var dateBuy = e.data.record.FechaCompra;
+
+                var dateString = dateNext.substr(6);
+                var currentTime = new Date(parseInt(dateString));
+                var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
+                var day = ("0" + currentTime.getDate()).slice(-2);
+                var year = currentTime.getFullYear();
+                var date = day + '-' + month + '-' + year;
+
+                var dateStringBuy = dateBuy.substr(6);
+                var currentTimeBuy = new Date(parseInt(dateStringBuy));
+                var monthbuy = ("0" + (currentTimeBuy.getMonth() + 1)).slice(-2);
+                var dayBuy = ("0" + currentTime.getDate()).slice(-2);
+                var yearBuy = currentTime.getFullYear();
+                var dateBuy = dayBuy + '-' + monthbuy + '-' + yearBuy;
+
+
+                $('#fechaProximaCompra')
+               .datepicker({
+                   autoclose: true,    // It is false, by default
+                   format: 'dd/mm/yyyy'
+               })
+
+                $('#fechaCompra')
+               .datepicker({
+                   autoclose: true,    // It is false, by default
+                   format: 'dd/mm/yyyy'
+               })
+
+                $("#idCliente").val(e.data.record.IdCliente);
+                $("#codigo").val(e.data.record.Codigo);
+                $("#fechaProximaCompra").val(date);
+                $("#fechaCompra").val(dateBuy);
+                $("#nombre").val(e.data.record.Nombre);
+                $("#apellido").val(e.data.record.Apellido);
+                $("#direccion").val(e.data.record.Direccion);
+                $("#telefono").val(e.data.record.Telefono);
+                $("#IdProducto").val(e.data.record.IdProducto);
+                $("#mascota").val(e.data.record.Mascota);
+                $("#numberDays").val(e.data.record.numberDays)
+                $("#clienteModal").modal("show");
+            }
+
+
+
+
+            function Save() {
+                debugger;
+                var selections = gridProduct.getSelections();
               
-               "Codigo": codigo,
-               "nombre":nombre,
-               "Apellido": apellido,
-               "Direccion": direccion,
-               "telefono": telefono,
-               "mascota": mascota,
-               "fechaCompra": fechaCompra,
-               "fechaProximaCompra":fechaProximaCompra
-           };
-         $.ajax({
-          
-             url: '/Cliente/GuardarCliente',
-             data: JSON.stringify(ClienteModels),
-             type: 'POST',
-             contentType: 'application/json; charset=utf-8',
-             success: function (data) {
-                 tr.find('.edit-mode, .display-mode').toggle();
-                 alert('Record updated Successfully!!');
-             }
-         });
-     });
 
-     
-   
-   
+                var cliente = {
+                    IdCliente: $("#idCliente").val(),
+                    Codigo: $("#codigo").val(),
+                    FechaCompra1: $("#fechaCompra").val(),
+                    FechaCompra2: $("#fechaProximaCompra").val(),
+                    Nombre: $("#nombre").val(),
+                    Apellido: $("#apellido").val(),
+                    Direccion: $("#direccion").val(),
+                    Telefono: $("#telefono").val(),
+                    Mascota: $("#mascota").val(),
+                    IdsProduct: selections,
+                    numberDays: $("#numberDays").val()
 
-  });
-  </script>
+                };
+
+
+                $.ajax({ url: "Save", type: "POST", data: { cliente: cliente } })
+                    .done(function () {
+                        grid.reload();
+                        $("#clienteModal").modal("hide");
+                    })
+                    .fail(function () {
+                        alert("Unable to save.");
+                        $("#clienteModal").modal("hide");
+                    });
+            }
+
+
+            function Remove(e) {
+
+                $.ajax({ url: "Remove", type: "POST", data: { idCliente: e.data.record.IdCliente } })
+                    .done(function () {
+                        grid.reload();
+                    })
+                    .fail(function () {
+                        alert("Unable to remove.");
+                    });
+            }
+            function Search() {
+
+                grid.reload({ searchString: $("#search").val() });
+            }
+
+            function SearchProduct() {
+
+                gridProduct.reload({ searchString: $("#search").val() });
+            }
+
+            $(document).ready(function () {
+
+                $('#fechaCompra')
+                .datepicker({
+                    autoclose: true,    // It is false, by default
+                    format: 'dd/mm/yyyy'
+                })
+
+                $('#fechaProximaCompra')
+                .datepicker({
+                    autoclose: true,    // It is false, by default
+                    format: 'dd/mm/yyyy'
+                })
+
+             
+                gridProduct = $("#gridProduct").grid({
+                    dataKey: "Id",
+                    columns: [
+                        { field: "IdProducto", hidden: true },
+                        { field: "Codigo", title: "Código", sortable: true },
+                        { field: "Marca", title: "Marca", sortable: true, },
+                        { field: "Descripcion1", title: "Descripcion 1", sortable: true },
+                        { field: "Descripcion2", title: "Descripcion 2", sortable: true }
+                    ],
+                    selectionMethod: 'checkbox',
+                    selectionType: 'multiple',
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+               
+                $('#btnShowSelection').on('click', function () {
+                    debugger;
+                    var selections = gridProduct.getSelections();
+                    $.each(selections, function () {
+                        alert(this);
+                    });
+                });
+                grid = $("#grid").grid({
+                    dataKey: "Id",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                        { field: "Codigo", title: "Código", sortable: true },
+                        { field: "Nombre", sortable: true },
+                        { field: "Apellido", sortable: true },
+                        { field: "Direccion", title: "Dirección", sortable: true },
+                        { field: "Telefono", sortable: true },
+                        { field: "Mascota", sortable: true },
+                        { field: "FechaCompra", title: "Fecha Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true },
+                        { field: "FechaProximaCompra", title: "Fecha Proxima Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true },
+                        { title: "", field: "Edit", width: 34, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
+                        { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
+                    ],
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+                $("#btnAddCliente").on("click", Add);
+                $("#btnSave").on("click", Save);
+                $("#btnSearch").on("click", Search);
+                $("#btnSearchGridProduct").on("click", SearchProduct);
+            });
+
+        </script>
+
+</head>
+<body>
+
+    <div class="container fill">
+        <h2>Clientes</h2>
+        <br />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input type="text" id="search" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button type="button" id="btnSearch" class="btn btn-default">Go!</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <button type="button" id="btnAddCliente" class="btn btn-default pull-right">Agregar Cliente</button>
+            </div>
+        </div>
+        <br />
+        <table id="grid" data-source="@Url.Action("GetCliente")"></table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Player</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Nav tabs -->
+                    <div role="tabpanel">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#clienteTab" aria-controls="clienteTab" role="tab" data-toggle="tab">Cliente</a>
+
+                            </li>
+                            <li role="presentation">
+                                <a href="#productoTab" aria-controls="productoTab" role="tab" data-toggle="tab">Producto</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="clienteTab">
+                                <form>
+                                    <input type="hidden" id="idCliente" />
+                                    <div class="form-group">
+                                        <label for="name">Código</label>
+                                        <input type="text" class="form-control" id="codigo" placeholder="Ingrese el Código">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="apellido">Apellido</label>
+                                        <input type="text" class="form-control" id="apellido" placeholder="Ingrese el Apellido">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección</label>
+                                        <input type="text" class="form-control" id="direccion" placeholder="Ingrese la dirección">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Mascota</label>
+                                        <input type="text" class="form-control" id="mascota" placeholder="Ingrese la Mascota">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fechaCompra">Fecha de Compra</label></br>
+                                        <input size="50" type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaCompra" placeholder="Ingrese Fecha de Compra">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numberDays">Días Próxima Compra</label></br>
+                                        <input type="number" min="0" onchange="CalculateDate()" class="form-control" id="numberDays" placeholder="Ingrese cantidad días">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaProximaCompra">Fecha Próxima Compra</label></br>
+                                        <input type="text" size="50" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaProximaCompra" placeholder="Ingrese Fecha Próxima Compra">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="telefono" placeholder="Ingrese Teléfono">
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="productoTab">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <input type="text" id="search" class="form-control" placeholder="Search for...">
+                                            <span class="input-group-btn">
+                                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                                            </span>
+                                        </div>
+                                    </div>  
+                                </div>
+                                <button id="btnShowSelection">Show Selections</button>
+                                <table id="gridProduct"  data-source="@Url.Action("GetProduct")"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+                </div>
+            </div>
+       
+                
+    
+</body>
+</html>

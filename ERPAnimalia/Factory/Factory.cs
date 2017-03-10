@@ -25,6 +25,11 @@ namespace ERPAnimalia.Factory
             return new PersonaModels();
         }
 
+        public static List<ClienteModel>  ListClienteModels()
+        {
+            return new List<ClienteModel>();
+        }
+
         public static ListaPrecioModel NewListaPrecioModel()
         {
             return new ListaPrecioModel();
@@ -60,6 +65,12 @@ namespace ERPAnimalia.Factory
             return new Product();
         }
 
+        public static List<Product>  CreateListProductdb()
+        {
+
+            return new List<Product>();
+        }
+
         public static TransferToFreeProductManager CreateTransferToFreeProductManager()
         {
 
@@ -76,6 +87,12 @@ namespace ERPAnimalia.Factory
         public static ProductManager CreateProducManager()
         {
             var productManager = new ProductManager();
+            return productManager;
+        }
+
+        public static ListProductManager CreateListProducManager()
+        {
+            var productManager = new ListProductManager();
             return productManager;
         }
 
