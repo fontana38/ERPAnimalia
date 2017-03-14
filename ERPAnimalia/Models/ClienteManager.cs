@@ -14,8 +14,7 @@ namespace ERPAnimalia.Models
 
         public ClienteManager()
         {
-            db = Factory.Factory.CreateContextDataBase();
-          
+            db = Factory.Factory.CreateContextDataBase();          
         }
 
         public void GuardarCliente(ClienteModel clienteModel)
@@ -50,9 +49,8 @@ namespace ERPAnimalia.Models
                                     var IdClienteIdProducto = new IdClienteIdProducto();
                                     IdClienteIdProducto.IdClienteProducto = Guid.NewGuid();
                                     IdClienteIdProducto.IdCliente = clienteDb.IdCliente;
-                                    IdClienteIdProducto.IdProducto = new Guid("1B04AE93-44F5-4511-869E-27A36C809D59");
+                                    IdClienteIdProducto.IdProducto = item;
                                     db.IdClienteIdProducto.Add(IdClienteIdProducto);
-
 
                                 }
                             }
@@ -75,6 +73,7 @@ namespace ERPAnimalia.Models
                 }
             }
         }
+
         public List<ClienteModel> ObtenerCliente(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             
@@ -82,8 +81,6 @@ namespace ERPAnimalia.Models
              
             var productList = Factory.Factory.CreateListProductdb();
             var listClient = Factory.Factory.ListClienteModels();
-
-
 
             //Edit Product Selected
             foreach (var item in clienteList)
@@ -104,6 +101,7 @@ namespace ERPAnimalia.Models
             {
                 listClient = listClient.Where(p => p.Nombre.Contains(searchString) || p.Codigo.Contains(searchString)).ToList();
             }
+
             total = clienteList.Count();
             var clienteQueryable = listClient.AsQueryable();
 

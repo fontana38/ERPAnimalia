@@ -1,5 +1,5 @@
 ﻿
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -15,6 +15,9 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
           
 
         <script src="~/Scripts/moment.js"></script>
@@ -91,6 +94,11 @@
                 $("#IdProducto").val(e.data.record.IdProducto);
                 $("#mascota").val(e.data.record.Mascota);
                 $("#numberDays").val(e.data.record.numberDays)
+                debugger;
+                $(e.data.record.Productos).each(function (index, value) {
+                    ids += $(value).attr('IdProducto');
+                });
+                //gridProduct.setSelected(.val());
                 $("#clienteModal").modal("show");
             }
 
@@ -152,19 +160,37 @@
 
                 $('#fechaCompra')
                 .datepicker({
-                    autoclose: true,    // It is false, by default
-                    format: 'dd/mm/yyyy'
-                })
+                    dateFormat: "dd-mm-yy",
+                    firstDay: 1,
+                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+                    monthNames:
+                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthNamesShort:
+                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+                });
 
                 $('#fechaProximaCompra')
                 .datepicker({
-                    autoclose: true,    // It is false, by default
-                    format: 'dd/mm/yyyy'
-                })
+                    dateFormat: "dd-mm-yy",
+                    firstDay: 1,
+                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+                    monthNames:
+                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthNamesShort:
+                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+                });
 
-             
+               
+              
                 gridProduct = $("#gridProduct").grid({
-                    dataKey: "Id",
+                    dataKey: "IdProducto",
+                    uiLibrary: "bootstrap",
                     columns: [
                         { field: "IdProducto", hidden: true },
                         { field: "Codigo", title: "Código", sortable: true },
@@ -176,14 +202,7 @@
                     selectionType: 'multiple',
                     pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
                 });
-               
-                $('#btnShowSelection').on('click', function () {
-                    debugger;
-                    var selections = gridProduct.getSelections();
-                    $.each(selections, function () {
-                        alert(this);
-                    });
-                });
+              
                 grid = $("#grid").grid({
                     dataKey: "Id",
                     uiLibrary: "bootstrap",
@@ -330,34 +349,37 @@
                                         <label for="telefono">Teléfono</label>
                                         <input type="text" class="form-control" id="telefono" placeholder="Ingrese Teléfono">
                                     </div>
-                                    
+
                                 </form>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="productoTab">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <input type="text" id="search" class="form-control" placeholder="Search for...">
                                             <span class="input-group-btn">
                                                 <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
                                             </span>
                                         </div>
-                                    </div>  
+                                    </div>
                                 </div>
-                                <button id="btnShowSelection">Show Selections</button>
-                                <table id="gridProduct"  data-source="@Url.Action("GetProduct")"></table>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" id="btnSave" class="btn btn-primary">Save</button>
-                </div>
-            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
-       
+        </div>
+    </div>  
                 
     
 </body>
