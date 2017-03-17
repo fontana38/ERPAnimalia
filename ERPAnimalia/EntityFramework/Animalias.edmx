@@ -91,6 +91,7 @@
           <Property Name="FechaCompra" Type="datetime" />
           <Property Name="FechaProximaCompra" Type="datetime" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dias" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -242,7 +243,9 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IdClienteIdProducto_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="IdClienteIdProducto" Type="Self.IdClienteIdProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
@@ -795,10 +798,13 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="FechaCompra" Type="DateTime" Precision="3" />
           <Property Name="FechaProximaCompra" Type="DateTime" Precision="3" />
           <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dias" Type="Int32" />
           <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" FromRole="Cliente" ToRole="IdClienteIdProducto" />
         </EntityType>
         <Association Name="FK_IdClienteIdProducto_Cliente">
-          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="AnimaliaPetShopModel.IdClienteIdProducto" Role="IdClienteIdProducto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
@@ -975,6 +981,7 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Dias" ColumnName="Dias" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="FechaProximaCompra" ColumnName="FechaProximaCompra" />
                 <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />

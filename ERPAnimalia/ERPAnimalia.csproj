@@ -255,6 +255,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="EntityFramework\Animalias1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\AspNetRoles.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
@@ -412,6 +417,7 @@
     <Content Include="EntityFramework\Animalias.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Animalias.edmx</DependentUpon>
+      <LastGenOutput>Animalias1.cs</LastGenOutput>
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

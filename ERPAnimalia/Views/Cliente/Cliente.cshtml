@@ -18,19 +18,21 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
-          
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js"></script>
+    <script src="http://stevenlevithan.com/assets/misc/date.format.js"></script>
+
 
         <script src="~/Scripts/moment.js"></script>
-                   
-    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>
-    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    
+
+        <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap-datepicker.js"></script>
+        <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
 
         <script type="text/javascript">
             ids = new Array();
@@ -46,7 +48,7 @@
                 $("#direccion").val("");
                 $("#telefono").val("");
                 $("#mascota").val("");
-                $("#numberDays").val("")
+                $("#dias").val("")
                 $("#clienteModal").modal("show");
             }
 
@@ -87,18 +89,28 @@
                 $("#codigo").val(e.data.record.Codigo);
                 $("#fechaProximaCompra").val(date);
                 $("#fechaCompra").val(dateBuy);
+
                 $("#nombre").val(e.data.record.Nombre);
                 $("#apellido").val(e.data.record.Apellido);
                 $("#direccion").val(e.data.record.Direccion);
                 $("#telefono").val(e.data.record.Telefono);
                 $("#IdProducto").val(e.data.record.IdProducto);
                 $("#mascota").val(e.data.record.Mascota);
-                $("#numberDays").val(e.data.record.numberDays)
+                $("#dias").val(e.data.record.dias)
                 debugger;
-                $(e.data.record.Productos).each(function (index, value) {
-                    ids += $(value).attr('IdProducto');
+                $(e.data.record.Productos).each(function (index, element) {
+
+                    ids[index] = $(element).attr('IdProducto');
+
                 });
-                //gridProduct.setSelected(.val());
+
+                $(ids).each(function (index, element) {
+
+                    gridProduct.setSelected(element);
+
+                });
+
+
                 $("#clienteModal").modal("show");
             }
 
@@ -109,7 +121,7 @@
                 debugger;
                 var selections = gridProduct.getSelections();
                 var cliente = {
-                    IdCliente: $("#idCliente").val(),
+
                     Codigo: $("#codigo").val(),
                     FechaCompra1: $("#fechaCompra").val(),
                     FechaCompra2: $("#fechaProximaCompra").val(),
@@ -119,7 +131,7 @@
                     Telefono: $("#telefono").val(),
                     Mascota: $("#mascota").val(),
                     IdsProduct: selections,
-                    numberDays: $("#numberDays").val()
+                    dias: $("#dias").val()
 
                 };
 
@@ -186,8 +198,8 @@
                         "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
                 });
 
-               
-              
+
+
                 gridProduct = $("#gridProduct").grid({
                     dataKey: "IdProducto",
                     uiLibrary: "bootstrap",
@@ -202,7 +214,7 @@
                     selectionType: 'multiple',
                     pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
                 });
-              
+
                 grid = $("#grid").grid({
                     dataKey: "Id",
                     uiLibrary: "bootstrap",
@@ -226,8 +238,7 @@
                 $("#btnSearchGridProduct").on("click", SearchProduct);
             });
 
-            function CalculateDate()
-            {
+            function CalculateDate() {
                 debugger;
                 $('#fechaCompra')
                  .datepicker({
@@ -236,7 +247,7 @@
                  })
 
                 var tt = $('#fechaCompra').val();
-                
+
                 var date = new Date(tt);
                 var newdate = new Date(date);
 
@@ -247,10 +258,10 @@
 
                 var date = new Date(dateNew);
                 var newdate = new Date(date);
-                
-                var days = $("#numberDays").val();
+
+                var days = $("#dias").val();
                 newdate.setDate(newdate.getDate() + parseInt(days));
-                
+
 
                 var dd = newdate.getDate();
                 var mm = newdate.getMonth() + 1;
@@ -259,7 +270,7 @@
                 var someFormattedDate = dd + '/' + mm + '/' + y;
                 $("#fechaProximaCompra").val(someFormattedDate);
 
-                
+
             }
         </script>
 
@@ -337,8 +348,8 @@
                                         <input size="50" type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaCompra" placeholder="Ingrese Fecha de Compra">
                                     </div>
                                     <div class="form-group">
-                                        <label for="numberDays">Días Próxima Compra</label></br>
-                                        <input type="number" min="0" onchange="CalculateDate()" class="form-control" id="numberDays" placeholder="Ingrese cantidad días">
+                                        <label for="dias">Días Próxima Compra</label></br>
+                                        <input type="number" min="0" onchange="CalculateDate()" class="form-control" id="dias" placeholder="Ingrese cantidad días">
                                     </div>
                                     <div class="form-group">
                                         <label for="fechaProximaCompra">Fecha Próxima Compra</label></br>
