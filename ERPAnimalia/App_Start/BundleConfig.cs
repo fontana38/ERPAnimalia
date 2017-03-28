@@ -20,7 +20,7 @@ namespace ERPAnimalia
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap3.3.7.min.js",
                       "~/Scripts/respond.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

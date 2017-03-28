@@ -92,6 +92,7 @@
           <Property Name="FechaProximaCompra" Type="datetime" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="50" />
           <Property Name="Dias" Type="int" />
+          <Property Name="mail" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
@@ -800,6 +801,7 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Dias" Type="Int32" />
           <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" FromRole="Cliente" ToRole="IdClienteIdProducto" />
+          <Property Name="mail" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <Association Name="FK_IdClienteIdProducto_Cliente">
           <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1">
@@ -981,6 +983,7 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="mail" ColumnName="mail" />
                 <ScalarProperty Name="Dias" ColumnName="Dias" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="FechaProximaCompra" ColumnName="FechaProximaCompra" />

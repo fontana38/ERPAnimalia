@@ -10,8 +10,7 @@
     <script src="~/Scripts/gijgo.js"></script>
     <link href="~/Content/css/gijgo.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.js"></script>*@
+ 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
@@ -23,6 +22,7 @@
 
 
         <script src="~/Scripts/moment.js"></script>
+        <script src="~/Scripts/client.js"></script>
 
         <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
         <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
@@ -38,19 +38,78 @@
             ids = new Array();
             var grid;
             var gridProduct;
-            function Add() {
-                $("#idCliene").val("");
-                $("#codigo").val("");
-                $("#fechaCompra").val("");
-                $("#fechaProximaCompra").val("");
-                $("#nombre").val("");
-                $("#apellido").val("");
-                $("#direccion").val("");
-                $("#telefono").val("");
-                $("#mascota").val("");
-                $("#dias").val("")
-                $("#clienteModal").modal("show");
-            }
+           
+            $(document).ready(function () {
+                debugger;
+                validationimput();
+
+                $('#fechaCompra')
+                .datepicker({
+                    dateFormat: "dd-mm-yy",
+                    firstDay: 1,
+                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+                    monthNames:
+                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthNamesShort:
+                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+                });
+
+                $('#fechaProximaCompra')
+                .datepicker({
+                    dateFormat: "dd-mm-yy",
+                    firstDay: 1,
+                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+                    monthNames:
+                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthNamesShort:
+                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+                });
+
+                gridProduct = $("#gridProduct").grid({
+                    dataKey: "IdProducto",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                        { field: "IdProducto", hidden: true },
+                        { field: "Codigo", title: "Código", sortable: true, width: 80 },
+                        { field: "Marca", title: "Marca", sortable: true, width: 200 },
+                        { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 250},
+                        { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 250 }
+                    ],
+                    selectionMethod: 'checkbox',
+                    selectionType: 'multiple',
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+
+                grid = $("#grid").grid({
+                    dataKey: "Id",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                        { field: "Codigo", title: "Código", sortable: true , width:80},
+                        { field: "Nombre", sortable: true,width: 200  },
+                        { field: "Apellido", sortable: true, width: 200 },
+                        { field: "Direccion", title: "Dirección", sortable: true, width: 200 },
+                        { field: "Telefono", sortable: true, width: 200 },
+                         { field: "Mail", sortable: true, width: 200 },
+                        { field: "Mascota", sortable: true, width: 200 },
+                        { field: "FechaCompra", title: "Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true, width: 150 },
+                        { field: "FechaProximaCompra", title: "Proxima Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true, width: 150 },
+                        { title: "", field: "Edit", width: 34, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
+                        { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
+                    ],
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+            
+                $("#btnAddCliente").on("click", Add);
+                $("#btnSave").on("click", Save);
+                $("#btnSearch").on("click", Search);
+                $("#btnSearchGridProduct").on("click", SearchProduct);
+            });
 
             function Edit(e) {
 
@@ -94,6 +153,7 @@
                 $("#apellido").val(e.data.record.Apellido);
                 $("#direccion").val(e.data.record.Direccion);
                 $("#telefono").val(e.data.record.Telefono);
+                $("#mail").val(e.data.record.Telefono);
                 $("#IdProducto").val(e.data.record.IdProducto);
                 $("#mascota").val(e.data.record.Mascota);
                 $("#dias").val(e.data.record.dias)
@@ -113,12 +173,39 @@
 
                 $("#clienteModal").modal("show");
             }
+          
 
+            function Search() {
 
+                grid.reload({ searchString: $("#search").val() });
+            }
 
+            function SearchProduct() {
+
+                gridProduct.reload({ searchString: $("#search").val() });
+            }
+
+            function Add() {
+                $("#idCliene").val("");
+                $("#codigo").val("");
+                $("#fechaCompra").val("");
+                $("#fechaProximaCompra").val("");
+                $("#nombre").val("");
+                $("#apellido").val("");
+                $("#direccion").val("");
+                $("#telefono").val("");
+                $("#mail").val("");
+                $("#mascota").val("");
+                $("#dias").val("")
+                $("#clienteModal").modal("show");
+            }
+
+   
 
             function Save() {
                 debugger;
+                SaveValidation();
+
                 var selections = gridProduct.getSelections();
                 var cliente = {
 
@@ -129,6 +216,7 @@
                     Apellido: $("#apellido").val(),
                     Direccion: $("#direccion").val(),
                     Telefono: $("#telefono").val(),
+                    Mail: $("#mail").val(),
                     Mascota: $("#mascota").val(),
                     IdsProduct: selections,
                     dias: $("#dias").val()
@@ -158,120 +246,6 @@
                         alert("Unable to remove.");
                     });
             }
-            function Search() {
-
-                grid.reload({ searchString: $("#search").val() });
-            }
-
-            function SearchProduct() {
-
-                gridProduct.reload({ searchString: $("#search").val() });
-            }
-
-            $(document).ready(function () {
-
-                $('#fechaCompra')
-                .datepicker({
-                    dateFormat: "dd-mm-yy",
-                    firstDay: 1,
-                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-                    monthNames:
-                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-                    monthNamesShort:
-                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
-                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-                });
-
-                $('#fechaProximaCompra')
-                .datepicker({
-                    dateFormat: "dd-mm-yy",
-                    firstDay: 1,
-                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
-                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-                    monthNames:
-                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-                    monthNamesShort:
-                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
-                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-                });
-
-
-
-                gridProduct = $("#gridProduct").grid({
-                    dataKey: "IdProducto",
-                    uiLibrary: "bootstrap",
-                    columns: [
-                        { field: "IdProducto", hidden: true },
-                        { field: "Codigo", title: "Código", sortable: true },
-                        { field: "Marca", title: "Marca", sortable: true, },
-                        { field: "Descripcion1", title: "Descripcion 1", sortable: true },
-                        { field: "Descripcion2", title: "Descripcion 2", sortable: true }
-                    ],
-                    selectionMethod: 'checkbox',
-                    selectionType: 'multiple',
-                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
-                });
-
-                grid = $("#grid").grid({
-                    dataKey: "Id",
-                    uiLibrary: "bootstrap",
-                    columns: [
-                        { field: "Codigo", title: "Código", sortable: true },
-                        { field: "Nombre", sortable: true },
-                        { field: "Apellido", sortable: true },
-                        { field: "Direccion", title: "Dirección", sortable: true },
-                        { field: "Telefono", sortable: true },
-                        { field: "Mascota", sortable: true },
-                        { field: "FechaCompra", title: "Fecha Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true },
-                        { field: "FechaProximaCompra", title: "Fecha Proxima Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true },
-                        { title: "", field: "Edit", width: 34, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
-                        { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
-                    ],
-                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
-                });
-                $("#btnAddCliente").on("click", Add);
-                $("#btnSave").on("click", Save);
-                $("#btnSearch").on("click", Search);
-                $("#btnSearchGridProduct").on("click", SearchProduct);
-            });
-
-            function CalculateDate() {
-                debugger;
-                $('#fechaCompra')
-                 .datepicker({
-                     autoclose: true,    // It is false, by default
-                     format: 'dd/mm/yyyy'
-                 })
-
-                var tt = $('#fechaCompra').val();
-
-                var date = new Date(tt);
-                var newdate = new Date(date);
-
-                var dd = newdate.getDate();
-                var mm = newdate.getMonth() + 1;
-                var y = newdate.getFullYear();
-                var dateNew = dd + '/' + mm + '/' + y;
-
-                var date = new Date(dateNew);
-                var newdate = new Date(date);
-
-                var days = $("#dias").val();
-                newdate.setDate(newdate.getDate() + parseInt(days));
-
-
-                var dd = newdate.getDate();
-                var mm = newdate.getMonth() + 1;
-                var y = newdate.getFullYear();
-
-                var someFormattedDate = dd + '/' + mm + '/' + y;
-                $("#fechaProximaCompra").val(someFormattedDate);
-
-
-            }
         </script>
 
 </head>
@@ -294,104 +268,118 @@
             </div>
         </div>
         <br />
+        
         <table id="grid" data-source="@Url.Action("GetCliente")"></table>
     </div>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Player</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Nav tabs -->
+                        <div role="tabpanel">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#clienteTab" aria-controls="clienteTab" role="tab" data-toggle="tab">Cliente</a>
 
-    <!-- Modal -->
-    <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Player</h4>
-                </div>
-                <div class="modal-body">
-                    <!-- Nav tabs -->
-                    <div role="tabpanel">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#clienteTab" aria-controls="clienteTab" role="tab" data-toggle="tab">Cliente</a>
+                                </li>
+                                <li role="presentation">
+                                    <a href="#productoTab" aria-controls="productoTab" role="tab" data-toggle="tab">Producto</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="clienteTab">
+                                    <form id="loginForm">
+                                        <input type="hidden" id="idCliente" />
+                                        <div class="form-group">
+                                            <label for="name">Código</label>
+                                            <input type="text" class="form-control" id="codigo" placeholder="Ingrese el Código">
+                                            <span class="error">Debe ingresar un código</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Nombre</label>
+                                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                                            <span class="error">Debe ingresar un nombre</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apellido">Apellido</label>
+                                            <input type="text" class="form-control" id="apellido" placeholder="Ingrese el Apellido">
+                                            <span class="error">Debe ingresar un apellido</span>
+                                        </div>
 
-                            </li>
-                            <li role="presentation">
-                                <a href="#productoTab" aria-controls="productoTab" role="tab" data-toggle="tab">Producto</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="clienteTab">
-                                <form>
-                                    <input type="hidden" id="idCliente" />
-                                    <div class="form-group">
-                                        <label for="name">Código</label>
-                                        <input type="text" class="form-control" id="codigo" placeholder="Ingrese el Código">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="name">Nombre</label>
-                                        <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="apellido">Apellido</label>
-                                        <input type="text" class="form-control" id="apellido" placeholder="Ingrese el Apellido">
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="direccion">Dirección</label>
+                                            <input type="text" class="form-control" id="direccion" placeholder="Ingrese la dirección">
+                                            <span class="error">Debe ingresar una dirección</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="direccion">Mail</label>
+                                            <input type="text" class="form-control" id="mail" placeholder="Ingrese mail">
+                                            <span class="error">Debe ingresar una dirección</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="direccion">Mascota</label>
+                                            <input type="text" class="form-control" id="mascota" placeholder="Ingrese la Mascota">
+                                            <span class="error">Debe ingresar una mascota</span>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="direccion">Dirección</label>
-                                        <input type="text" class="form-control" id="direccion" placeholder="Ingrese la dirección">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="direccion">Mascota</label>
-                                        <input type="text" class="form-control" id="mascota" placeholder="Ingrese la Mascota">
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="fechaCompra">Fecha de Compra</label></br>
+                                            <input size="50" type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaCompra" placeholder="Ingrese Fecha de Compra">
+                                            <span class="error">Debe ingresar una fecha</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dias">Días Próxima Compra</label></br>
+                                            <input type="number" min="0" onchange="CalculateDate()" class="form-control" id="dias" placeholder="Ingrese cantidad días">
+                                            <span class="error">Debe ingresar un numero</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="fechaProximaCompra">Fecha Próxima Compra</label></br>
+                                            <input type="text" size="50" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaProximaCompra" placeholder="Ingrese Fecha Próxima Compra">
+                                           
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="fechaCompra">Fecha de Compra</label></br>
-                                        <input size="50" type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaCompra" placeholder="Ingrese Fecha de Compra">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="dias">Días Próxima Compra</label></br>
-                                        <input type="number" min="0" onchange="CalculateDate()" class="form-control" id="dias" placeholder="Ingrese cantidad días">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="fechaProximaCompra">Fecha Próxima Compra</label></br>
-                                        <input type="text" size="50" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaProximaCompra" placeholder="Ingrese Fecha Próxima Compra">
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="telefono">Teléfono</label>
+                                            <input type="text" class="form-control" id="telefono" placeholder="Ingrese Teléfono">
+                                            <span class="error">Debe ingresar un teléfono</span>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label for="telefono">Teléfono</label>
-                                        <input type="text" class="form-control" id="telefono" placeholder="Ingrese Teléfono">
-                                    </div>
-
-                                </form>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="productoTab">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="input-group">
-                                            <input type="text" id="search" class="form-control" placeholder="Search for...">
-                                            <span class="input-group-btn">
-                                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
-                                            </span>
+                                    </form>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="productoTab">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <input type="text" id="search" class="form-control" placeholder="Search for...">
+                                                <span class="input-group-btn">
+                                                    <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
-                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
+                                        </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>  
-                
     
 </body>
 </html>

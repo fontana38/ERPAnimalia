@@ -30,6 +30,7 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<System.DateTime> FechaProximaCompra { get; set; }
         public string Codigo { get; set; }
         public Nullable<int> Dias { get; set; }
+        public Nullable<decimal> mail { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }

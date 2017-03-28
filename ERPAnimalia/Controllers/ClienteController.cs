@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ERPAnimalia.Models;
-using PagedList;
-
-
+﻿
 namespace ERPAnimalia.Controllers
 {
+    using System;
+    using System.Web.Mvc;
+    using ERPAnimalia.Models;
+
+
     [RoutePrefix("Cliente")]
     public class ClienteController : Controller
     {

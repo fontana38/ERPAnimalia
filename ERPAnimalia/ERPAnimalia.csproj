@@ -308,14 +308,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\ICabeceraComprobante.cs" />
     <Compile Include="Interfaces\IListProduct.cs" />
     <Compile Include="Mapper\MapperObject.cs" />
     <Compile Include="Mapper\AutoMapperConfig.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CabeceraComprobanteModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\ClienteManager.cs" />
     <Compile Include="Models\ClienteModel.cs" />
-    <Compile Include="Models\IClinteManager.cs" />
+    <Compile Include="Interfaces\IClinteManager.cs" />
     <Compile Include="Models\ListProductManager.cs" />
     <Compile Include="Models\PersonaModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -351,6 +353,7 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Scripts\bootstrap3.3.7.min.js" />
     <Content Include="Content\css\gijgo.css" />
     <Content Include="Content\css\gijgo.min.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
@@ -444,6 +447,7 @@
     <Content Include="EntityFramework\Animalias.edmx.diagram">
       <DependentUpon>Animalias.edmx</DependentUpon>
     </Content>
+    <Content Include="Scripts\client.js" />
     <Content Include="Scripts\datatables.extensions\AutoFill\js\dataTables.autoFill.js" />
     <Content Include="Scripts\datatables.extensions\AutoFill\js\dataTables.autoFill.min.js" />
     <Content Include="Scripts\datatables.extensions\AutoFill\Readme.txt" />
@@ -502,6 +506,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery.min.js.3.1.1.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.datatable.min.js" />
     <Content Include="Scripts\jquery.dataTables.js" />

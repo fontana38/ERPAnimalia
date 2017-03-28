@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color:orangered !important;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -8,9 +9,33 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+.error{
+	display: none;
+	margin-left: 10px;
+}		
 
+.error_show{
+	color: red;
+	margin-left: 10px;
+}
+input.invalid{
+	border: 2px solid red;
+}
 
-    
+input.valid{
+	border: 2px solid green;
+}
+#loginForm .has-error .control-label,
+#loginForm .has-error .help-block,
+#loginForm .has-error .form-control-feedback {
+    color: #f39c12;
+}
+
+#loginForm .has-success .control-label,
+#loginForm .has-success .help-block,
+#loginForm .has-success .form-control-feedback {
+    color: #18bc9c;
+}
 .container-fluid {
     padding: 0 15px;
   
@@ -31,3 +56,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#grid{
+    background-color:#808080;
+}
+
+td{
+    color: black;  
+}
+
