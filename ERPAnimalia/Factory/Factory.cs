@@ -134,11 +134,7 @@ namespace ERPAnimalia.Factory
 
         }
 
-        public static List<Cliente> ClienteDb()
-        {
-            return new List<Cliente>();
-
-        }
+       
 
         public static List<ClienteModel> Cliente()
         {

@@ -4,7 +4,7 @@ namespace ERPAnimalia.Controllers
     using System;
     using System.Web.Mvc;
     using ERPAnimalia.Models;
-
+    using Interface;
 
     [RoutePrefix("Cliente")]
     public class ClienteController : Controller

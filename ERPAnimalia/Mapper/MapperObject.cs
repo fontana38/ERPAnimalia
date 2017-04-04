@@ -309,6 +309,21 @@ namespace ERPAnimalia
                 throw new Exception(e.Message.ToString());
             }
         }
-           
+
+        public static List<ClienteModel> CreateListClientModel(List<Cliente> listCliente)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+                return mapper.Map<List<ClienteModel>>(listCliente);
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+
         }
+
+    }
     }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ERPAnimalia.Models
 {
-    public class CabeceraComprobanteModel
+    public class VoucherHeadModel
     {
         public Guid IdCabeceraComprobante;
         public Guid IdDetalleComprobante;
@@ -13,5 +13,7 @@ namespace ERPAnimalia.Models
         public Guid IdTipoComprobante;
         public DateTime Fecha;
         public string Numero;
+        List<TipoComprobante> Tipo;
+        List<ClienteModel> clientModel;
     }
 }

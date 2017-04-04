@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace ERPAnimalia.Interfaces
 {
-    interface ICabeceraComprobante
+    interface IDetalleComprobante
     {
-       
     }
 }
