@@ -19,11 +19,10 @@ namespace ERPAnimalia.Models.Manager
 
         public List<ClienteModel> GetClient()
         {
-           
             var clienteList = db.Cliente.ToList();
             var listClient = MapperObject.CreateListClientModel(clienteList);
+           
             return listClient;
-
         }
 
         

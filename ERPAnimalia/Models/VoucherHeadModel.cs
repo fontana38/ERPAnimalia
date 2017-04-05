@@ -13,7 +13,7 @@ namespace ERPAnimalia.Models
         public Guid IdTipoComprobante;
         public DateTime Fecha;
         public string Numero;
-        List<TipoComprobante> Tipo;
-        List<ClienteModel> clientModel;
+        public List<TipoComprobante> Tipo;
+        public List<ClienteModel> clientModel;
     }
 }

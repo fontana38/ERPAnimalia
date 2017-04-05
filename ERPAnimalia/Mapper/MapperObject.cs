@@ -314,8 +314,15 @@ namespace ERPAnimalia
         {
             try
             {
+                
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
-                return mapper.Map<List<ClienteModel>>(listCliente);
+                var client = mapper.Map<List<ClienteModel>>(listCliente);
+                foreach (var item in client)
+                {
+                    item.NombreCompleto = item.Apellido + " " + item.Nombre;
+                }
+
+                return client;
             }
             catch (Exception e)
             {

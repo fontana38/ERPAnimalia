@@ -14,6 +14,7 @@ namespace ERPAnimalia.Models
         public string Direccion { get; set; }
         public string Telefono { get; set; }
         public string Mail { get; set; }
+        public string NombreCompleto { get; set; }
 
     }
 }

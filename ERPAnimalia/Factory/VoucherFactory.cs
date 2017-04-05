@@ -12,7 +12,7 @@ namespace ERPAnimalia.Factory
     using ERPAnimalia.Models.Manager;
     public static class VoucherFactory
     {
-        
+
         public static VoucherHeadModel CreateVoucherHeadModel()
         {
             return new VoucherHeadModel();

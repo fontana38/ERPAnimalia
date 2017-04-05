@@ -1,11 +1,12 @@
 ﻿@using ERPAnimalia.Models;
+
 @{
     Layout = null;
     
 }
 
 <!DOCTYPE html>
-
+@model ERPAnimalia.Models.VoucherHeadModel
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
@@ -14,9 +15,28 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        debugger;
+        $("#NombreCompleto").autocomplete({
+         
+            source: function (request, response) {
+                $.ajax({
+                   
+                    url: "/Voucher/GetClient",
+                    type: "POST", dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        debugger;
+                        response($.map(data, function (item) {
+                            return { label: item.NombreCompleto, value: item.NombreCompleto };
+                        }));
+                    }
+                });
+            },
+            messages: { noResults: "", results: "" }
+        });
                 debugger;
-                $('#DateVoucher')
-                .datepicker({
+                $('#DateVoucher').datepicker({
                     dateFormat: "dd-mm-yy",
                     firstDay: 1,
                     dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
@@ -32,25 +52,9 @@
                   
     });
 
-    var date = new Date().dateFormat("dd/mm/yyyy");;
     
-    $('#DateVoucher').val(date);
 
-    $("#client").autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                url: "/Voucher/GetClient",
-                type: "POST", dataType: "json",
-                data: { term: request.term },
-                success: function (data) {
-                    response($.map(data, function (item) {
-                        return { label: item.startfrom };
-                    }));
-                }
-            });
-        },
-        messages: { noResults: "", results: "" }
-    });
+
 
 
                
@@ -69,7 +73,9 @@
                 <div class="form-group">
                     <label class="control-label col-sm-3">Cliente:</label>
                     <div>
-                        <input id="client">
+                       @Html.EditorFor(model => model.clientModel.First().NombreCompleto, new { @id="client", htmlAttributes = new { @class = "form-control" } })  
+
+
                     </div>
                 </div>
 

@@ -13,9 +13,9 @@ namespace ERPAnimalia.Controllers
     {
         public IVoucherHeadManager HeadVoucherManager { get; set; }
 
-        private VoucherController()
+        public VoucherController()
         {
-
+            HeadVoucherManager = Factory.VoucherFactory.CreateVoucherHeadManager();
         }
         // GET: Voucher
         public ActionResult Index()
@@ -35,12 +35,20 @@ namespace ERPAnimalia.Controllers
 
         // GET: Voucher
         [HttpPost]
-        public JsonResult GetClient()
+        public JsonResult GetClient(string term)
         {
-            var listClient = HeadVoucherManager.GetClient();
+            
             var voucherModel = Factory.VoucherFactory.CreateVoucherHeadModel();
+            var listClient = HeadVoucherManager.GetClient();
+            voucherModel.clientModel = listClient;
 
-            return Json(voucherModel, JsonRequestBehavior.AllowGet);
+            var clientName = (from N in listClient
+                              where N.Nombre.StartsWith(term) || N.Apellido.StartsWith(term)
+                              select new {N.NombreCompleto }).ToList();
+
+            return Json(clientName, JsonRequestBehavior.AllowGet);
+
+           
         }
     }
 }
