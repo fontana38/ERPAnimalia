@@ -1,13 +1,107 @@
-﻿<!DOCTYPE html>
+﻿@using ERPAnimalia.Models;
+
+<!DOCTYPE html>
+
+@model ERPAnimalia.Models.VoucherDetailModel
 <html>
-<head>
 
-</head>
-        <body>
-            @{
 
-                Html.RenderPartial("HeadVoucher");
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Factura</title>
 
-            }
-        </body>
+        <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+        <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
+       
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js"></script>
+        <script src="http://stevenlevithan.com/assets/misc/date.format.js"></script>
+
+
+        <script src="~/Scripts/moment.js"></script>
+        <script src="~/Scripts/client.js"></script>
+
+        <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap-datepicker.js"></script>
+        <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+        <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+    </head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Descripcion1").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Voucher/GetProduct",
+                        type: "POST", dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { label: item.Descripcion1, value: item.Descripcion1 };
+                            }));
+                        }
+                    });
+                },
+                messages: { noResults: "", results: "" }
+            });
+
+          
+        });
+
+    </script>
+    <div class="container-fluid">
+        @{
+            Html.RenderPartial("HeadVoucher");
+        }
+                <!-- Nav tabs -->
+                <div role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active">
+                            <a href="#productTab" aria-controls="productoTab" role="tab" data-toggle="tab">Product</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#informationTab" aria-controls="informationTab" role="tab" data-toggle="tab">Informacion</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="productTab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label col-md-3">Producto:</label>
+                                    <div>
+                                        @Html.EditorFor(model => model.ProductModel.First().Descripcion1, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div>
+                                        @Html.EditorFor(model => model.ProductModel.First().Codigo, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div>
+                                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div>
+                                        @Html.EditorFor(model => model.ProductModel.First().ListaPrecioItem.PrecioVenta, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="informationTab">
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+            
+    
+</body>
 </html>

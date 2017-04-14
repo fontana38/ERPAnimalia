@@ -310,18 +310,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IVoucherDetailManager.cs" />
     <Compile Include="Interfaces\IVoucherHeadManager.cs" />
     <Compile Include="Interfaces\IDetalleComprobante.cs" />
     <Compile Include="Interfaces\IListProduct.cs" />
     <Compile Include="Mapper\MapperObject.cs" />
     <Compile Include="Mapper\AutoMapperConfig.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Manager\VoucherDetailManager.cs" />
     <Compile Include="Models\VoucherHeadModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\Manager\ClienteManager.cs" />
     <Compile Include="Models\ClienteModel.cs" />
     <Compile Include="Interfaces\IClinteManager.cs" />
-    <Compile Include="Models\DetalleComprobante.cs" />
+    <Compile Include="Models\VoucherDetailModel.cs" />
     <Compile Include="Models\ListProductManager.cs" />
     <Compile Include="Models\Manager\VoucheHeadManager.cs" />
     <Compile Include="Models\PersonaModels.cs" />

@@ -22,5 +22,15 @@ namespace ERPAnimalia.Factory
             return new VoucheHeadManager();
         }
 
+        public static VoucherDetailModel CreateVoucherDetailModel()
+        {
+            return new VoucherDetailModel();
+        }
+
+        public static IVoucherDetailManager CreateVoucherDetailManager()
+        {
+            return new VoucherDetailManager();
+        }
+
     }
 }

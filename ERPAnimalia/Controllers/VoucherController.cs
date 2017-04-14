@@ -12,10 +12,12 @@ namespace ERPAnimalia.Controllers
     public class VoucherController : Controller
     {
         public IVoucherHeadManager HeadVoucherManager { get; set; }
+        public IVoucherDetailManager VoucherDetailManager { get; set; }
 
         public VoucherController()
         {
             HeadVoucherManager = Factory.VoucherFactory.CreateVoucherHeadManager();
+            VoucherDetailManager = Factory.VoucherFactory.CreateVoucherDetailManager();
         }
         // GET: Voucher
         public ActionResult Index()
@@ -27,10 +29,11 @@ namespace ERPAnimalia.Controllers
         [Route("CrearFactura")]
         public ActionResult HeadVoucher()
         {
-            var listClient = HeadVoucherManager.GetClient();
+         
             var voucherModel =Factory.VoucherFactory.CreateVoucherHeadModel();
-            
-            return View();
+            var voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+
+            return View("~/Views/Voucher/Voucher.cshtml");
         }
 
         // GET: Voucher
@@ -49,6 +52,23 @@ namespace ERPAnimalia.Controllers
             return Json(clientName, JsonRequestBehavior.AllowGet);
 
            
+        }
+
+        [HttpPost]
+        public JsonResult GetProduct(string term)
+        {
+
+           var voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+            var listProduct = VoucherDetailManager.GetProduct();
+            voucherDetailModel.ProductModel = listProduct;
+
+            var clientName = (from N in listProduct
+                              where N.Descripcion1.StartsWith(term) || N.Codigo.StartsWith(term)
+                              select new { N.Descripcion1 }).ToList();
+
+            return Json(clientName, JsonRequestBehavior.AllowGet);
+
+
         }
     }
 }

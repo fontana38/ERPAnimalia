@@ -35,18 +35,12 @@ namespace ERPAnimalia
                     productMap.CategoryItem = category;
                     productMap.SubCategoryItem = subCategoryMap;
                     productMap.ListaPrecioItem = listPriceMap;
-
-
-
                     list.Add(productMap);
                 }
-
-
                 return list;
             }
             catch (Exception e)
             {
-
                 throw new Exception(e.Message.ToString());
             }
        
