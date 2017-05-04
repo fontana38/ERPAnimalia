@@ -4,25 +4,18 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>How to use jQuery Grid with ASP.NET MVC</title>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+   
     <script src="~/Scripts/gijgo.min.js"></script>
     <link href="~/Content/css/gijgo.css" rel="stylesheet" />
     <script src="~/Scripts/gijgo.js"></script>
     <link href="~/Content/css/gijgo.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
- 
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.0/moment.min.js"></script>
     <script src="http://stevenlevithan.com/assets/misc/date.format.js"></script>
-
-
-        <script src="~/Scripts/moment.js"></script>
-        <script src="~/Scripts/client.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/client.js"></script>
 
         <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
         <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
@@ -113,7 +106,7 @@
 
             function Edit(e) {
 
-                debugger;
+                
                 var dateNext = e.data.record.FechaProximaCompra;
                 var dateBuy = e.data.record.FechaCompra;
 
@@ -157,7 +150,7 @@
                 $("#IdProducto").val(e.data.record.IdProducto);
                 $("#mascota").val(e.data.record.Mascota);
                 $("#dias").val(e.data.record.dias)
-                debugger;
+                
                 $(e.data.record.Productos).each(function (index, element) {
 
                     ids[index] = $(element).attr('IdProducto');

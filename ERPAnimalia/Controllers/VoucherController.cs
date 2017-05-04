@@ -1,4 +1,5 @@
 ﻿using ERPAnimalia.Interfaces;
+using ERPAnimalia.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace ERPAnimalia.Controllers
     {
         public IVoucherHeadManager HeadVoucherManager { get; set; }
         public IVoucherDetailManager VoucherDetailManager { get; set; }
+        public VoucherDetailModel voucherDetailModel;
 
         public VoucherController()
         {
@@ -31,8 +33,8 @@ namespace ERPAnimalia.Controllers
         {
          
             var voucherModel =Factory.VoucherFactory.CreateVoucherHeadModel();
-            var voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
-
+             voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+           
             return View("~/Views/Voucher/Voucher.cshtml");
         }
 
@@ -58,17 +60,33 @@ namespace ERPAnimalia.Controllers
         public JsonResult GetProduct(string term)
         {
 
-           var voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+            voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
             var listProduct = VoucherDetailManager.GetProduct();
             voucherDetailModel.ProductModel = listProduct;
 
-            var clientName = (from N in listProduct
+            var productName = (from N in listProduct
                               where N.Descripcion1.StartsWith(term) || N.Codigo.StartsWith(term)
                               select new { N.Descripcion1 }).ToList();
 
-            return Json(clientName, JsonRequestBehavior.AllowGet);
+            return Json(productName, JsonRequestBehavior.AllowGet);
 
 
         }
+
+        [HttpPost]
+        public JsonResult GetProductDetail(string term)
+        {
+
+            voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+            var listProduct = VoucherDetailManager.GetProduct();
+            voucherDetailModel.ProductModel = listProduct;
+
+            
+
+            return Json(voucherDetailModel, JsonRequestBehavior.AllowGet);
+
+
+        }
+
     }
 }

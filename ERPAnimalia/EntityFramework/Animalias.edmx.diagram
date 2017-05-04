@@ -32,6 +32,14 @@
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Cliente" Width="1.5" PointX="7.375" PointY="1" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.CabeceraComprobante" Width="1.5" PointX="9.625" PointY="1.25" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.DetalleComprobante" Width="1.5" PointX="7.375" PointY="23.25" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.FormaDePago" Width="1.5" PointX="5.125" PointY="23.625" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.TipoComprobante" Width="1.5" PointX="7.375" PointY="19.5" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_CabeceraComprobante_Cliente" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_CabeceraComprobante_DetalleComprobante" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_CabeceraComprobante_TipoComprobante" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_DetalleComprobante_FormaDePago" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

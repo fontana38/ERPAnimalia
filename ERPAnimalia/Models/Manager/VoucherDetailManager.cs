@@ -23,5 +23,7 @@ namespace ERPAnimalia.Models.Manager
 
             return productListModel;
         }
+
+       
     }
 }

@@ -277,6 +277,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="EntityFramework\CabeceraComprobante.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\Category.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
@@ -284,6 +287,12 @@
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\C__MigrationHistory.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\DetalleComprobante.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\FormaDePago.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\IdClienteIdProducto.cs">
@@ -302,6 +311,9 @@
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\SubCategory.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\TipoComprobante.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="Enumeration.cs" />
@@ -361,6 +373,8 @@
     <Content Include="Content\bootstrap-responsive.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\css\Voucher.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Scripts\bootstrap3.3.7.min.js" />
     <Content Include="Content\css\gijgo.css" />
     <Content Include="Content\css\gijgo.min.css" />
@@ -493,6 +507,7 @@
     <Content Include="Scripts\datatables.extensions\TableTools\Readme.txt" />
     <Content Include="Scripts\datatables.extensions\TableTools\swf\copy_csv_xls.swf" />
     <Content Include="Scripts\datatables.extensions\TableTools\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Scripts\date.format.js" />
     <Content Include="Scripts\gijgo.js" />
     <Content Include="Scripts\gijgo.min.js" />
     <Content Include="Scripts\grid-0.4.3.js" />
@@ -507,13 +522,20 @@
     <Content Include="Content\bootstrap-datepicker.standalone.css.map" />
     <Content Include="Content\bootstrap-datepicker.min.css.map" />
     <Content Include="Content\bootstrap-datepicker.css.map" />
+    <Content Include="Scripts\grid\grid.js" />
+    <Content Include="Scripts\grid\grid.min.js" />
+    <Content Include="Scripts\jquery-1.11.2.min.js" />
+    <Content Include="Scripts\1.12.1\jquery-ui.js" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.min.js.3.1.1.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.datatable.min.js" />
@@ -656,6 +678,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebApplication1\ERPAnimalia.Angular.csproj">
+      <Project>{bf2c4f74-d701-4058-8f99-4c887dd4ed96}</Project>
+      <Name>ERPAnimalia.Angular</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -70,6 +70,18 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="CabeceraComprobante">
+          <Key>
+            <PropertyRef Name="IdCabeceraComprobante" />
+          </Key>
+          <Property Name="IdCabeceraComprobante" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Numero" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fecha" Type="datetimeoffset" Precision="7" />
+          <Property Name="IdTipoComprobante" Type="uniqueidentifier" />
+          <Property Name="IdCliente" Type="uniqueidentifier" />
+          <Property Name="IdDetalleComprobante" Type="uniqueidentifier" />
+          <Property Name="Cobrada" Type="bit" />
+        </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="IdCategory" />
@@ -101,6 +113,23 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="IdComprobante" Type="nchar" MaxLength="10" />
           <Property Name="Numero" Type="nvarchar" MaxLength="50" />
         </EntityType>-->
+        <EntityType Name="DetalleComprobante">
+          <Key>
+            <PropertyRef Name="IdDetalleComprobante" />
+          </Key>
+          <Property Name="IdDetalleComprobante" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdProducto" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Cantidad" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="IdFormaDePago" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="FormaDePago">
+          <Key>
+            <PropertyRef Name="IdFormaDePago" />
+          </Key>
+          <Property Name="IdFormaDePago" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="IdClienteIdProducto">
           <Key>
             <PropertyRef Name="IdClienteProducto" />
@@ -175,6 +204,51 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="IdSubCategory" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="TipoComprobante">
+          <Key>
+            <PropertyRef Name="IdTipoComprobante" />
+          </Key>
+          <Property Name="IdTipoComprobante" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Tipo" Type="int" />
+        </EntityType>
+        <Association Name="FK_CabeceraComprobante_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="0..1" />
+          <End Role="CabeceraComprobante" Type="Self.CabeceraComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CabeceraComprobante">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabeceraComprobante_DetalleComprobante">
+          <End Role="DetalleComprobante" Type="Self.DetalleComprobante" Multiplicity="0..1" />
+          <End Role="CabeceraComprobante" Type="Self.CabeceraComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetalleComprobante">
+              <PropertyRef Name="IdDetalleComprobante" />
+            </Principal>
+            <Dependent Role="CabeceraComprobante">
+              <PropertyRef Name="IdDetalleComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabeceraComprobante_TipoComprobante">
+          <End Role="TipoComprobante" Type="Self.TipoComprobante" Multiplicity="0..1" />
+          <End Role="CabeceraComprobante" Type="Self.CabeceraComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoComprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Principal>
+            <Dependent Role="CabeceraComprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Category_SubCategory">
           <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
           <End Role="Category" Type="Self.Category" Multiplicity="*" />
@@ -240,6 +314,18 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleComprobante_FormaDePago">
+          <End Role="FormaDePago" Type="Self.FormaDePago" Multiplicity="0..1" />
+          <End Role="DetalleComprobante" Type="Self.DetalleComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaDePago">
+              <PropertyRef Name="IdFormaDePago" />
+            </Principal>
+            <Dependent Role="DetalleComprobante">
+              <PropertyRef Name="IdFormaDePago" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -348,8 +434,11 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CabeceraComprobante" EntityType="Self.CabeceraComprobante" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetalleComprobante" EntityType="Self.DetalleComprobante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormaDePago" EntityType="Self.FormaDePago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IdClienteIdProducto" EntityType="Self.IdClienteIdProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ListaPrecio" EntityType="Self.ListaPrecio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -357,6 +446,19 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <EntitySet Name="ProductoLista" EntityType="Self.ProductoLista" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoComprobante" EntityType="Self.TipoComprobante" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CabeceraComprobante_Cliente" Association="Self.FK_CabeceraComprobante_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="CabeceraComprobante" EntitySet="CabeceraComprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabeceraComprobante_DetalleComprobante" Association="Self.FK_CabeceraComprobante_DetalleComprobante">
+            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
+            <End Role="CabeceraComprobante" EntitySet="CabeceraComprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabeceraComprobante_TipoComprobante" Association="Self.FK_CabeceraComprobante_TipoComprobante">
+            <End Role="TipoComprobante" EntitySet="TipoComprobante" />
+            <End Role="CabeceraComprobante" EntitySet="CabeceraComprobante" />
+          </AssociationSet>
           <AssociationSet Name="FK_Category_SubCategory" Association="Self.FK_Category_SubCategory">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Category" EntitySet="Category" />
@@ -376,6 +478,10 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleComprobante_FormaDePago" Association="Self.FK_DetalleComprobante_FormaDePago">
+            <End Role="FormaDePago" EntitySet="FormaDePago" />
+            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
           </AssociationSet>
           <AssociationSet Name="FK_IdClienteIdProducto_Cliente" Association="Self.FK_IdClienteIdProducto_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -575,6 +681,26 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <AssociationSet Name="FK_IdClienteIdProducto_Cliente" Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
+          </AssociationSet>
+          <EntitySet Name="CabeceraComprobante" EntityType="AnimaliaPetShopModel.CabeceraComprobante" />
+          <EntitySet Name="DetalleComprobante" EntityType="AnimaliaPetShopModel.DetalleComprobante" />
+          <EntitySet Name="FormaDePago" EntityType="AnimaliaPetShopModel.FormaDePago" />
+          <EntitySet Name="TipoComprobante" EntityType="AnimaliaPetShopModel.TipoComprobante" />
+          <AssociationSet Name="FK_CabeceraComprobante_Cliente" Association="AnimaliaPetShopModel.FK_CabeceraComprobante_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="CabeceraComprobante" EntitySet="CabeceraComprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabeceraComprobante_DetalleComprobante" Association="AnimaliaPetShopModel.FK_CabeceraComprobante_DetalleComprobante">
+            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
+            <End Role="CabeceraComprobante" EntitySet="CabeceraComprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CabeceraComprobante_TipoComprobante" Association="AnimaliaPetShopModel.FK_CabeceraComprobante_TipoComprobante">
+            <End Role="TipoComprobante" EntitySet="TipoComprobante" />
+            <End Role="CabeceraComprobante" EntitySet="CabeceraComprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleComprobante_FormaDePago" Association="AnimaliaPetShopModel.FK_DetalleComprobante_FormaDePago">
+            <End Role="FormaDePago" EntitySet="FormaDePago" />
+            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubCategory">
@@ -802,6 +928,7 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
           <Property Name="Dias" Type="Int32" />
           <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" FromRole="Cliente" ToRole="IdClienteIdProducto" />
           <Property Name="mail" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="CabeceraComprobante" Relationship="AnimaliaPetShopModel.FK_CabeceraComprobante_Cliente" FromRole="Cliente" ToRole="CabeceraComprobante" />
         </EntityType>
         <Association Name="FK_IdClienteIdProducto_Cliente">
           <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1">
@@ -814,6 +941,99 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
             </Principal>
             <Dependent Role="IdClienteIdProducto">
               <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CabeceraComprobante">
+          <Key>
+            <PropertyRef Name="IdCabeceraComprobante" />
+          </Key>
+          <Property Name="IdCabeceraComprobante" Type="Guid" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fecha" Type="DateTimeOffset" Precision="7" />
+          <Property Name="IdTipoComprobante" Type="Guid" />
+          <Property Name="IdCliente" Type="Guid" />
+          <Property Name="IdDetalleComprobante" Type="Guid" />
+          <Property Name="Cobrada" Type="Boolean" />
+          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_CabeceraComprobante_Cliente" FromRole="CabeceraComprobante" ToRole="Cliente" />
+          <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_CabeceraComprobante_DetalleComprobante" FromRole="CabeceraComprobante" ToRole="DetalleComprobante" />
+          <NavigationProperty Name="TipoComprobante" Relationship="AnimaliaPetShopModel.FK_CabeceraComprobante_TipoComprobante" FromRole="CabeceraComprobante" ToRole="TipoComprobante" />
+        </EntityType>
+        <EntityType Name="DetalleComprobante">
+          <Key>
+            <PropertyRef Name="IdDetalleComprobante" />
+          </Key>
+          <Property Name="IdDetalleComprobante" Type="Guid" Nullable="false" />
+          <Property Name="IdProducto" Type="Guid" Nullable="false" />
+          <Property Name="Cantidad" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdFormaDePago" Type="Guid" />
+          <NavigationProperty Name="CabeceraComprobante" Relationship="AnimaliaPetShopModel.FK_CabeceraComprobante_DetalleComprobante" FromRole="DetalleComprobante" ToRole="CabeceraComprobante" />
+          <NavigationProperty Name="FormaDePago" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_FormaDePago" FromRole="DetalleComprobante" ToRole="FormaDePago" />
+        </EntityType>
+        <EntityType Name="FormaDePago">
+          <Key>
+            <PropertyRef Name="IdFormaDePago" />
+          </Key>
+          <Property Name="IdFormaDePago" Type="Guid" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_FormaDePago" FromRole="FormaDePago" ToRole="DetalleComprobante" />
+        </EntityType>
+        <EntityType Name="TipoComprobante">
+          <Key>
+            <PropertyRef Name="IdTipoComprobante" />
+          </Key>
+          <Property Name="IdTipoComprobante" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Tipo" Type="Int32" />
+          <NavigationProperty Name="CabeceraComprobante" Relationship="AnimaliaPetShopModel.FK_CabeceraComprobante_TipoComprobante" FromRole="TipoComprobante" ToRole="CabeceraComprobante" />
+        </EntityType>
+        <Association Name="FK_CabeceraComprobante_Cliente">
+          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.CabeceraComprobante" Role="CabeceraComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="CabeceraComprobante">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabeceraComprobante_DetalleComprobante">
+          <End Type="AnimaliaPetShopModel.DetalleComprobante" Role="DetalleComprobante" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.CabeceraComprobante" Role="CabeceraComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetalleComprobante">
+              <PropertyRef Name="IdDetalleComprobante" />
+            </Principal>
+            <Dependent Role="CabeceraComprobante">
+              <PropertyRef Name="IdDetalleComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CabeceraComprobante_TipoComprobante">
+          <End Type="AnimaliaPetShopModel.TipoComprobante" Role="TipoComprobante" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.CabeceraComprobante" Role="CabeceraComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoComprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Principal>
+            <Dependent Role="CabeceraComprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleComprobante_FormaDePago">
+          <End Type="AnimaliaPetShopModel.FormaDePago" Role="FormaDePago" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.DetalleComprobante" Role="DetalleComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaDePago">
+              <PropertyRef Name="IdFormaDePago" />
+            </Principal>
+            <Dependent Role="DetalleComprobante">
+              <PropertyRef Name="IdFormaDePago" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -994,6 +1214,48 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.Comprobante' does not have a p
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CabeceraComprobante">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.CabeceraComprobante">
+              <MappingFragment StoreEntitySet="CabeceraComprobante">
+                <ScalarProperty Name="Cobrada" ColumnName="Cobrada" />
+                <ScalarProperty Name="IdDetalleComprobante" ColumnName="IdDetalleComprobante" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdCabeceraComprobante" ColumnName="IdCabeceraComprobante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetalleComprobante">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.DetalleComprobante">
+              <MappingFragment StoreEntitySet="DetalleComprobante">
+                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="IdDetalleComprobante" ColumnName="IdDetalleComprobante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FormaDePago">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.FormaDePago">
+              <MappingFragment StoreEntitySet="FormaDePago">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoComprobante">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.TipoComprobante">
+              <MappingFragment StoreEntitySet="TipoComprobante">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
