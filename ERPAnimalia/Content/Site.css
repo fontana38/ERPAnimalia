@@ -1,13 +1,22 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color:orangered !important;
+    background-color:#f39c12 !important;
+   opacity: 0.9;
 }
-
+.container-fluid
+{
+    background-color: #ffffff !important;
+    padding: 0 15px;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.panel {
+    width:100% !important;
 }
 .error{
 	display: none;
@@ -36,10 +45,7 @@ input.valid{
 #loginForm .has-success .form-control-feedback {
     color: #18bc9c;
 }
-.container-fluid {
-    padding: 0 15px;
-  
-}
+
 .panel-primary {
     width: 2000px;
 }
@@ -61,13 +67,6 @@ textarea {
     max-width: 280px;
 }
 
-.nav-tabs{
- 
-background-color:green;
- 
-}
- 
- 
 
 #grid{
     background-color:#808080;

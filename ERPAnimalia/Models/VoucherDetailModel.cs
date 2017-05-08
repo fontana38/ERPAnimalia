@@ -13,5 +13,6 @@ namespace ERPAnimalia.Models
         public decimal Total;
         public decimal Subtotal;
         public List<ProductModels> ProductModel;
+        public List<String> ProductName;
     }
 }

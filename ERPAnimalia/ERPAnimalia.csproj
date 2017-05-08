@@ -329,6 +329,7 @@
     <Compile Include="Mapper\MapperObject.cs" />
     <Compile Include="Mapper\AutoMapperConfig.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DetailGrid.cs" />
     <Compile Include="Models\Manager\VoucherDetailManager.cs" />
     <Compile Include="Models\VoucherHeadModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
