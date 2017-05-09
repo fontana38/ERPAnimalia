@@ -327,7 +327,42 @@ namespace ERPAnimalia
         }
 
 
-       
+        public static DetalleComprobante CreateVoucherDetailDb( VoucherDetailModel voucherDetail)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+
+                var  vouccherDetailMap = mapper.Map<DetalleComprobante>(voucherDetail);
+
+                return vouccherDetailMap;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+
+        }
+
+        public static CabeceraComprobante CreateVoucherHeadDb(VoucherHeadModel voucherHead)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+
+                var voucherHeadMap = mapper.Map<CabeceraComprobante>(voucherHead);
+
+                return voucherHeadMap;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+
+        }
 
     }
+
     }

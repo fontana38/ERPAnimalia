@@ -20,6 +20,7 @@ namespace ERPAnimalia.Controllers
         {
             HeadVoucherManager = Factory.VoucherFactory.CreateVoucherHeadManager();
             VoucherDetailManager = Factory.VoucherFactory.CreateVoucherDetailManager();
+           
         }
     // GET: Voucher
     public ActionResult Index()
@@ -76,48 +77,72 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, double descuento= 0)
+        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, decimal descuento= 0)
         {
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var detailGridList = new List<DetailGrid>();
+            int total;
+           
             if (String.IsNullOrEmpty(term))
             {
                 term = string.Empty;
             }
 
-            int total;
-
-            voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
-            var listProduct = VoucherDetailManager.GetProduct();
-            voucherDetailModel.ProductModel = listProduct;
-
-            var Descripcion1 = (from N in listProduct
-                                where N.Descripcion1.StartsWith(term) 
-                                select new { N }).ToList();
-
-          
-
-            var detailGrid = new DetailGrid();
-
-            if (Descripcion1.Count != 0 && term != string.Empty)
+            if (!String.IsNullOrEmpty(term))
             {
-                detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
-                detailGrid.Codigo = Descripcion1[0].N.Codigo;
-                detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
-                detailGrid.PrecioVenta = (double)Descripcion1[0].N.ListaPrecioItem.PrecioVenta;
-                detailGrid.Cantidad = cantidad;
-                detailGrid.Descuento = descuento;
 
-                detailGrid.Subtotal = (detailGrid.PrecioVenta * cantidad) - descuento; 
-               
-            }
+                voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+                var listProduct = VoucherDetailManager.GetProduct();
+                voucherDetailModel.ProductModel = listProduct;
 
-            if (detailGridTemp != null )
-            {
-                var newRowExist = detailGridTemp.Find(x => x.IdProduct == detailGrid.IdProduct);
- 
-                if (newRowExist == null)
-            {
+                var Descripcion1 = (from N in listProduct
+                                    where N.Descripcion1.StartsWith(term)
+                                    select new { N }).ToList();
+
+
+
+                var detailGrid = new DetailGrid();
+
+                if (Descripcion1.Count != 0 && term != string.Empty)
+                {
+                    detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
+                    detailGrid.Codigo = Descripcion1[0].N.Codigo;
+                    detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
+                    detailGrid.PrecioVenta = Descripcion1[0].N.ListaPrecioItem.PrecioVenta;
+
+                    detailGrid.Cantidad = (cantidad == 0) ? 1 : cantidad;
+                    detailGrid.Descuento = descuento;
+
+                    detailGrid.Subtotal = (detailGrid.PrecioVenta * detailGrid.Cantidad) - descuento;
+
+                }
+
+                if (detailGridTemp != null)
+                {
+                    var newRowExist = detailGridTemp.Find(x => x.IdProduct == detailGrid.IdProduct);
+
+                    if (newRowExist == null)
+                    {
+                        detailGridTemp.Add(detailGrid);
+                        foreach (var temp in detailGridTemp)
+                        {
+                            var detailRow = new DetailGrid();
+                            detailRow.Codigo = temp.Codigo;
+                            detailRow.PrecioVenta = temp.PrecioVenta;
+                            detailRow.Cantidad = (cantidad == 0) ? 1 : cantidad;
+                            detailRow.Descuento = descuento;
+
+                            detailRow.Subtotal = (detailRow.PrecioVenta * detailRow.Cantidad) - descuento;
+
+
+                            detailGridList.Add(detailRow);
+                        }
+
+                    }
+                }
+                else if (!String.IsNullOrEmpty(term))
+                {
+                    detailGridTemp = new List<DetailGrid>();
                     detailGridTemp.Add(detailGrid);
                     foreach (var temp in detailGridTemp)
                     {
@@ -125,34 +150,38 @@ namespace ERPAnimalia.Controllers
                         detailRow.Codigo = temp.Codigo;
                         detailRow.PrecioVenta = temp.PrecioVenta;
 
+                        detailRow.Cantidad = (cantidad == 0) ? 1 : cantidad;
+                        detailRow.Descuento = descuento;
+
+                        detailRow.Subtotal = (detailRow.PrecioVenta * detailRow.Cantidad) - descuento;
+
                         detailGridList.Add(detailRow);
                     }
-
                 }
-            }
-            else if(!String.IsNullOrEmpty(term))
-            {
-                detailGridTemp = new List<DetailGrid>();
-                detailGridTemp.Add(detailGrid);
-                foreach (var temp in detailGridTemp)
+
+                if (detailGridList != null)
                 {
-                    var detailRow = new DetailGrid();
-                    detailRow.Codigo = temp.Codigo;
-                    detailRow.PrecioVenta = temp.PrecioVenta;
-
-                    detailGridList.Add(detailRow);
+                    TempData["DetailGrid"] = detailGridTemp;
                 }
-            }
 
+                if (detailGridTemp != null)
+                {
+                    detailGridTemp.First().Total = 0;
+                    var totalRow = new decimal();
+                    foreach (var item in detailGridTemp)
+                    {
+                        totalRow += item.Subtotal;
+                    }
 
-            if (detailGridList != null)
-            {
-                TempData["DetailGrid"] = detailGridTemp;
+                    detailGridTemp.First().Total = totalRow;
+                }
+
             }
+            
 
              var records= (detailGridTemp!=null) ? detailGridTemp: detailGridList;
-
-             total = (detailGridTemp != null) ? detailGridTemp.Count() : detailGridList.Count();
+           
+            total = (detailGridTemp != null) ? detailGridTemp.Count() : detailGridList.Count();
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
 
 
@@ -160,27 +189,31 @@ namespace ERPAnimalia.Controllers
 
 
         [HttpGet]
-        public JsonResult GetSubtotal( Guid? idProduct,int cantidad = 0, double descuento = 0)
+        public JsonResult GetSubtotal( Guid? idProduct,int cantidad = 0, decimal descuento = 0)
         {
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
-            double total = 0;
-            foreach (var item in detailGridTemp)
-            {
-                total += item.Subtotal;
-            } 
-
+            
             DetailGrid product = detailGridTemp.Find(x => x.IdProduct == idProduct);
 
             product.Cantidad = cantidad;
             product.Descuento = descuento;
-            product.Total = total;
+          
 
             product.Subtotal = (product.PrecioVenta * cantidad) - descuento;
             TempData["DetailGrid"] = detailGridTemp;
             var records = detailGridTemp;
             var total = detailGridTemp.Count;
+          
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public JsonResult Save()
+        {
+            var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
+            VoucherDetailManager.SaveVoucher(VoucherList);
+            return Json(true);
+        }
+
 
 
 

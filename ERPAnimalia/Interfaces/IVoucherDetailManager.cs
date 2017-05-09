@@ -10,5 +10,6 @@ namespace ERPAnimalia.Interfaces
     public interface IVoucherDetailManager
     {
         List<ProductModels> GetProduct();
+        void SaveVoucher(List<DetailGrid> list);
     }
 }
