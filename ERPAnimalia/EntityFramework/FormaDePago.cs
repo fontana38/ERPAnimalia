@@ -17,13 +17,13 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FormaDePago()
         {
-            this.DetalleComprobante = new HashSet<DetalleComprobante>();
+            this.Comprobante = new HashSet<Comprobante>();
         }
     
-        public System.Guid IdFormaDePago { get; set; }
         public string Descripcion { get; set; }
+        public int IdFormaDePago { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleComprobante> DetalleComprobante { get; set; }
+        public virtual ICollection<Comprobante> Comprobante { get; set; }
     }
 }

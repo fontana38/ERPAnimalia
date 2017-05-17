@@ -18,7 +18,7 @@ namespace ERPAnimalia.EntityFramework
         public Cliente()
         {
             this.IdClienteIdProducto = new HashSet<IdClienteIdProducto>();
-            this.CabeceraComprobante = new HashSet<CabeceraComprobante>();
+            this.Comprobante = new HashSet<Comprobante>();
         }
     
         public System.Guid IdCliente { get; set; }
@@ -36,6 +36,6 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CabeceraComprobante> CabeceraComprobante { get; set; }
+        public virtual ICollection<Comprobante> Comprobante { get; set; }
     }
 }

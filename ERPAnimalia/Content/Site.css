@@ -16,7 +16,7 @@
 }
 
 .panel {
-    width:100% !important;
+    width:130% !important;
 }
 .error{
 	display: none;
@@ -69,10 +69,29 @@ textarea {
 
 
 #grid{
-    background-color:#808080;
+    background-color:#ffffff;
 }
 
 td{
     color: black;  
 }
 
+.panel-primary
+{
+    margin-top:20px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover
+{
+   color:#fff !important;
+   background-color:#0044cc !important;
+}
+
+a {
+    color: #fff !important;
+    background-color: #03A9F4 !important;
+}
+th{
+  background-color: #0044cc!important;
+  color: #fff !important;
+}

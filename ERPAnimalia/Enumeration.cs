@@ -13,5 +13,26 @@ namespace ERPAnimalia
             Accesorios=2
 
         }
+
+        public enum TipoComprobante : int
+        {
+            FacturaA = 1,
+            FacturaB = 2,
+            NoteCredito=3
+        }
+
+        public enum FormaDePago : int
+        {
+            Efectivo = 1,
+            CtaCte = 2,
+            TarjetaCredito = 3,
+            TarjetaDebito=4
+        }
+
+        public enum TipoVenta : int
+        {
+           Cantidad=1,
+           Kg=2
+        }
     }
 }

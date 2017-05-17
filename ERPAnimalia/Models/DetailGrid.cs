@@ -12,8 +12,10 @@ namespace ERPAnimalia.Models
      public string Descripcion1 { get; set; }
      public decimal PrecioVenta { get; set; }
      public decimal Cantidad { get; set; }
+     public decimal kg { get; set; }
      public decimal Descuento { get; set; }
-     public decimal Subtotal { get; set; }
+     public string Subtotal { get; set; }
      public decimal Total { get; set; }
+    public string Porcentage { get; set; }
     }
 }

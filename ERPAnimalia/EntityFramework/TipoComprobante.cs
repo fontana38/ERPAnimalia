@@ -17,15 +17,13 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoComprobante()
         {
-            this.CabeceraComprobante = new HashSet<CabeceraComprobante>();
+            this.Comprobante = new HashSet<Comprobante>();
         }
     
-        public System.Guid IdTipoComprobante { get; set; }
-        public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public Nullable<int> Tipo { get; set; }
+        public int IdTipoComprobante { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CabeceraComprobante> CabeceraComprobante { get; set; }
+        public virtual ICollection<Comprobante> Comprobante { get; set; }
     }
 }

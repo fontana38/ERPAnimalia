@@ -5,11 +5,9 @@ using System.Web;
 
 namespace ERPAnimalia.Models
 {
-    public class TipoComprobante
+    public class TipoComprobantes
     {
-        public Guid IdTipoComprobante;
-        public string Nombre;
-        public string Descripcion;
-        public int Tipo;
+        public int IdTipoComprobante;
+        public string Descripcion;       
     }
 }

@@ -315,27 +315,27 @@ namespace ERPAnimalia
                 {
                     item.NombreCompleto = item.Apellido + " " + item.Nombre;
                 }
-
                 return client;
             }
             catch (Exception e)
             {
-
                 throw new Exception(e.Message.ToString());
             }
-
         }
-
-
-        public static DetalleComprobante CreateVoucherDetailDb( VoucherDetailModel voucherDetail)
+        public static List<DetalleComprobante> CreateVoucherDetailDb(List<VoucherDetailModel> voucherDetail)
         {
             try
             {
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+                var vaoucherDetailMapper = new List<DetalleComprobante>();
+                foreach (var item in voucherDetail)
+                {
+                   
+                  var  vouccherDetailMap = mapper.Map<DetalleComprobante>(item);
+                    vaoucherDetailMapper.Add(vouccherDetailMap);
 
-                var  vouccherDetailMap = mapper.Map<DetalleComprobante>(voucherDetail);
-
-                return vouccherDetailMap;
+                }
+                return vaoucherDetailMapper;
             }
             catch (Exception e)
             {
@@ -344,14 +344,13 @@ namespace ERPAnimalia
             }
 
         }
-
-        public static CabeceraComprobante CreateVoucherHeadDb(VoucherHeadModel voucherHead)
+        public static Comprobante CreateVoucherHeadDb(VoucherHeadModel voucherHead)
         {
             try
             {
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
 
-                var voucherHeadMap = mapper.Map<CabeceraComprobante>(voucherHead);
+                var voucherHeadMap = mapper.Map<Comprobante>(voucherHead);
 
                 return voucherHeadMap;
             }

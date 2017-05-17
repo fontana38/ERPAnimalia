@@ -31,10 +31,11 @@ namespace ERPAnimalia.Mapper
                 .ForMember(t => t.FechaCompra2, opt => opt.Ignore())
                 .ForMember(t => t.IdsProduct, opt => opt.Ignore());
                 cfg.CreateMap<ClienteModel, Cliente>();
-                
-
-
-
+                cfg.CreateMap<VoucherHeadModel, Comprobante>()
+                 .ForMember(t => t.Cliente, opt => opt.Ignore())
+                 .ForMember(t => t.TipoComprobante, opt => opt.Ignore())
+                 .ForMember(t => t.FormaDePago, opt => opt.Ignore());
+                cfg.CreateMap<VoucherDetailModel, DetalleComprobante>();
             });
 
            

@@ -7,13 +7,14 @@ namespace ERPAnimalia.Models
 {
     public class VoucherHeadModel
     {
-        public Guid IdCabeceraComprobante;
-        public Guid IdDetalleComprobante;
-        public Guid IdCliente;
-        public Guid IdTipoComprobante;
+        public Guid IdComprobante;
+        public Guid IdCliente;      
         public DateTime Fecha;
         public string Numero;
-        public List<TipoComprobante> Tipo;
-        public List<ClienteModel> clientModel;
+        public int IdtipoComprobante;
+        public int IdformaDePago;
+        public decimal Total;
+        bool Cobrada;
+        public List<ClienteModel> ClientModel;
     }
 }

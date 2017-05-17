@@ -14,20 +14,14 @@ namespace ERPAnimalia.EntityFramework
     
     public partial class DetalleComprobante
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DetalleComprobante()
-        {
-            this.CabeceraComprobante = new HashSet<CabeceraComprobante>();
-        }
-    
         public System.Guid IdDetalleComprobante { get; set; }
         public System.Guid IdProducto { get; set; }
         public Nullable<decimal> Cantidad { get; set; }
-        public Nullable<decimal> Total { get; set; }
-        public Nullable<System.Guid> IdFormaDePago { get; set; }
+        public Nullable<decimal> Subtotal { get; set; }
+        public Nullable<decimal> PrecioVenta { get; set; }
+        public Nullable<decimal> precioCosto { get; set; }
+        public Nullable<System.Guid> IdComprobante { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CabeceraComprobante> CabeceraComprobante { get; set; }
-        public virtual FormaDePago FormaDePago { get; set; }
+        public virtual Comprobante Comprobante { get; set; }
     }
 }

@@ -3,20 +3,23 @@
 <!DOCTYPE html>
 
 @model ERPAnimalia.Models.VoucherDetailModel
+
 <html>
 <head>
-
-    <script src="http://code.gijgo.com/1.3.1/js/gijgo.js" type="text/javascript"></script>
     <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/1.3.1-js-gijgo.js"></script>
+
     <title>Factura</title>
 </head>
 <body>
     <table id="grid"></table>
     <script type="text/javascript">
         var id;
+        var isLoad;
         var gridDetail;
         $(document).ready(function () {
-           
+            SaveEnabled();
             $("#Descripcion1").autocomplete({
                 source: function (request, response) {
                     $.ajax({
@@ -27,6 +30,7 @@
                             response($.map(data, function (item) {
                                 return { label: item.Descripcion1, value: item.Descripcion1 };
                                 GetTotal();
+                                SaveEnabled();
                             }));
                         }
                     });
@@ -34,33 +38,47 @@
                 messages: { noResults: "", results: "" }
             });
 
-             gridDetail = $("#gridDetail").grid({
+         
+            gridDetail = $("#gridDetail").grid({
                 dataSource: "/Voucher/GetProductDetail",
                 dataKey: "IdProduct",
                 uiLibrary: "bootstrap",
                 columns: [
                      { field: "IdProduct", hidden: true },
-                    { field: "Codigo", title: "Código", sortable: true, width: 20 },
-                    { field: "Descripcion1", title: "Descripcion1", sortable: true, width: 80 },
-                    { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 20 },
-                    { field: "Cantidad", title: "Cantidad", editor: true, width: 20 },
-                    { field: "Descuento", title: "Descuento", editor: true, width: 20 },
-                    { field: "Subtotal", title: "Subtotal", sortable: true, width: 20 },
-                    { width: 60, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
+                    { field: "Codigo", title: "Código", sortable: true, width:100 },
+                    { field: "Descripcion1", title: "Descripcion1", sortable: true, width: 150 },
+                    { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 120 },
+                    { field: "Cantidad", title: "Cantidad", editor: true, width: 100 },
+                    { field: "Descuento", title: "Descuento", editor: true, width: 100 },
+                     { field:"Porcentage", title: "%", sortable: true, width: 100, format: '00,00' },
+                    { field: "Subtotal", title: "Subtotal", sortable: true, width: 100, format:'00,00'},
+                    { width: 150, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
                 ],
                 optimisticPersistence: { sessionStorage: ["page", "limit"] },
                 pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
-             });
-
-      
-            gridDetail.on('cellDataChanged', function (e, $cell, column, record, oldValue, newValue) {                
-                CalculateRow(record);
-                
+            });
+            gridDetail.on('cellDataChanged', function (e, $cell, column, record, oldValue, newValue) {
+                CalculateRow(record)
             });
 
-            function CalculateRow(record) {
+            $('#Descripcion1').blur(function () {
+                if ($("#Descripcion1").val() != "")
+                {
+                    gridDetail.reload({ term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
+                    SaveEnabled();
+                }
+                
+            });
+            gridDetail.on('dataBound', function (e, records, totalRecords) {
                 debugger;
-               
+                GetTotal();
+                SaveEnabled();
+            });
+            $("#btnSave").on("click", Save);
+        });
+           
+
+            function CalculateRow(record) {
                 $.ajax({
                     url: "/Voucher/GetSubtotal",
                     type: "GET", dataType: "json",
@@ -71,42 +89,73 @@
                     }
                 });
             }
-            
-
-            $('#Descripcion1').blur(function () {     
-                gridDetail.reload({ term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
-                GetTotal();
-            });
 
             function GetTotal()
+            {             
+                    if (gridDetail.count() != 0) {
+                        var totalRows = gridDetail.count();
+                        var row = gridDetail.get(totalRows);
+                        $("#totalVoucher").val(row.Total);
+                    }
+            }
+            function Save() {
+                var  client= $("#NombreCompleto").val();
+                var  dateVoucher= $("#DateVoucher").val();
+                var tipoComprobante= $("#TipoComprobante").val();
+                var formaPago = $("#formaDePago").val();
+                
+                $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago, tipoVenta: $("#tipoVenta").val() } })
+                    .done(function (data) {
+                        debugger;
+                        alert(data);
+                        gridDetail.clear();
+                       $("#NombreCompleto").val("");
+                       $("#DateVoucher").val("");
+                       $("#idTelefono").html("");
+                       $("#idDireccion").html("");
+                       $('#Descripcion1').val("");
+
+                    })
+                    .fail(function () {
+                        alert("Unable to save.");
+                        $("#clienteModal").modal("hide");
+                    }); 
+            }
+            function SaveEnabled()
             {
-                debugger;
-                if (gridDetail.count != 0) {
-                    var totalRows = gridDetail.count();
-                    var row = gridDetail.get(totalRows);
-                    $("#totalVoucher").val(row.Total);
+                if (gridDetail != 'undefine' &&  $("#NombreCompleto").val() != '')
+                {
+                    if (gridDetail.count() != 0)
+                    {
+                        btnSave.disabled = false;
+                    }
+                    else {
+                        btnSave.disabled = true;
+                    }
+                   
                 }
+                else
+                {
+                    btnSave.disabled = true;
+                }
+                
             }
 
-          
-        });
-
-        function Delete(e) {
-            if (confirm('Are you sure?')) {
-                grid.removeRow(e.data.id);
-            }
-        }
-
-        $.ajax({ url: "Save", type: "POST"})
-                   .done(function () {
-                       grid.reload();
-                     
-                   })
-                   .fail(function () {
-                       alert("Unable to save.");
+            function Delete(e) {
+                if (confirm('Are you sure?')) { 
+                $.ajax({
+                    url: "/Voucher/Delete",
+                    type: "post", dataType: "json",
+                    data: { idProduct: e.data.record.IdProduct },
+                    success: function (data) {
+                        gridDetail.reload();
                        
-                   });
-        }
+                    }
+                
+                });
+                GetTotal();
+               }
+            }
     </script>
     <div class="container-fluid">
         @{
@@ -131,6 +180,11 @@
                             <div class="col-md-5">
                                 <label class="control-label col-md-2">Producto:</label>
                                 @Html.EditorFor(model => model.ProductModel.First().Descripcion1, new { htmlAttributes = new { @class = "form-control col-md-offset-3" } })
+                            </div>
+
+
+                            <div class="form-group">
+                                @Html.DropDownList("tipoVenta", new SelectList((System.Collections.IEnumerable)ViewData["TipoVenta"]), new { @class = "form-control" })
                             </div>
                         </div>
                         </br>

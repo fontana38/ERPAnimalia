@@ -1,8 +1,6 @@
 ﻿function validationimput()
 {
-    debugger;
     $('#codigo').keyup('input', function () {
-        debugger;
         var input = $(this);
         var is_name = input.val();
         if (is_name) { input.removeClass("invalid").addClass("valid"); }
@@ -10,8 +8,7 @@
         $('btnSave').prop("disabled", true);
     });
 
-    $('#nombre').keyup('input', function () {
-        debugger;
+    $('#nombre').keyup('input', function () {       
         var input = $(this);
         var is_name = input.val();
         if (is_name) { input.removeClass("invalid").addClass("valid"); }
@@ -19,7 +16,6 @@
     });
 
     $('#apellido').on('input', function () {
-        debugger;
         var input = $(this);
         var is_name = input.val();
         if (is_name) { input.removeClass("invalid").addClass("valid"); }
@@ -27,7 +23,6 @@
     });
 
     $('#telefono').on('input', function () {
-        debugger;
         var input = $(this);
         var is_name = input.val();
         if (is_name) { input.removeClass("invalid").addClass("valid"); }
@@ -35,7 +30,6 @@
     });
 
     $('#fechaCompra').on('input', function () {
-        debugger;
         var input = $(this);
         var is_name = input.val();
         if (is_name) { input.removeClass("invalid").addClass("valid"); }
@@ -44,7 +38,6 @@
 
 
     $('#mail').on('input', function () {
-        debugger;
         var input = $(this);
         var is_name = input.val();
         if (isValidEmailAddress(is_name)) { input.removeClass("invalid").addClass("valid"); }
