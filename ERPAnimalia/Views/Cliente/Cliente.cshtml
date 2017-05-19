@@ -22,16 +22,17 @@
         <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
         <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.1.10.1.js"></script>
       
 
-        <script type="text/javascript">
+     <script type="text/javascript">
             ids = new Array();
             var grid;
             var gridProduct;
            
             $(document).ready(function () {
+                debugger;
                 validationimput();
-
                 $('#fechaCompra')
                 .datepicker({
                     dateFormat: "dd-mm-yy",
@@ -61,7 +62,9 @@
                 });
 
                 $.datepicker.setDefaults($.datepicker.regional["es"]);
-                gridProduct = $("#gridProduct").grid({
+
+                var $j = jQuery.noConflict();
+                gridProduct = $j("#gridProduct").grid({
                     dataKey: "IdProducto",
                     uiLibrary: "bootstrap",
                     columns: [
@@ -76,7 +79,7 @@
                     pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
                 });
 
-                grid = $("#grid").grid({
+                grid = $j("#grid").grid({
                     dataKey: "Id",
                     uiLibrary: "bootstrap",
                     columns: [
@@ -103,7 +106,6 @@
 
             function Edit(e) {
 
-                
                 var dateNext = e.data.record.FechaProximaCompra;
                 var dateBuy = e.data.record.FechaCompra;
 
@@ -172,6 +174,7 @@
             }
 
             function Add() {
+                var $j = jQuery.noConflict();
                 $("#idCliene").val("");
                 $("#codigo").val("");
                 $("#fechaCompra").val("");
@@ -183,12 +186,13 @@
                 $("#mail").val("");
                 $("#mascota").val("");
                 $("#dias").val("")
-                $("#clienteModal").modal("show");
+                $j("#clienteModal").modal("show");
             }
 
    
 
             function Save() {
+                debugger;
                 SaveValidation();
 
                 var selections = gridProduct.getSelections();
@@ -230,6 +234,36 @@
                     .fail(function () {
                         alert("Unable to remove.");
                     });
+            }
+
+
+            function CalculateDate() {
+                debugger;
+                
+                var tt = $('#fechaCompra').val();
+                var date = new Date(tt);
+                var newdate = new Date(date);
+
+                var dd = newdate.getDate();
+                var mm = newdate.getMonth() + 1;
+                var y = newdate.getFullYear();
+                var dateNew = dd + '/' + mm + '/' + y;
+
+                var date = new Date(dateNew);
+                var newdate = new Date(date);
+
+                var days = $("#dias").val();
+                newdate.setDate(newdate.getDate() + parseInt(days));
+
+
+                var dd = newdate.getDate();
+                var mm = newdate.getMonth() + 1;
+                var y = newdate.getFullYear();
+
+                var someFormattedDate = dd + '/' + mm + '/' + y;
+                $("#fechaProximaCompra").val(someFormattedDate);
+
+
             }
         </script>
 

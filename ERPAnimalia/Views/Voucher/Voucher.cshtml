@@ -13,7 +13,7 @@
     <title>Factura</title>
 </head>
 <body>
-    <table id="grid"></table>
+    
     <script type="text/javascript">
         var id;
         var isLoad;
@@ -50,8 +50,8 @@
                     { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 120 },
                     { field: "Cantidad", title: "Cantidad", editor: true, width: 100 },
                     { field: "Descuento", title: "Descuento", editor: true, width: 100 },
-                     { field:"Porcentage", title: "%", sortable: true, width: 100, format: '00,00' },
-                    { field: "Subtotal", title: "Subtotal", sortable: true, width: 100, format:'00,00'},
+                     { field: "Porcentage", title: "%", sortable: true, width: 100},
+                    { field: "Subtotal", title: "Subtotal", sortable: true, width: 100},
                     { width: 150, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
                 ],
                 optimisticPersistence: { sessionStorage: ["page", "limit"] },

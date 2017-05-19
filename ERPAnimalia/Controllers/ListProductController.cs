@@ -10,7 +10,7 @@ namespace ERPAnimalia.Controllers
 {
 
 
-    [RoutePrefix("Cliente/ListProduct")]
+    [RoutePrefix("Producto")]
     public class ListProductController : Controller
     {
         public IListProduct ListProductManagers { get; set; }
@@ -24,13 +24,22 @@ namespace ERPAnimalia.Controllers
         }
 
         // GET: ListProduct
-       
-        [HttpPost]
-        public ActionResult GetProduct()
-
+        [Route("Index")]
+        public ActionResult Index()
         {
-
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetProduct(int? page, int? limit, string sortBy=null, string direction=null, string searchString = null)
+        {
+            int total;
+
+
+            var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
+
+
+            return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
     }
 }

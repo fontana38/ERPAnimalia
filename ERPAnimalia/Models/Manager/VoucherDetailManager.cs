@@ -60,7 +60,6 @@ namespace ERPAnimalia.Models.Manager
                          var headDb = MapperObject.CreateVoucherHeadDb(head);
                         var voucherDetailDb = MapperObject.CreateVoucherDetailDb(detail);
 
-
                         headDb.IdComprobante= Guid.NewGuid();
                         db.Comprobante.Add(headDb);
 
@@ -108,10 +107,6 @@ namespace ERPAnimalia.Models.Manager
             var voucherDetailModelList = Factory.VoucherFactory.CreateVoucherDetailModelList();
             var listProduct = GetProduct();
 
-            //voucherDetailModel.ProductModel = listProduct;
-
-            //var productIds = new List<Guid>();
-
             if (detailGridTemp != null)
             {
                 foreach (var item in detailGridTemp)
@@ -124,7 +119,6 @@ namespace ERPAnimalia.Models.Manager
                     voucherDetailModel.IdProducto = item.IdProduct;
 
                     voucherDetailModelList.Add(voucherDetailModel);
-                    //productIds.Add(item.IdProduct);
                 }
 
 
@@ -159,18 +153,16 @@ namespace ERPAnimalia.Models.Manager
             
         }
 
-        public string CalculateDiscountPorcentage(DetailGrid row,decimal discount)
+        public decimal CalculateDiscountPorcentage(DetailGrid row,decimal discount)
         {
             row.Descuento = discount;
             row.Subtotal = ((row.PrecioVenta * row.Cantidad) - discount).ToString("F");
-            row.Porcentage = (discount / row.PrecioVenta).ToString() ;
+            row.Porcentage = Decimal.Round((discount / row.PrecioVenta),2) ;
             return row.Porcentage;
         }
 
         public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad, string tipoVenta, decimal descuento)
         {
-            
-
             if (tipoVenta != "Kg")
             {
                 detailGrid.Cantidad = (cantidad == 0) ? 1 : cantidad;
@@ -180,14 +172,13 @@ namespace ERPAnimalia.Models.Manager
                 detailGrid.Cantidad = cantidad;
             }
 
-            detailGrid.Descuento = descuento;
+            detailGrid.Descuento = Decimal.Round(descuento,2);
 
             detailGrid.Porcentage = CalculateDiscountPorcentage(detailGrid, descuento);
 
             detailGrid.Subtotal = ((detailGrid.PrecioVenta * detailGrid.Cantidad) - descuento).ToString("F");
 
             return detailGrid;
-
         }
 
     }

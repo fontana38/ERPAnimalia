@@ -269,9 +269,6 @@ namespace ERPAnimalia.Models
         {
             db = Factory.Factory.CreateContextDataBase();
             var productList = db.Product.ToList();
-
-          
-
             var map = MapperObject.CreateProductList(productList);
 
             if (!string.IsNullOrWhiteSpace(searchString))
@@ -279,6 +276,7 @@ namespace ERPAnimalia.Models
                 map = map.Where(p => p.Codigo.Contains(searchString) || p.Descripcion1.Contains(searchString)).ToList();
             }
             total = productList.Count();
+
             var productQueryable = map.AsQueryable();
 
             if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))

@@ -1,6 +1,6 @@
 ﻿@using ERPAnimalia.Models;
 @model ProductModels
-
+<link href="~/Content/css/product.css" rel="stylesheet" />
 @{
 
     var viewDataCategory = ViewData["Category"] as List<CategoryModel>;
@@ -9,7 +9,7 @@
 </br>
 <div class="container-fluid">
 
-    <div class="panel panel-primary">
+    <div id="product" class="panel panel-primary">
         <div class="panel-heading">Buscar Productos</div>
         <div class="panel-body">
 

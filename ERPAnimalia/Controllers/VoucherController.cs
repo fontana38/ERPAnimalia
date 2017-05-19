@@ -127,8 +127,6 @@ namespace ERPAnimalia.Controllers
                                     where N.Descripcion1.StartsWith(term)
                                     select new { N }).ToList();
 
-
-
                 var detailGrid = new DetailGrid();
 
                 if (Descripcion1.Count != 0 && term != string.Empty)
@@ -136,10 +134,9 @@ namespace ERPAnimalia.Controllers
                     detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
                     detailGrid.Codigo = Descripcion1[0].N.Codigo;
                     detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
-                    detailGrid.PrecioVenta = Descripcion1[0].N.ListaPrecioItem.PrecioVenta;
+                    detailGrid.PrecioVenta = Decimal.Round( Descripcion1[0].N.ListaPrecioItem.PrecioVenta,2);
 
                     detailGrid = VoucherDetailManager.SetValuesNewRowTable(detailGrid, cantidad, tipoVenta, descuento);
-
                 }
 
                 if (detailGridTemp != null)
@@ -149,45 +146,13 @@ namespace ERPAnimalia.Controllers
                     if (newRowExist == null)
                     {
                         detailGridTemp.Add(detailGrid);
-                        //foreach (var temp in detailGridTemp)
-                        //{
-                        //    var detailRow = new DetailGrid();
-                        //    detailRow.Codigo = temp.Codigo;
-                        //    detailRow.PrecioVenta = temp.PrecioVenta;
-                        //    if (tipoVenta != "Kg")
-                        //    {
-                        //        detailRow.Cantidad = (cantidad == 0) ? 1 : cantidad;
-                        //    }
-                        //    else
-                        //    {
-                        //        detailRow.Cantidad = cantidad;
-                        //    }
-
-                        //    detailRow.Porcentage = VoucherDetailManager.CalculateDiscountPorcentage(detailRow, descuento);
-                            
-                        //    detailGridList.Add(detailRow);
-                        //}
-
+                        
                     }
                 }
                 else if (!String.IsNullOrEmpty(term))
                 {
                     detailGridTemp = new List<DetailGrid>();
                     detailGridTemp.Add(detailGrid);
-                    //foreach (var temp in detailGridTemp)
-                    //{
-                    //    var detailRow = new DetailGrid();
-                    //    detailRow.Codigo = temp.Codigo;
-                    //    detailRow.PrecioVenta = temp.PrecioVenta;
-
-                    //    detailRow.Cantidad = (cantidad == 0) ? 1 : cantidad;
-                    //    detailRow.Descuento = descuento;
-
-                    //    detailRow.Subtotal = ((detailRow.PrecioVenta * detailRow.Cantidad) - descuento).ToString("F");
-
-                    //    detailRow.Porcentage = VoucherDetailManager.CalculateDiscountPorcentage(detailRow, descuento);
-                    //    detailGridList.Add(detailRow);
-                    //}
                 }
 
                 if (detailGridTemp != null)
@@ -204,7 +169,7 @@ namespace ERPAnimalia.Controllers
                         totalRow += Convert.ToDecimal(item.Subtotal);
                     }
 
-                    detailGridTemp.Last().Total = totalRow;
+                    detailGridTemp.Last().Total = Decimal.Round( totalRow,2);
                 }
 
             }

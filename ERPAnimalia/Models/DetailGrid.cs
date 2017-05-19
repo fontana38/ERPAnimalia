@@ -8,7 +8,7 @@ namespace ERPAnimalia.Models
     public class DetailGrid
     { 
      public Guid IdProduct { get; set; }
-        public string Codigo { get; set; }
+     public string Codigo { get; set; }
      public string Descripcion1 { get; set; }
      public decimal PrecioVenta { get; set; }
      public decimal Cantidad { get; set; }
@@ -16,6 +16,6 @@ namespace ERPAnimalia.Models
      public decimal Descuento { get; set; }
      public string Subtotal { get; set; }
      public decimal Total { get; set; }
-    public string Porcentage { get; set; }
+    public decimal Porcentage { get; set; }
     }
 }

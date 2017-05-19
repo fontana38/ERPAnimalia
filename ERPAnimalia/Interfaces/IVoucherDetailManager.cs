@@ -15,7 +15,7 @@ namespace ERPAnimalia.Interfaces
         List<FormaDePago> GetFormaDePago();
         List<TipoComprobante> GetTipoComprobante();
         List<VoucherDetailModel> MappModels(List<DetailGrid> detailGridTemp);
-        string CalculateDiscountPorcentage(DetailGrid row, decimal discount);
+        decimal CalculateDiscountPorcentage(DetailGrid row, decimal discount);
 
         DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad, string tipoVenta, decimal descuento);
     }
