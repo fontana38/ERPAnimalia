@@ -16,11 +16,12 @@ namespace ERPAnimalia.Controllers
         public IListProduct ListProductManagers { get; set; }
 
         public ProductManager ProductManagers { get; set; }
-        public ManagerListOfAmount ManagerList { get; set; }
+       
 
         public ListProductController()
         {
             ListProductManagers = Factory.Factory.CreateListProducManager();
+            ProductManagers = Factory.Factory.CreateProducManager();
         }
 
         // GET: ListProduct
@@ -31,13 +32,10 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProduct(int? page, int? limit, string sortBy=null, string direction=null, string searchString = null)
+        public JsonResult GetProduct(int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
             int total;
-
-
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
-
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }

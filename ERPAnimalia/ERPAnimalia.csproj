@@ -234,7 +234,6 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ListProductController.cs" />
     <Compile Include="Controllers\SearchProductController.cs" />
-    <Compile Include="Controllers\TransferToFreeProductController.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="DataBase\TransactionBase.cs" />
     <Compile Include="EntityFramework\Animalias.Context.cs">
@@ -300,13 +299,7 @@
     <Compile Include="EntityFramework\IdClienteIdProducto.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
-    <Compile Include="EntityFramework\ListaPrecio.cs">
-      <DependentUpon>Animalias.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityFramework\ProductDetail.cs">
-      <DependentUpon>Animalias.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EntityFramework\ProductoLista.cs">
+    <Compile Include="EntityFramework\Product.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\Proveedor.cs">
@@ -324,6 +317,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CalCulos.cs" />
     <Compile Include="Interfaces\IVoucherDetailManager.cs" />
     <Compile Include="Interfaces\IVoucherHeadManager.cs" />
     <Compile Include="Interfaces\IDetalleComprobante.cs" />
@@ -343,15 +337,10 @@
     <Compile Include="Models\Manager\VoucheHeadManager.cs" />
     <Compile Include="Models\PersonaModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ListaPrecioModel.cs" />
-    <Compile Include="Models\Manager\ManagerListOfAmount.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProductDetailModel.cs" />
     <Compile Include="Models\Manager\ProductManager.cs" />
     <Compile Include="Models\ProductModels.cs" />
-    <Compile Include="EntityFramework\Product.cs">
-      <DependentUpon>Animalias.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ProductoListaModel.cs" />
     <Compile Include="Models\SortHelper.cs" />
     <Compile Include="Models\TipoComprobante.cs" />

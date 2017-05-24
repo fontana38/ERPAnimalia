@@ -18,14 +18,14 @@ namespace ERPAnimalia.Mapper
             MapperConfiguration = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Category, CategoryModel>().ForMember(t => t.SubCategory, opt => opt.Ignore());
                 cfg.CreateMap<SubCategory, SubCategoryModel>();
-                cfg.CreateMap<Product, ProductModels>().ForMember(t => t.Category, opt => opt.Ignore())
+                cfg.CreateMap<Product, ProductModels>()
                 .ForMember(t => t.SubCategory, opt => opt.Ignore())
-                .ForMember(t => t.IsSelect, opt => opt.Ignore())
-                .ForMember(t => t.ListaPrecio, opt => opt.Ignore())
                 .ForMember(t => t.SubCategoryItem, opt => opt.Ignore())
-                 .ForMember(t => t.Cantidad, opt => opt.Ignore());
-                cfg.CreateMap<ListaPrecio, ListaPrecioModel>();
-                cfg.CreateMap<ListaPrecioModel, ListaPrecio>();
+                .ForMember(t => t.CategoryItem, opt => opt.Ignore())
+                .ForMember(t => t.Category, opt => opt.Ignore())
+                .ForMember(t => t.CategoryItem, opt => opt.Ignore())
+                .ForMember(t => t.CategoryName, opt => opt.Ignore())
+                .ForMember(t => t.SubCategoryName, opt => opt.Ignore());
                 cfg.CreateMap<Cliente, ClienteModel>()
                 .ForMember(t => t.FechaCompra1, opt => opt.Ignore())
                 .ForMember(t => t.FechaCompra2, opt => opt.Ignore())

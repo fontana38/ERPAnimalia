@@ -16,11 +16,6 @@
         <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="0.75" PointY="18.25" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="5" PointY="19.5" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Category_SubCategory" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.ProductoLista" Width="1.5" PointX="3" PointY="15.125" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.ListaPrecio" Width="1.5" PointX="6.25" PointY="9.125" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_ProductoLista1" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.ProductDetail" Width="1.5" PointX="2.875" PointY="12.125" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Proveedor" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.IdClienteIdProducto" Width="1.5" PointX="13" PointY="14.375" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Cliente" Width="1.5" PointX="7.375" PointY="1" />
@@ -33,13 +28,10 @@
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="8.5" PointY="12.875" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="7.25" PointY="21.625" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_ListaPrecio" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductDetail_Product" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_ProductoLista_Product" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -20,13 +20,14 @@ namespace ERPAnimalia.Models
             
         }
 
-        public List<ProductModels> GetAllProduct()
-        {
-            db = Factory.Factory.CreateContextDataBase();
-            var listProduct=  db.Product.ToList();
+        //public List<ProductModels> GetAllProduct()
+        //{
+        //    db = Factory.Factory.CreateContextDataBase();
+        //    var listProduct=  db.Product.ToList();
+
  
-            return MapperObject.CreateProductList(listProduct).ToList();
-        }
+        //    return MapperObject.CreateProductList(listProduct).ToList();
+        //}
 
         public void AddProduct(Product product)
         {
@@ -71,12 +72,7 @@ namespace ERPAnimalia.Models
                     try
                     {
                         var productDb = MapperObject.CreateProductDb(product);
-                        
-                        var managerList = Factory.Factory.CreateManagerListOfAmount();
-                        product.ListaPrecioItem.FechaInicio = DateTime.Now.Date;
-                        product.ListaPrecioItem.FechaFinal = DateTime.Now.Date.AddYears(1);
-                        product.ListaPrecioItem = managerList.AddList(product, productDb);
-                        
+  
                         //AddNewProduct
                         AddProduct(productDb);
 
@@ -163,119 +159,118 @@ namespace ERPAnimalia.Models
            return Factory.Factory.NewProductModel();
         }
 
-        public virtual List<ProductModels> SortGrid(string currentSort,string sortOrder)
-        {
-            var model = GetAllProduct();
+        //public virtual List<ProductModels> SortGrid(string currentSort,string sortOrder)
+        //{
+        //    var model = GetAllProduct();
 
-            switch (sortOrder)
-            {
-                case "codigo":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.Codigo).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.Codigo).ToList();
-                    break;
-                case "descripcion1":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.Descripcion1).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.Descripcion1).ToList();
-                    break;
+        //    switch (sortOrder)
+        //    {
+        //        case "codigo":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.Codigo).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.Codigo).ToList();
+        //            break;
+        //        case "descripcion1":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.Descripcion1).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.Descripcion1).ToList();
+        //            break;
                    
-                case "Categoria":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.CategoryItem.Name).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.CategoryItem.Name).ToList();
-                    break;
-                case "Descripcion2":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.Descripcion2).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.Descripcion2).ToList();
-                    break;
-                case "Cantidad":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.Cantidad).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.Cantidad).ToList();
-                    break;
-                case "Presentacion":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.Presentacion).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.Presentacion).ToList();
-                    break;
-                case "RentabilidadPesos":
-                    if (sortOrder.Equals(currentSort))
-                        model = model.OrderByDescending
-                                (p => p.RentabilidadPesos).ToList();
-                    else
-                        model = model.OrderBy
-                                (p => p.Presentacion).ToList();
-                    break;
+        //        case "Categoria":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.CategoryItem.Name).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.CategoryItem.Name).ToList();
+        //            break;
+        //        case "Descripcion2":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.Descripcion2).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.Descripcion2).ToList();
+        //            break;
+        //        case "Cantidad":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.Cantidad).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.Cantidad).ToList();
+        //            break;
+        //        case "Presentacion":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.Presentacion).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.Presentacion).ToList();
+        //            break;
+        //        case "RentabilidadPesos":
+        //            if (sortOrder.Equals(currentSort))
+        //                model = model.OrderByDescending
+        //                        (p => p.RentabilidadPesos).ToList();
+        //            else
+        //                model = model.OrderBy
+        //                        (p => p.Presentacion).ToList();
+        //            break;
 
 
-                default:
-                    model = model.OrderBy(s => s.ListaPrecioItem.FechaInicio).ToList(); 
-                    break;
+        //        default:
+                   
+        //            break;
                 
-            }
-            return model;
+        //    }
+        //    return model;
            
-        }
+        //}
 
-        public List<ProductModels> SearchProduct(ProductModels search)
-        {
-            try
-            {
-                db = Factory.Factory.CreateContextDataBase();
+        //public List<ProductModels> SearchProduct(ProductModels search)
+        //{
+        //    try
+        //    {
+        //        db = Factory.Factory.CreateContextDataBase();
 
-                var searchProduct = string.Empty;
+        //        var searchProduct = string.Empty;
 
-                var product = db.Product.ToList();
+        //        var product = db.Product.ToList();
 
-                if (!String.IsNullOrWhiteSpace(search.Codigo)) product = product.Where(u => u.Codigo.Contains(search.Codigo)).ToList();
-                if (!String.IsNullOrWhiteSpace(search.Descripcion1)) product = product.Where(u => u.Descripcion1.Contains(search.Descripcion1)).ToList();
-                if ((search.IdCategory != 0)) product = product.Where(u => u.Category.IdCategory == search.IdCategory).ToList();
-                if ((search.Descripcion2 != null)) product = product.Where(u => u.Descripcion2 == search.Descripcion2).ToList();
+        //        if (!String.IsNullOrWhiteSpace(search.Codigo)) product = product.Where(u => u.Codigo.Contains(search.Codigo)).ToList();
+        //        if (!String.IsNullOrWhiteSpace(search.Descripcion1)) product = product.Where(u => u.Descripcion1.Contains(search.Descripcion1)).ToList();
+        //        if ((search.IdSubCategoria != 0)) product = product.Where(u => u.Category.IdCategory == search.IdCategoria).ToList();
+        //        if ((search.Descripcion2 != null)) product = product.Where(u => u.Descripcion2 == search.Descripcion2).ToList();
 
-                //product = db.Product.Where(b => b.Codigo.Contains(codigo) || b.Name.Contains(name) || b.IdCategory ==category || b.IdSubCategory == subCategory).ToList();
+        //        //product = db.Product.Where(b => b.Codigo.Contains(codigo) || b.Name.Contains(name) || b.IdCategory ==category || b.IdSubCategory == subCategory).ToList();
 
-                var productModel = MapperObject.CreateProductList(product);
-                return productModel;
-            }
+        //        var productModel = MapperObject.CreateProductList(product);
+        //        return productModel;
+        //    }
 
-            catch (Exception e)
-            {
+        //    catch (Exception e)
+        //    {
 
-                throw new Exception(e.Message.ToString());
-            }
-        }
+        //        throw new Exception(e.Message.ToString());
+        //    }
+        //}
 
         public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
-            db = Factory.Factory.CreateContextDataBase();
-            var productList = db.Product.ToList();
-            var map = MapperObject.CreateProductList(productList);
+            var map = MapProduct();
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 map = map.Where(p => p.Codigo.Contains(searchString) || p.Descripcion1.Contains(searchString)).ToList();
             }
-            total = productList.Count();
+
+            total = map.Count();
 
             var productQueryable = map.AsQueryable();
 
@@ -299,6 +294,17 @@ namespace ERPAnimalia.Models
             }
 
             return productQueryable.ToList();
+        }
+
+        public List<ProductModels> MapProduct()
+        {
+           
+            db = Factory.Factory.CreateContextDataBase();
+            var productList = db.Product.ToList();
+            var category = db.Category.ToList();
+            var subcategoria = db.SubCategory.ToList();
+
+            return  MapperObject.CreateProductList(productList, category, subcategoria);
         }
 
         public void RemoveModelView(ModelStateDictionary modelState)

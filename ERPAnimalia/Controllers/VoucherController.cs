@@ -134,7 +134,7 @@ namespace ERPAnimalia.Controllers
                     detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
                     detailGrid.Codigo = Descripcion1[0].N.Codigo;
                     detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
-                    detailGrid.PrecioVenta = Decimal.Round( Descripcion1[0].N.ListaPrecioItem.PrecioVenta,2);
+                    detailGrid.PrecioVenta =  Descripcion1[0].N.PrecioVenta.Value;
 
                     detailGrid = VoucherDetailManager.SetValuesNewRowTable(detailGrid, cantidad, tipoVenta, descuento);
                 }

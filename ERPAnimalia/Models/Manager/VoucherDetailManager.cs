@@ -10,10 +10,12 @@ namespace ERPAnimalia.Models.Manager
     public class VoucherDetailManager : IVoucherDetailManager
     {
         public AnimaliaPetShopEntities db { get; set; }
+        public ProductManager _ProducManager { get; set; }
 
         public VoucherDetailManager()
         {
             db = Factory.Factory.CreateContextDataBase();
+            _ProducManager = Factory.Factory.CreateProducManager();
         }
         public List<TipoComprobante> GetTipoComprobante()
         {
@@ -30,10 +32,7 @@ namespace ERPAnimalia.Models.Manager
 
         public List<ProductModels> GetProduct()
         {
-            var productList = db.Product.ToList();
-            var productListModel = MapperObject.CreateProductList(productList);
-
-            return productListModel;
+            return _ProducManager.MapProduct();
         }
 
         public string SaveVoucher(List<DetailGrid> detailGridTemp, VoucherHeadModel head,string tipoVenta)

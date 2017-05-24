@@ -10,16 +10,7 @@ namespace ERPAnimalia.Factory
     public static class Factory
     {
 
-       public static ListaPrecio NewListaPrecio()
-        {
-            return new ListaPrecio();
-        }
-
-        public static ProductoLista NewProductoLista()
-        {
-            return new ProductoLista();
-        }
-
+ 
         public static PersonaModels NewClienteModels()
         {
             return new PersonaModels();
@@ -30,16 +21,7 @@ namespace ERPAnimalia.Factory
             return new List<ClienteModel>();
         }
 
-        public static ListaPrecioModel NewListaPrecioModel()
-        {
-            return new ListaPrecioModel();
-        }
-
-        public static List<ListaPrecioModel>  NewListaPrecioModelCollection()
-        {
-            return new List<ListaPrecioModel>();
-        }
-
+        
         public static ProductoListaModel NewProductoListaModel()
         {
             return new ProductoListaModel();
@@ -78,11 +60,6 @@ namespace ERPAnimalia.Factory
         }
 
 
-        public static ManagerListOfAmount CreateManagerListOfAmount()
-        {
-            return new  ManagerListOfAmount();
-            
-        }
 
         public static ProductManager CreateProducManager()
         {
@@ -127,14 +104,6 @@ namespace ERPAnimalia.Factory
             return new SubCategoryModel();
 
         }
-
-        public static ProductoLista NewProductoListaDB()
-        {
-            return new ProductoLista();
-
-        }
-
-       
 
         public static List<ClienteModel> Cliente()
         {

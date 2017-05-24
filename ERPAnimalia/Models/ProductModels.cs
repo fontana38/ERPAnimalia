@@ -46,15 +46,22 @@ namespace ERPAnimalia.Models
         [Display(Name = "Rentabilidad %")]
         public decimal? RentabilidadPorcentaje { get; set; }
 
+        [Display(Name = "Precio Costo")]
+        public decimal? PrecioCosto { get; set; }
+
+        [Display(Name = "Precio Venta")]
+        public decimal? PrecioVenta { get; set; }
+
+
         public int? kg { get; set; }
 
         [Required(ErrorMessage = "Por favor Ingrese la Categoria")]
 
-        public int? IdCategory { get; set; }
+        public int? IdCategoria { get; set; }
        
-        public int? IdSubCategory { get; set; }
+        public int? IdSubCategoria { get; set; }
 
-        public Guid? IdListaPrecio { get; set; }
+       
 
         [Display(Name = "Categoria")]
         public List<CategoryModel> Category { get; set; }
@@ -68,9 +75,11 @@ namespace ERPAnimalia.Models
         [Display(Name = "Sub Categoria")]
         public SubCategoryModel SubCategoryItem { get; set; }
 
-        public List<ListaPrecioModel> ListaPrecio { get; set; }
+       
+        public string SubCategoryName { get; set; }
 
-        public ListaPrecioModel ListaPrecioItem { get; set; }
+
+        public string CategoryName { get; set; }
 
         public bool IsSelect { get; set; }
     }

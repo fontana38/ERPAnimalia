@@ -12,40 +12,39 @@ namespace ERPAnimalia.Controllers
     public class ProductController : Controller
     {
         public ProductManager ProductManagers { get; set; }
-        public ManagerListOfAmount ManagerList { get; set; }
+      
 
         public ProductController()
         {
-            ProductManagers = Factory.Factory.CreateProducManager();
-            ManagerList = Factory.Factory.CreateManagerListOfAmount();
+            ProductManagers = Factory.Factory.CreateProducManager();          
         }
 
-        // GET: Product
-        [Route("Product")]
-        public ActionResult Index(string sortOrder, string CurrentSort, int? page, int pageSize = 25)
-        {
-            ViewData["Category"] = ProductManagers.GetCategory();
+        //// GET: Product
+        //[Route("Product")]
+        //public ActionResult Index(string sortOrder, string CurrentSort, int? page, int pageSize = 25)
+        //{
+        //    ViewData["Category"] = ProductManagers.GetCategory();
 
-            ViewData["SubCategory"] = ProductManagers.GetSubCategory();
+        //    ViewData["SubCategory"] = ProductManagers.GetSubCategory();
 
-            page = page > 0 ? page : 1;
-            pageSize = pageSize > 0 ? pageSize : 25;
+        //    page = page > 0 ? page : 1;
+        //    pageSize = pageSize > 0 ? pageSize : 25;
 
-            sortOrder = String.IsNullOrEmpty(sortOrder) ? "date" : sortOrder;
+        //    sortOrder = String.IsNullOrEmpty(sortOrder) ? "date" : sortOrder;
 
 
-            ViewBag.CurrentSort = sortOrder;
+        //    ViewBag.CurrentSort = sortOrder;
 
-            var model = ProductManagers.SortGrid(sortOrder, CurrentSort);
+        //    //var model = ProductManagers.SortGrid(sortOrder, CurrentSort);
+
             
-            
-            int pageNumber = (page ?? 1);
+        //    int pageNumber = (page ?? 1);
           
-            IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(model, pageSize + 1, 5, 25);
+        //    IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(model, pageSize + 1, 5, 25);
             
-            return View(productModel);
+        //    return View(productModel);
             
-        }
+        //}
 
         // GET: Product/Details/5
         public ActionResult Details(int id)
@@ -61,7 +60,7 @@ namespace ERPAnimalia.Controllers
             {
                 product.Category = ProductManagers.GetCategory();
                 product.SubCategory = ProductManagers.GetSubCategory();
-                product.ListaPrecio = ManagerList.GetListOfAmount();
+               
 
                 ModelState.Remove("Codigo");
                 ModelState.Remove("Description1");
@@ -69,10 +68,6 @@ namespace ERPAnimalia.Controllers
                 ModelState.Remove("IdCategory");
                 ModelState.Remove("Descripcion2");
                 ModelState.Remove("marca");
-
-                var lista = product.ListaPrecio.Find(x => x.IdLitaPrecio == product.IdListaPrecio);
-                product.ListaPrecioItem = lista;
-
 
                 return View("Add", product);
             }
@@ -94,7 +89,7 @@ namespace ERPAnimalia.Controllers
             }
             product.Category = ProductManagers.GetCategory();
             product.SubCategory = ProductManagers.GetSubCategory();
-            product.ListaPrecio = ManagerList.GetListOfAmount();
+           
             return View("Add", product);
         }
 
@@ -143,27 +138,27 @@ namespace ERPAnimalia.Controllers
             return View();
         }
 
-        public ActionResult SearchProduct(ProductModels product)
-        {
-            ViewData["Category"] = ProductManagers.GetCategory();
-            ViewData["SubCategory"] = ProductManagers.GetSubCategory();
-            product.Category= ViewData["Category"] as List<CategoryModel>;
-            product.SubCategory= ViewData["SubCategory"] as List<SubCategoryModel>;
-            var productList = ProductManagers.SearchProduct(product);
+        //public ActionResult SearchProduct(ProductModels product)
+        //{
+        //    ViewData["Category"] = ProductManagers.GetCategory();
+        //    ViewData["SubCategory"] = ProductManagers.GetSubCategory();
+        //    product.Category= ViewData["Category"] as List<CategoryModel>;
+        //    product.SubCategory= ViewData["SubCategory"] as List<SubCategoryModel>;
+        //    var productList = ProductManagers.SearchProduct(product);
 
-            int pageSize = 25;
+        //    int pageSize = 25;
 
             
-            IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(productList, pageSize + 1, 5, 25);
-            if(productModel.Count == 0)
-            {
-                RedirectToAction("Index");
-            }
+        //    IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(productList, pageSize + 1, 5, 25);
+        //    if(productModel.Count == 0)
+        //    {
+        //        RedirectToAction("Index");
+        //    }
            
-                return View("Index", productModel);
+        //        return View("Index", productModel);
             
             
-        }
+        //}
         // POST: Product/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

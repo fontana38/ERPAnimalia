@@ -20,10 +20,10 @@ namespace ERPAnimalia.Models
         public List<ProductModels> GetProduct(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             var productList = db.Product.ToList();
+            var categoriaList = db.Category.ToList();
+            var subCategoriaList = db.SubCategory.ToList();
 
-           
-
-            var product = MapperObject.CreateProductList(productList);
+            var product = MapperObject.CreateProductList(productList, categoriaList,subCategoriaList);
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {

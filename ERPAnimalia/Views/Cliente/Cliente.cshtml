@@ -22,7 +22,7 @@
         <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
         <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
         <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/jquery.1.10.1.js"></script>
+         <script src="~/Scripts/jquery.1.10.1.js"></script>
       
 
      <script type="text/javascript">
@@ -31,8 +31,8 @@
             var gridProduct;
            
             $(document).ready(function () {
-                debugger;
-                validationimput();
+
+               
                 $('#fechaCompra')
                 .datepicker({
                     dateFormat: "dd-mm-yy",
@@ -70,9 +70,9 @@
                     columns: [
                         { field: "IdProducto", hidden: true },
                         { field: "Codigo", title: "Código", sortable: true, width: 80 },
-                        { field: "Marca", title: "Marca", sortable: true, width: 200 },
-                        { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 250 },
-                        { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 250 }
+                        { field: "Marca", title: "Marca", sortable: true, width: 150 },
+                        { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
+                        { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200}
                     ],
                     selectionMethod: 'checkbox',
                     selectionType: 'multiple',
@@ -169,8 +169,8 @@
             }
 
             function SearchProduct() {
-
-                gridProduct.reload({ searchString: $("#search").val() });
+                debugger;
+                gridProduct.reload({ searchString: $("#searchProduct").val() });
             }
 
             function Add() {
@@ -189,39 +189,36 @@
                 $j("#clienteModal").modal("show");
             }
 
-   
-
             function Save() {
                 debugger;
-                SaveValidation();
+                if (SaveValidation())
+                {
+                    var selections = gridProduct.getSelections();
+                    var cliente = {
 
-                var selections = gridProduct.getSelections();
-                var cliente = {
+                        Codigo: $("#codigo").val(),
+                        FechaCompra1: $("#fechaCompra").val(),
+                        FechaCompra2: $("#fechaProximaCompra").val(),
+                        Nombre: $("#nombre").val(),
+                        Apellido: $("#apellido").val(),
+                        Direccion: $("#direccion").val(),
+                        Telefono: $("#telefono").val(),
+                        Mail: $("#mail").val(),
+                        Mascota: $("#mascota").val(),
+                        IdsProduct: selections,
+                        dias: $("#dias").val()
 
-                    Codigo: $("#codigo").val(),
-                    FechaCompra1: $("#fechaCompra").val(),
-                    FechaCompra2: $("#fechaProximaCompra").val(),
-                    Nombre: $("#nombre").val(),
-                    Apellido: $("#apellido").val(),
-                    Direccion: $("#direccion").val(),
-                    Telefono: $("#telefono").val(),
-                    Mail: $("#mail").val(),
-                    Mascota: $("#mascota").val(),
-                    IdsProduct: selections,
-                    dias: $("#dias").val()
-
-                };
-
-
-                $.ajax({ url: "Save", type: "POST", data: { cliente: cliente } })
-                    .done(function () {
-                        grid.reload();
-                        $("#clienteModal").modal("hide");
-                    })
-                    .fail(function () {
-                        alert("Unable to save.");
-                        $("#clienteModal").modal("hide");
-                    });
+                    };
+                    $.ajax({ url: "Save", type: "POST", data: { cliente: cliente } })
+                        .done(function () {
+                            grid.reload();
+                            $("#clienteModal").modal("hide");
+                        })
+                        .fail(function () {
+                            alert("Unable to save.");
+                            $("#clienteModal").modal("hide");
+                        });
+                }
             }
 
 
@@ -238,8 +235,6 @@
 
 
             function CalculateDate() {
-                debugger;
-                
                 var tt = $('#fechaCompra').val();
                 var date = new Date(tt);
                 var newdate = new Date(date);
@@ -263,6 +258,21 @@
                 var someFormattedDate = dd + '/' + mm + '/' + y;
                 $("#fechaProximaCompra").val(someFormattedDate);
 
+
+            }
+
+            function  SaveValidation()
+            {
+                if($("#codigo").val()=="" ||$("#dias").val()=="" || $("#apellido").val()=="" || $("#direccion").val()=="")
+                {
+                   alert("Complete los campos necesarios para poder guardar.Codigo,nombre,apellido,direccion y dias")
+                    return false;
+                }
+                else
+                {
+                   
+                    return true;
+                }
 
             }
         </script>
@@ -294,7 +304,7 @@
     
         <!-- Modal -->
         <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div id="modalDialog" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -361,7 +371,7 @@
                                         <div class="form-group">
                                             <label for="fechaProximaCompra">Fecha Próxima Compra</label></br>
                                             <input type="text" size="50" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaProximaCompra" placeholder="Ingrese Fecha Próxima Compra">
-                                           
+
                                         </div>
 
                                         <div class="form-group">
@@ -374,15 +384,18 @@
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="productoTab">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
+
                                             <div class="input-group col-md-offset-4">
-                                                <input type="text" id="search" class="form-control" placeholder="Search for...">
+                                                <input type="text" id="searchProduct" class="form-control" placeholder="Search for...">
                                                 <span class="input-group-btn">
                                                     <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
+                              
+                           
                                     <div class="row">
                                         <div class="col-md-12">
                                             <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>

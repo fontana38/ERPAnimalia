@@ -95,3 +95,7 @@ th{
   background-color: #0044cc!important;
   color: #fff !important;
 }
+
+#modalDialog{
+    width:800px;
+}

@@ -13,8 +13,6 @@ namespace ERPAnimalia.Controllers
         public ProductManager ProductManagers { get; set; }
         public IListProduct ListProductManagers { get; set; }
 
-       
-        public ManagerListOfAmount ManagerList { get; set; }
 
         public ClienteController()
         {

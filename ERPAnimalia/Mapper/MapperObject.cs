@@ -19,7 +19,7 @@ namespace ERPAnimalia
         //    var cliente = mapper.Map<ClienteModels>(cli);
         //    return cliente;
         //}
-        public static List<ProductModels> CreateProductList(List<Product> product)
+        public static List<ProductModels> CreateProductList(List<Product> product, List<Category> category, List<SubCategory> subCategory)
         {
             try
             {
@@ -28,13 +28,17 @@ namespace ERPAnimalia
 
                 foreach (var item in product)
                 {
-                    var category = CreateCategory(item.Category);
+                    var cat= category.Find(x => x.IdCategory == item.IdCategoria);
+                    var subCat = subCategory.Find(x => x.IdSubCategory == item.IdSubCategoria);
                     var productMap = mapper.Map<ProductModels>(item);
-                    var subCategoryMap = CreateSubCategory(item.Category.SubCategory);
-                    var listPriceMap = CreateListMap(item.ListaPrecio);
-                    productMap.CategoryItem = category;
+                    var subCategoryMap = CreateSubCategory(subCat);
+                    var categoryMap = CreateCategory(cat);
+
+                    productMap.CategoryItem = categoryMap;
                     productMap.SubCategoryItem = subCategoryMap;
-                    productMap.ListaPrecioItem = listPriceMap;
+                    productMap.CategoryName = categoryMap.Name;
+                    productMap.SubCategoryName = subCategoryMap.Name;
+                   
                     list.Add(productMap);
                 }
                 return list;
@@ -142,10 +146,8 @@ namespace ERPAnimalia
                         var category = CreateCategory(item.Category);
                         var productMap = mapper.Map<ProductModels>(item);
                         var subCategoryMap = CreateSubCategory(item.Category.SubCategory);
-                        var listPriceMap = CreateListMap(item.ListaPrecio);
                         productMap.CategoryItem = category;
                         productMap.SubCategoryItem = subCategoryMap;
-                        productMap.ListaPrecioItem = listPriceMap;
                         listaMap.Productos.Add(productMap);
                     }
 
@@ -162,56 +164,11 @@ namespace ERPAnimalia
                 throw new Exception(e.Message.ToString());
             }
         }
-        public static List<ListaPrecioModel> CreateListAmountMap(List<ListaPrecio> lista)
-        {
-            try
-            {
-                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
-                var List = Factory.Factory.NewListaPrecioModelCollection();
-                foreach (var item in List)
-                {
-                    var listaMap = mapper.Map<ListaPrecioModel>(item);
-
-                    List.Add(listaMap);
-                }
-
-                return List;
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message.ToString());
-            }
-            
-        }
-
-        public static ListaPrecioModel CreateListMap(ListaPrecio lista)
-        {
-            try
-            {
-                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
-                return mapper.Map<ListaPrecioModel>(lista);
-            }
-            catch (Exception e)
-            {
-
-                throw new Exception(e.Message.ToString());
-            }
-            
-        }
-        public static ListaPrecio CreateListMapDb(ListaPrecioModel lista)
-        {
-            try
-            {
-                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
-                return mapper.Map<ListaPrecio>(lista);
-            }
-            catch (Exception e)
-            {
-
-                throw new Exception(e.Message.ToString());
-            }
+       
            
-        }
+
+        
+       
 
         public static List<SubCategoryModel> CreateSubCategoryList(List<SubCategory> subCategory)
         {
@@ -275,7 +232,7 @@ namespace ERPAnimalia
                 NewProduct.Kg = product.kg;
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
-                NewProduct.IdCategoria = product.IdCategory;
+                NewProduct.IdCategoria = product.IdCategoria;
                 
                 return NewProduct;
         }
@@ -293,8 +250,9 @@ namespace ERPAnimalia
                
                 productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
-                productDb.IdCategoria = product.IdCategory;
-               
+                productDb.IdCategoria = product.IdCategoria;
+                productDb.IdSubCategoria = product.IdCategoria;
+
                 return productDb;
             }
             catch (Exception e)
