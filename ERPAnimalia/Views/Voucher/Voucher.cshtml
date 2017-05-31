@@ -50,7 +50,7 @@
                     { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 120 },
                     { field: "Cantidad", title: "Cantidad", editor: true, width: 100 },
                     { field: "Descuento", title: "Descuento", editor: true, width: 100 },
-                     { field: "Porcentage", title: "%", sortable: true, width: 100},
+                    { field: "Porcentage", title: "%", sortable: true, width: 100},
                     { field: "Subtotal", title: "Subtotal", sortable: true, width: 100},
                     { width: 150, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
                 ],
@@ -70,7 +70,6 @@
                 
             });
             gridDetail.on('dataBound', function (e, records, totalRecords) {
-                debugger;
                 GetTotal();
                 SaveEnabled();
             });
@@ -105,9 +104,7 @@
                 var formaPago = $("#formaDePago").val();
                 
                 $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago, tipoVenta: $("#tipoVenta").val() } })
-                    .done(function (data) {
-                        debugger;
-                        alert(data);
+                    .done(function (data) {                     
                         gridDetail.clear();
                        $("#NombreCompleto").val("");
                        $("#DateVoucher").val("");

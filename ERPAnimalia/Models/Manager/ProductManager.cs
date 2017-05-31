@@ -154,6 +154,15 @@ namespace ERPAnimalia.Models
             return MapperObject.CreateSubCategoryList(subCategory);
         }
 
+        public void Delete(Guid id)
+        {
+            db = Factory.Factory.CreateContextDataBase();
+           
+            var productById = db.Product.Find(id);
+
+            db.Product.Remove(productById);
+            db.SaveChanges();
+        }
         public ProductModels NewProductModel()
         {
            return Factory.Factory.NewProductModel();

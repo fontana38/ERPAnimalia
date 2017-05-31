@@ -61,7 +61,6 @@ namespace ERPAnimalia.Controllers
                 product.Category = ProductManagers.GetCategory();
                 product.SubCategory = ProductManagers.GetSubCategory();
                
-
                 ModelState.Remove("Codigo");
                 ModelState.Remove("Description1");
                 ModelState.Remove("Cantidad");
@@ -85,7 +84,7 @@ namespace ERPAnimalia.Controllers
             if (ModelState.IsValid)
             {
                 ProductManagers.SaveProduct(product);
-                return RedirectToAction("Index");
+                return RedirectToAction("Producto/Index");
             }
             product.Category = ProductManagers.GetCategory();
             product.SubCategory = ProductManagers.GetSubCategory();
@@ -110,21 +109,23 @@ namespace ERPAnimalia.Controllers
         }
 
         // GET: Product/Edit/5
-        public ActionResult Edit(Guid id)
+        [HttpGet]
+        public ActionResult Edit( Guid ids)
         {
-           var productEdit = ProductManagers.GetProductById(id);
-           return View(productEdit);
+           
+           var productEdit = ProductManagers.GetProductById(ids);
+            return View(productEdit);
         }
 
         // POST: Product/Edit/5
         [HttpPost]
-        public ActionResult Edit(Guid id, ProductModels product)
+        public ActionResult Edit(Guid? id, ProductModels product)
         {
             try
             {
                 ProductManagers.EditProduct(product);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("/Producto/Index");
             }
             catch
             {
@@ -133,9 +134,10 @@ namespace ERPAnimalia.Controllers
         }
 
         // GET: Product/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
-            return View();
+            ProductManagers.Delete(id);
+            return RedirectToAction("../Producto/Index");
         }
 
         //public ActionResult SearchProduct(ProductModels product)

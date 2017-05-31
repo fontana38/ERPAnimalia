@@ -149,8 +149,8 @@
           <Property Name="IdSubCategoria" Type="int" />
           <Property Name="Descripcion2" Type="nchar" MaxLength="10" />
           <Property Name="Presentacion" Type="nvarchar" MaxLength="50" />
-          <Property Name="RentabilidadPesos" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="Rentabilidad" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="RentabilidadPesos" Type="float" />
+          <Property Name="Rentabilidad" Type="float" />
           <Property Name="PrecioVenta" Type="decimal" Precision="18" Scale="0" />
           <Property Name="PrecioCosto" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
@@ -772,8 +772,8 @@
           <Property Name="IdSubCategoria" Type="Int32" />
           <Property Name="Descripcion2" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Presentacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RentabilidadPesos" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Rentabilidad" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="RentabilidadPesos" Type="Double" />
+          <Property Name="Rentabilidad" Type="Double" />
           <Property Name="PrecioVenta" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="PrecioCosto" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Category" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Product" ToRole="Category" />

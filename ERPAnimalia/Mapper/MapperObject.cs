@@ -232,9 +232,15 @@ namespace ERPAnimalia
                 NewProduct.Kg = product.kg;
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
-                NewProduct.IdCategoria = product.IdCategoria;
-                
-                return NewProduct;
+                NewProduct.IdCategoria = product.IdCategory;
+                NewProduct.IdSubCategoria = product.IdSubCategory;
+                NewProduct.PrecioVenta = product.PrecioVenta;
+                NewProduct.PrecioCosto = product.PrecioCosto;
+                NewProduct.Presentacion = product.Presentacion;
+                NewProduct.RentabilidadPesos = Convert.ToDouble(Helper.CalCulos.CalcularRentabilidad(product.PrecioCosto, product.PrecioVenta));
+                NewProduct.Rentabilidad = Convert.ToDouble(Helper.CalCulos.CalcularRentabilidadPorcentage(product.PrecioCosto.Value, product.PrecioVenta.Value));
+
+            return NewProduct;
         }
 
         public static Product EditProductDb(ProductModels product, Product productDb)
@@ -250,8 +256,11 @@ namespace ERPAnimalia
                
                 productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
-                productDb.IdCategoria = product.IdCategoria;
-                productDb.IdSubCategoria = product.IdCategoria;
+                productDb.IdCategoria = product.CategoryItem.IdCategory;
+                productDb.IdSubCategoria = product.SubCategoryItem.IdSubCategory;
+                productDb.RentabilidadPesos = Convert.ToDouble(Helper.CalCulos.CalcularRentabilidad(product.PrecioCosto, product.PrecioVenta));
+                productDb.Rentabilidad = Convert.ToDouble(Helper.CalCulos.CalcularRentabilidadPorcentage(product.PrecioCosto.Value, product.PrecioVenta.Value));
+
 
                 return productDb;
             }

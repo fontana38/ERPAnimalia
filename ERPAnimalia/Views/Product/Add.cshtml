@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
     <link href="~/Content/AddControl.css" rel="stylesheet" />
     @model ProductModels
     <meta charset="utf-8" />
@@ -11,14 +11,23 @@
 
 </head>
 <body>
+    <script type="text/javascript">
+       
+       
+
+        
+        
+    </script>
     </br>
     </br>
         <div class="container-fluid">
             
             <form action="SaveProduct" class="form-horizontal">
+               
                 <div class="form-group">
                     @Html.ValidationSummary();
                 </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-md-4">Código:</label>
@@ -27,9 +36,13 @@
                     </div>
                     <div class="form-group">
                         <label class="col-md-4" for="desc">Categoria:</label>
-                        @Html.DropDownListFor(model => model.Category.First().IdCategory,
-    new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+                        @Html.DropDownListFor(model => Model.IdCategory,
+                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
 
+                    </div><div class="form-group">
+                        <label class="col-md-4" for="desc">Subcategoria:</label>
+                        @Html.DropDownListFor(model => model.IdSubCategory,
+                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
                     </div>
                     <div class="form-group">
                         <label class="col-md-4" for="desc">Marca:</label>
@@ -79,7 +92,7 @@
                                     @Html.TextBoxFor(m => m.PrecioVenta, new { @class = "form-control", type = "text", placeholder = "Precio Venta" })
                                 </div>
                             </div>
-                            <button type="submit" name="SaveProduct" value="SaveProduct" class="btn btn-primary">Agregar Producto</button>
+                            <button type="submit" name="SaveProduct" value="save" class="btn btn-primary">Agregar Producto</button>
 </form>
         </div>
 </body>

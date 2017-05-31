@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ERPAnimalia.Models
 {
@@ -41,10 +42,10 @@ namespace ERPAnimalia.Models
         public decimal? Cantidad { get; set; }
 
         [Display(Name = "Rentabilidad Pesos")]
-        public decimal? RentabilidadPesos { get; set; }
+        public double? RentabilidadPesos { get; set; }
 
         [Display(Name = "Rentabilidad %")]
-        public decimal? RentabilidadPorcentaje { get; set; }
+        public double? Rentabilidad { get; set; }
 
         [Display(Name = "Precio Costo")]
         public decimal? PrecioCosto { get; set; }
@@ -57,15 +58,17 @@ namespace ERPAnimalia.Models
 
         [Required(ErrorMessage = "Por favor Ingrese la Categoria")]
 
-        public int? IdCategoria { get; set; }
+        public int? IdCategory { get; set; }
        
-        public int? IdSubCategoria { get; set; }
+        public int? IdSubCategory { get; set; }
 
        
 
-        [Display(Name = "Categoria")]
+        
         public List<CategoryModel> Category { get; set; }
-   
+
+        public SelectList CategorySelect { get; set; }
+
         [Display(Name = "Sub Categoria")]
         public List<SubCategoryModel> SubCategory { get; set; }
 

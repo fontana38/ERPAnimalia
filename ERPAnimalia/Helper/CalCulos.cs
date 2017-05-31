@@ -9,13 +9,13 @@ namespace ERPAnimalia.Helper
     {
         public static string CalcularRentabilidad(decimal? precioCosto, decimal? PrecioVenta)
         {
-            var porcentage =  (PrecioVenta.Value - precioCosto.Value).ToString("F"); ;
-            return porcentage;
+            var pesos = (PrecioVenta.Value - precioCosto.Value).ToString("f2"); 
+            return pesos;
         }
 
         public static string CalcularRentabilidadPorcentage(decimal precioCosto, decimal PrecioVenta)
         {
-            var porcentage = ( precioCosto / PrecioVenta).ToString("F"); ;
+            var porcentage = (precioCosto / PrecioVenta).ToString("f2");
             return porcentage;
         }
     }

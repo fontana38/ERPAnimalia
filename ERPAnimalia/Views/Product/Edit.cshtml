@@ -11,66 +11,78 @@
 </head>
 <body>
 
-@using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
-{
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+    {
 
         @Html.HiddenFor(m => m.IdProducto)
         <div class="form-group">
-            <label class="control-label col-sm-2">Código:</label>
-            <div class="col-sm-10">
+            <label class="col-md-4" for="desc">Código:</label>
                 @Html.EditorFor(m => m.Codigo, new { @class = "form-control", type = "text", placeholder = "Ingrese el código" })
-            </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="usr">Nombre:</label>
-            <div class="col-sm-10">
-                @Html.EditorFor(m => m.Name, new { @class = "form-control", type = "text" })
+            <label class="col-md-4" for="desc">Categoria:</label>
+            @Html.DropDownListFor(model => Model.CategoryItem.IdCategory,
+                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
 
-            </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="desc">Descripción:</label>
-            <div class="col-sm-10">
-                @Html.EditorFor(m => m.Descripcion1, new { @class = "form-control", type = "text" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="desc">Categoria:</label>
-            <div class="col-sm-10">
-                @Html.DropDownListFor(model => model.Category.First().IdCategory,
-    new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
-
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="desc">Subcategoria:</label>
-            <div class="col-sm-10">
-                @Html.DropDownListFor(model => model.SubCategoryItem.IdSubCategory,
-    new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
-
-            </div>
+            <label class="col-md-4" for="desc">Subcategoria:</label>
+            @Html.DropDownListFor(model => model.SubCategoryItem.IdSubCategory,
+                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="cant">Cantidad:</label>
-            <div class="col-sm-10">
-                @Html.EditorFor(m => m.Cantidad, new { @class = "form-control", type = "text" })
-
-            </div>
+            <label class="col-md-4" for="desc">Marca:</label>
+            @Html.TextBoxFor(m => m.Marca, new { @class = "form-control", type = "text", placeholder = "Ingrese Marca" })
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-2" for="kg">Kg:</label>
-            <div class="col-sm-10">
-                @Html.EditorFor(m => m.kg, new { @class = "form-control", type = "text" })
-
-            </div>
+            <label class="col-md-4" for="desc">Descripción1:</label>
+            @Html.TextBoxFor(m => m.Descripcion1, new { @class = "form-control", type = "text", placeholder = "Ingrese Descripción1" })
         </div>
+                    <div class="form-group">
+                        <label class="col-md-4" for="desc">Descripción2:</label>
+                        @Html.TextBoxFor(m => m.Descripcion2, new { @class = "form-control", type = "text", placeholder = "Ingrese Descripción2" })
+                    </div>
+
+                   
+                        <div class="form-group">
+                            <label class="col-md-4" for="cant">Presentación:</label>
+                            @Html.TextBoxFor(m => m.Presentacion, new { @class = "form-control", type = "text", placeholder = "Ingrese Presentación" })
+
+                        </div>
+                   
+
+                    <div class="form-group">
+                        <label class="col-md-4" for="cant">Kg:</label>
+                        @Html.TextBoxFor(m => m.kg, new { @class = "form-control", type = "text", placeholder = "Ingrese Kg" })
 
 
-        <button type="submit" class="btn btn-primary">Guardar Producto</button>
-        }
-  
+                    </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4" for="cant">Cantidad:</label>
+                            @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "text", placeholder = "Ingrese Cantidad" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4" for="pwd">Código de barra:</label>
+                            @Html.TextBoxFor(m => m.CodigoBarra, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4" for="pwd">Precio Costo</label>
+                            @Html.TextBoxFor(m => m.PrecioCosto, new { @class = "form-control", type = "text", placeholder = "Precio Costo" })
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4" for="pwd">Precio Venta</label>
+                            @Html.TextBoxFor(m => m.PrecioVenta, new { @class = "form-control", type = "text", placeholder = "Precio Venta" })
+                        </div>
+                    
+
+
+                        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+    }
+
 </body>
 
 </html>

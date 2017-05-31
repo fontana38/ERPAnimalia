@@ -31,8 +31,8 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<int> IdSubCategoria { get; set; }
         public string Descripcion2 { get; set; }
         public string Presentacion { get; set; }
-        public Nullable<decimal> RentabilidadPesos { get; set; }
-        public Nullable<decimal> Rentabilidad { get; set; }
+        public Nullable<double> RentabilidadPesos { get; set; }
+        public Nullable<double> Rentabilidad { get; set; }
         public Nullable<decimal> PrecioVenta { get; set; }
         public Nullable<decimal> PrecioCosto { get; set; }
     

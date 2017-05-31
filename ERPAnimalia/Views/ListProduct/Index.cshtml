@@ -3,22 +3,15 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Producto</title>
-    @Styles.Render("~/Content/Site.css")
-    <script src="~/Scripts/gijgo.min.js"></script>
+   
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>
-    <link href="~/Content/css/gijgo.css" rel="stylesheet" />
     <script src="~/Scripts/gijgo.js"></script>
-    <link href="~/Content/css/gijgo.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-    <link href="~/Content/grid-0.4.3.min.css" rel="stylesheet" type="text/css">
-    <script src="~/Scripts/client.js"></script>
-    <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
-    <script src="~/Scripts/grid-0.4.3.min.js" type="text/javascript"></script>
+    
 </head>
 <body>
     <script type="text/javascript">
         var gridProduct;
+
         $(document).ready(function () {
 
              gridProduct = $("#gridProduct").grid({
@@ -27,33 +20,67 @@
                 columns: [
                 { field: "IdProducto", hidden: true },
                 { field: "Codigo", title: "Código", sortable: true, width: 80 },
-                { field: "Marca", title: "Marca", sortable: true, width: 200 },
-                { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 100 },
-                { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 100 },
+                { field: "Marca", title: "Marca", sortable: true, width: 80 },
+                { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 120 },
+                { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 120 },
                 { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
-                 { field:"CategoryName", title: "Categoria", sortable: true, width: 100 },
+                { field:"CategoryName", title: "Categoria", sortable: true, width: 100 },
                 { field: "Kg", title: "Kg", sortable: true, width: 80 },
                 { field: "Cantidad", title: "Cantidad", sortable: true, width: 80 },
                 { field: "PrecioCosto", title: "Precio Costo", sortable: true, width: 80 },
                 { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 80 },
-                { field: "RentabilidadPeso", title: "Renabilidad $", sortable: true, width: 80 },
-                { field: "Rentabilidad%", title: "Renabilidad %", sortable: true, width: 80 }
-                //{ title: '', field: 'Edit', width: 24, type: 'icon', icon: 'ui-icon-pencil', tooltip: 'Edit', events: { 'click': Edit } },
-                //{ title: '', field: 'Delete', width: 24, type: 'icon', icon: 'ui-icon-close', tooltip: 'Delete', events: { 'click': Delete } }
+                { field: "RentabilidadPesos", title: "Renabilidad $", sortable: true, width: 80 },
+                { field: "Rentabilidad", title: "Renabilidad %", sortable: true, width: 80 },
+                {
+                    width: 90, tmpl: '<a href="#">Edit</a>', align: 'center', events: {
+                        'click': function (e) {
+                            id = e.data.record.IdProducto;
+                            location.href='@Url.Action("Edit","Product")?ids=' + id;
+                        }
+                    }
+                },
+                {
+                    width: 90, tmpl: '<a href="#">delete</a>', align: 'center', events: {
+                        'click': function (e) {
+                            id = e.data.record.IdProducto;
+                            location.href = '@Url.Action("Delete","Product")?id=' + id;
+                        }
+                    }
+                }
                 ],
                 pager: { limit: 5, sizes: [2, 5, 10, 20] }
             });
-              
-            //$("#btnAddProduct").on("click", Add);
-            //$("#btnSave").on("click", Save);
+
             $("#btnSearch").on("click", Search);
         });
+
+        @*function Edit(e) {
+            debugger;
+            $.ajax({
+                type: 'Get',
+                url:'@Url.Action("Edit","Product")',
+                data: {ids: e.data.record.IdProducto },
+
+                success: function (msg) {
+                    debugger;
+                    // Notice that msg.d is used to retrieve the result object
+                    alert(msg.d);
+                }
+            });
+
+
+        }*@
 
         function Search() {
             debugger;
             gridProduct.reload({ searchString: $("#search").val() });
         }
-        
+
+        function Delete(e) {
+
+
+        }
+
     </script>
 
 
