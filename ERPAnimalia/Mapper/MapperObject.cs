@@ -289,6 +289,26 @@ namespace ERPAnimalia
                 throw new Exception(e.Message.ToString());
             }
         }
+
+
+        public static List<ProveedorModel> CreateListProveedorModel(List<Proveedor> listProveedor)
+        {
+            try
+            {
+
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+                var proveedor = mapper.Map<List<ProveedorModel>>(listProveedor);
+                foreach (var item in proveedor)
+                {
+                    item.NombreCompleto = item.Apellido + " " + item.Nombre;
+                }
+                return proveedor;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message.ToString());
+            }
+        }
         public static List<DetalleComprobante> CreateVoucherDetailDb(List<VoucherDetailModel> voucherDetail)
         {
             try

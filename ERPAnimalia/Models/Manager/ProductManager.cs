@@ -20,15 +20,6 @@ namespace ERPAnimalia.Models
             
         }
 
-        //public List<ProductModels> GetAllProduct()
-        //{
-        //    db = Factory.Factory.CreateContextDataBase();
-        //    var listProduct=  db.Product.ToList();
-
- 
-        //    return MapperObject.CreateProductList(listProduct).ToList();
-        //}
-
         public void AddProduct(Product product)
         {
             try

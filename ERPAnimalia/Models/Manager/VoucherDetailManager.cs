@@ -35,7 +35,7 @@ namespace ERPAnimalia.Models.Manager
             return _ProducManager.MapProduct();
         }
 
-        public string SaveVoucher(List<DetailGrid> detailGridTemp, VoucherHeadModel head,string tipoVenta)
+        public string SaveVoucher(List<DetailGrid> detailGridTemp, VoucherHeadModel head)
         {
             var detail = MappModels(detailGridTemp);
             var message = string.Empty;
@@ -68,9 +68,9 @@ namespace ERPAnimalia.Models.Manager
                             item.IdComprobante = headDb.IdComprobante;
                             var product = db.Product.Find(item.IdProducto);
                             
-                            if(verifyQuantyty(item, product,tipoVenta))
+                            if(verifyQuantyty(item, product))
                             {
-                                if(tipoVenta!= "Kg")
+                                if(product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
                                 {
                                     product.Cantidad = product.Cantidad - item.Cantidad;
                                 }
@@ -125,9 +125,9 @@ namespace ERPAnimalia.Models.Manager
             return voucherDetailModelList;
         }
 
-        private bool verifyQuantyty(DetalleComprobante comprobante,Product product, string tipoVenta)
+        private bool verifyQuantyty(DetalleComprobante comprobante,Product product)
         {
-           if(tipoVenta != "Kg")
+           if(product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
             {
                 if (comprobante.Cantidad < product.Cantidad)
                 {
@@ -160,9 +160,9 @@ namespace ERPAnimalia.Models.Manager
             return row.Porcentage;
         }
 
-        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad, string tipoVenta, decimal descuento)
+        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad,  decimal descuento)
         {
-            if (tipoVenta != "Kg")
+            if (detailGrid.SubCategoryItem != (int)Enumeration.Subcategory.Suelto)
             {
                 detailGrid.Cantidad = (cantidad == 0) ? 1 : cantidad;
             }

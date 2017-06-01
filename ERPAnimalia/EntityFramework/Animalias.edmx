@@ -106,6 +106,8 @@
           <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
           <Property Name="Cobrada" Type="binary" MaxLength="50" />
           <Property Name="IdCliente" Type="uniqueidentifier" />
+          <Property Name="IdProveedor" Type="uniqueidentifier" />
+          <Property Name="FechaPago" Type="datetime" />
         </EntityType>
         <EntityType Name="DetalleComprobante">
           <Key>
@@ -164,6 +166,7 @@
           <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Codigo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -203,6 +206,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Comprobante_Comprobante">
+          <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="1" />
+          <End Role="Comprobante1" Type="Self.Comprobante" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Comprobante">
+              <PropertyRef Name="IdComprobante" />
+            </Principal>
+            <Dependent Role="Comprobante1">
+              <PropertyRef Name="IdComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comprobante_FormaDePago">
           <End Role="FormaDePago" Type="Self.FormaDePago" Multiplicity="0..1" />
           <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="*" />
@@ -212,6 +227,18 @@
             </Principal>
             <Dependent Role="Comprobante">
               <PropertyRef Name="IdFormaDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_Proveedor">
+          <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+          <End Role="Comprobante" Type="Self.Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdProveedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -370,8 +397,16 @@
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Comprobante" EntitySet="Comprobante" />
           </AssociationSet>
+          <AssociationSet Name="FK_Comprobante_Comprobante" Association="Self.FK_Comprobante_Comprobante">
+            <End Role="Comprobante" EntitySet="Comprobante" />
+            <End Role="Comprobante1" EntitySet="Comprobante" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comprobante_FormaDePago" Association="Self.FK_Comprobante_FormaDePago">
             <End Role="FormaDePago" EntitySet="FormaDePago" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comprobante_Proveedor" Association="Self.FK_Comprobante_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Comprobante" EntitySet="Comprobante" />
           </AssociationSet>
           <AssociationSet Name="FK_Comprobante_TipoComprobante" Association="Self.FK_Comprobante_TipoComprobante">
@@ -538,7 +573,6 @@
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Category" EntitySet="Category" />
           </AssociationSet>
-          <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
           <EntitySet Name="IdClienteIdProducto" EntityType="AnimaliaPetShopModel.IdClienteIdProducto" />
           <EntitySet Name="Cliente" EntityType="AnimaliaPetShopModel.Cliente" />
           <AssociationSet Name="FK_IdClienteIdProducto_Cliente" Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente">
@@ -548,23 +582,6 @@
           <EntitySet Name="DetalleComprobante" EntityType="AnimaliaPetShopModel.DetalleComprobante" />
           <EntitySet Name="FormaDePago" EntityType="AnimaliaPetShopModel.FormaDePago" />
           <EntitySet Name="TipoComprobante" EntityType="AnimaliaPetShopModel.TipoComprobante" />
-          <EntitySet Name="Comprobante" EntityType="AnimaliaPetShopModel.Comprobante" />
-          <AssociationSet Name="FK_Comprobante_Cliente" Association="AnimaliaPetShopModel.FK_Comprobante_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Comprobante" EntitySet="Comprobante" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comprobante_FormaDePago" Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago">
-            <End Role="FormaDePago" EntitySet="FormaDePago" />
-            <End Role="Comprobante" EntitySet="Comprobante" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comprobante_TipoComprobante" Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante">
-            <End Role="TipoComprobante" EntitySet="TipoComprobante" />
-            <End Role="Comprobante" EntitySet="Comprobante" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleComprobante_Comprobante" Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante">
-            <End Role="Comprobante" EntitySet="Comprobante" />
-            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
-          </AssociationSet>
           <EntitySet Name="Product" EntityType="AnimaliaPetShopModel.Product" />
           <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
             <End Role="Category" EntitySet="Category" />
@@ -577,6 +594,32 @@
           <AssociationSet Name="FK_Product_SubCategory" Association="AnimaliaPetShopModel.FK_Product_SubCategory">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
+          <EntitySet Name="Comprobante" EntityType="AnimaliaPetShopModel.Comprobante" />
+          <AssociationSet Name="FK_Comprobante_Cliente" Association="AnimaliaPetShopModel.FK_Comprobante_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comprobante_Comprobante" Association="AnimaliaPetShopModel.FK_Comprobante_Comprobante">
+            <End Role="Comprobante" EntitySet="Comprobante" />
+            <End Role="Comprobante1" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comprobante_FormaDePago" Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago">
+            <End Role="FormaDePago" EntitySet="FormaDePago" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comprobante_Proveedor" Association="AnimaliaPetShopModel.FK_Comprobante_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comprobante_TipoComprobante" Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante">
+            <End Role="TipoComprobante" EntitySet="TipoComprobante" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleComprobante_Comprobante" Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante">
+            <End Role="Comprobante" EntitySet="Comprobante" />
+            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubCategory">
@@ -610,17 +653,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Proveedor">
-          <Key>
-            <PropertyRef Name="IdProveedor" />
-          </Key>
-          <Property Name="IdProveedor" Type="Guid" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Dirección" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="IdClienteIdProducto">
           <Key>
             <PropertyRef Name="IdClienteProducto" />
@@ -692,71 +724,6 @@
           <Property Name="IdTipoComprobante" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="TipoComprobante" ToRole="Comprobante" />
         </EntityType>
-        <EntityType Name="Comprobante">
-          <Key>
-            <PropertyRef Name="IdComprobante" />
-          </Key>
-          <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <Property Name="IdComprobante" Type="Guid" Nullable="false" />
-          <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdFormaDePago" Type="Int32" />
-          <Property Name="IdTipoComprobante" Type="Int32" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Cobrada" Type="Binary" MaxLength="50" FixedLength="true" />
-          <Property Name="IdCliente" Type="Guid" />
-          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Comprobante" ToRole="Cliente" />
-          <NavigationProperty Name="FormaDePago" Relationship="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" FromRole="Comprobante" ToRole="FormaDePago" />
-          <NavigationProperty Name="TipoComprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="Comprobante" ToRole="TipoComprobante" />
-          <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" FromRole="Comprobante" ToRole="DetalleComprobante" />
-        </EntityType>
-        <Association Name="FK_Comprobante_Cliente">
-          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="Comprobante">
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comprobante_FormaDePago">
-          <End Type="AnimaliaPetShopModel.FormaDePago" Role="FormaDePago" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormaDePago">
-              <PropertyRef Name="IdFormaDePago" />
-            </Principal>
-            <Dependent Role="Comprobante">
-              <PropertyRef Name="IdFormaDePago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comprobante_TipoComprobante">
-          <End Type="AnimaliaPetShopModel.TipoComprobante" Role="TipoComprobante" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoComprobante">
-              <PropertyRef Name="IdTipoComprobante" />
-            </Principal>
-            <Dependent Role="Comprobante">
-              <PropertyRef Name="IdTipoComprobante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DetalleComprobante_Comprobante">
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.DetalleComprobante" Role="DetalleComprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Comprobante">
-              <PropertyRef Name="IdComprobante" />
-            </Principal>
-            <Dependent Role="DetalleComprobante">
-              <PropertyRef Name="IdComprobante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -813,6 +780,113 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="IdSubCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dirección" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Proveedor" ToRole="Comprobante" />
+        </EntityType>
+        <EntityType Name="Comprobante">
+          <Key>
+            <PropertyRef Name="IdComprobante" />
+          </Key>
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="IdComprobante" Type="Guid" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdFormaDePago" Type="Int32" />
+          <Property Name="IdTipoComprobante" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Cobrada" Type="Binary" MaxLength="50" FixedLength="true" />
+          <Property Name="IdCliente" Type="Guid" />
+          <Property Name="IdProveedor" Type="Guid" />
+          <Property Name="FechaPago" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Comprobante" ToRole="Cliente" />
+          <NavigationProperty Name="Comprobante1" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante" ToRole="Comprobante1" />
+          <NavigationProperty Name="Comprobante2" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante1" ToRole="Comprobante" />
+          <NavigationProperty Name="FormaDePago" Relationship="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" FromRole="Comprobante" ToRole="FormaDePago" />
+          <NavigationProperty Name="Proveedor" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Comprobante" ToRole="Proveedor" />
+          <NavigationProperty Name="TipoComprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="Comprobante" ToRole="TipoComprobante" />
+          <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" FromRole="Comprobante" ToRole="DetalleComprobante" />
+        </EntityType>
+        <Association Name="FK_Comprobante_Cliente">
+          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_Comprobante">
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Comprobante">
+              <PropertyRef Name="IdComprobante" />
+            </Principal>
+            <Dependent Role="Comprobante1">
+              <PropertyRef Name="IdComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_FormaDePago">
+          <End Type="AnimaliaPetShopModel.FormaDePago" Role="FormaDePago" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaDePago">
+              <PropertyRef Name="IdFormaDePago" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdFormaDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_Proveedor">
+          <End Type="AnimaliaPetShopModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_TipoComprobante">
+          <End Type="AnimaliaPetShopModel.TipoComprobante" Role="TipoComprobante" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoComprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleComprobante_Comprobante">
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.DetalleComprobante" Role="DetalleComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comprobante">
+              <PropertyRef Name="IdComprobante" />
+            </Principal>
+            <Dependent Role="DetalleComprobante">
+              <PropertyRef Name="IdComprobante" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -906,18 +980,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Proveedor">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Proveedor">
-              <MappingFragment StoreEntitySet="Proveedor">
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
-                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IdClienteIdProducto">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.IdClienteIdProducto">
               <MappingFragment StoreEntitySet="IdClienteIdProducto">
@@ -973,20 +1035,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Comprobante">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Comprobante">
-              <MappingFragment StoreEntitySet="Comprobante">
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="Cobrada" ColumnName="Cobrada" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
-                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="IdComprobante" ColumnName="IdComprobante" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -1005,6 +1053,35 @@
                 <ScalarProperty Name="Descripcion1" ColumnName="Descripcion1" />
                 <ScalarProperty Name="Marca" ColumnName="Marca" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Proveedor">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Proveedor">
+              <MappingFragment StoreEntitySet="Proveedor">
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comprobante">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Comprobante">
+              <MappingFragment StoreEntitySet="Comprobante">
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Cobrada" ColumnName="Cobrada" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
+                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdComprobante" ColumnName="IdComprobante" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

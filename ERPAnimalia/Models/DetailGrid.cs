@@ -16,6 +16,8 @@ namespace ERPAnimalia.Models
      public decimal Descuento { get; set; }
      public string Subtotal { get; set; }
      public decimal Total { get; set; }
-    public decimal Porcentage { get; set; }
+     public decimal Porcentage { get; set; }
+     public int CategoryItem { get; set; }
+     public int SubCategoryItem { get; set; }
     }
 }

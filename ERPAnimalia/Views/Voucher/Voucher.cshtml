@@ -103,7 +103,7 @@
                 var tipoComprobante= $("#TipoComprobante").val();
                 var formaPago = $("#formaDePago").val();
                 
-                $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago, tipoVenta: $("#tipoVenta").val() } })
+                $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago } })
                     .done(function (data) {                     
                         gridDetail.clear();
                        $("#NombreCompleto").val("");
@@ -177,11 +177,6 @@
                             <div class="col-md-5">
                                 <label class="control-label col-md-2">Producto:</label>
                                 @Html.EditorFor(model => model.ProductModel.First().Descripcion1, new { htmlAttributes = new { @class = "form-control col-md-offset-3" } })
-                            </div>
-
-
-                            <div class="form-group">
-                                @Html.DropDownList("tipoVenta", new SelectList((System.Collections.IEnumerable)ViewData["TipoVenta"]), new { @class = "form-control" })
                             </div>
                         </div>
                         </br>

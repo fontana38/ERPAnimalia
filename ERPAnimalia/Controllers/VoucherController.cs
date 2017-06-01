@@ -19,13 +19,8 @@ namespace ERPAnimalia.Controllers
 
         public VoucherController()
         {
-            var list = new  List<string>();
-            list.Add("Cantidad");
-            list.Add("Kg");
-
             HeadVoucherManager = Factory.VoucherFactory.CreateVoucherHeadManager();
-            VoucherDetailManager = Factory.VoucherFactory.CreateVoucherDetailManager();
-            ViewData["TipoVenta"] = list;
+            VoucherDetailManager = Factory.VoucherFactory.CreateVoucherDetailManager();         
         }
     // GET: Voucher
     public ActionResult Index()
@@ -104,7 +99,7 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, decimal descuento = 0, string tipoVenta="")
+        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, decimal descuento = 0)
         {      
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var detailGridList = new List<DetailGrid>();
@@ -135,8 +130,10 @@ namespace ERPAnimalia.Controllers
                     detailGrid.Codigo = Descripcion1[0].N.Codigo;
                     detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
                     detailGrid.PrecioVenta =  Descripcion1[0].N.PrecioVenta.Value;
+                    detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
+                    detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
 
-                    detailGrid = VoucherDetailManager.SetValuesNewRowTable(detailGrid, cantidad, tipoVenta, descuento);
+                    detailGrid = VoucherDetailManager.SetValuesNewRowTable(detailGrid, cantidad, descuento);
                 }
 
                 if (detailGridTemp != null)
@@ -222,7 +219,7 @@ namespace ERPAnimalia.Controllers
            
 
         [HttpPost]
-        public JsonResult Save(string cliente,string date, int comprobante,int formaDePago,string tipoVenta)
+        public JsonResult Save(string cliente,string date, int comprobante,int formaDePago)
         {
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
 
@@ -234,7 +231,7 @@ namespace ERPAnimalia.Controllers
             voucherHeadModel.IdtipoComprobante = comprobante;
             voucherHeadModel.Fecha = DateTime.Parse(date).Date;
             voucherHeadModel.IdCliente = idClient;
-            var message =VoucherDetailManager.SaveVoucher(detailGridTemp,voucherHeadModel,tipoVenta);
+            var message =VoucherDetailManager.SaveVoucher(detailGridTemp,voucherHeadModel);
 
             TempData["DetailGrid"] = null;
 

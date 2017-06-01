@@ -233,6 +233,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ListProductController.cs" />
+    <Compile Include="Controllers\LoadOrderController.cs" />
     <Compile Include="Controllers\SearchProductController.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="DataBase\TransactionBase.cs" />
@@ -312,12 +313,15 @@
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="Enumeration.cs" />
+    <Compile Include="Factory\LoadOrderFacory.cs" />
     <Compile Include="Factory\VoucherFactory.cs" />
     <Compile Include="Factory\Factory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CalCulos.cs" />
+    <Compile Include="Helper\Common.cs" />
+    <Compile Include="Interfaces\ILoadOrderManager.cs" />
     <Compile Include="Interfaces\IVoucherDetailManager.cs" />
     <Compile Include="Interfaces\IVoucherHeadManager.cs" />
     <Compile Include="Interfaces\IDetalleComprobante.cs" />
@@ -326,7 +330,11 @@
     <Compile Include="Mapper\AutoMapperConfig.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DetailGrid.cs" />
+    <Compile Include="Models\Manager\LoadOrderManager.cs" />
     <Compile Include="Models\Manager\VoucherDetailManager.cs" />
+    <Compile Include="Models\ProveedorModel.cs" />
+    <Compile Include="Models\VoucherHeadGeneral.cs" />
+    <Compile Include="Models\VoucherHeadLoadOrder.cs" />
     <Compile Include="Models\VoucherHeadModel.cs" />
     <Compile Include="Models\CategoryModel.cs" />
     <Compile Include="Models\Manager\ClienteManager.cs" />
@@ -658,6 +666,7 @@
     <Content Include="Views\Shared\HeadVoucher.cshtml" />
     <Content Include="Views\Voucher\Voucher.cshtml" />
     <Content Include="Views\ListProduct\Index.cshtml" />
+    <Content Include="Views\LoadOrder\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

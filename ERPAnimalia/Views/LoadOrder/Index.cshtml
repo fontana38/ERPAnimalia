@@ -1,0 +1,83 @@
+﻿@using ERPAnimalia.Models;
+<!DOCTYPE html>
+<head>
+    @model ERPAnimalia.Models.VoucherHeadLoadOrder
+    <link href="~/Content/css/Voucher.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery.1.10.1.js"></script>
+
+</head>
+
+
+<script type="text/javascript">
+    debugger;
+   
+    $(document).ready(function () {
+        $("#NombreCompleto").autocomplete({
+            source: function (request, response) {
+                debugger;
+                $.ajax({
+                    url: "/LoadOrder/GetProveedor",
+                    type: "POST", dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {                      
+                        response($.map(data, function (item) {
+                            return { label: item.NombreCompleto, value: item.NombreCompleto };
+                        }));
+                    }
+                });
+            },
+            messages: { noResults: "", results: "" }
+        });
+
+        
+        $('#FechaPago').datepicker({
+                    dateFormat: "dd-mm-yy",
+                    firstDay: 1,
+                    dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+                    dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+                    monthNames:
+                        ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+                    monthNamesShort:
+                        ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                        "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+                });
+
+                $.datepicker.setDefaults($.datepicker.regional["es"]);
+
+                $("#FechaPago").datepicker("setDate", new Date());
+
+               
+    });
+
+
+</script>
+
+<div id="factura" class="panel panel-primary-factura">
+    <div class="panel-heading">Crear Factura</div>
+    <br class="panel-body">
+    <form class="container-fluid" action="LoadOrder">
+        <div class="form-group">
+            <label class="control-label col-md-3" for="proveedor">Proveedor:</label>
+            @Html.EditorFor(model => model.ProveedorModel.First().NombreCompleto, new { htmlAttributes = new { @class = "form-control" } })
+            <label class="label label-primary col-md-5" id="idTelefono"></label><div class="col-md-1"></div><label class="label label-primary col-md-5" id="idDireccion"></label>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-3" for="DateVoucher">Fecha de Pago</label>
+            <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="FechaPago" placeholder="Ingrese Fecha">
+        </div>
+
+        <div class="form-group">
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-3">forma Pago:</label>
+            @Html.DropDownList("formaDePago", new SelectList((System.Collections.IEnumerable)ViewData["listFormaPago"], "IdFormaDePago", "Descripcion"), new { @class = "form-control" })
+        </div>
+
+
+    </form>
+</div>
+

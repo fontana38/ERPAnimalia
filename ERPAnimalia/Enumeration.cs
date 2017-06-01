@@ -14,6 +14,13 @@ namespace ERPAnimalia
 
         }
 
+        public enum Subcategory : int
+        {
+            Suelto = 1,
+            Bolsa = 2
+
+        }
+
         public enum TipoComprobante : int
         {
             FacturaA = 1,

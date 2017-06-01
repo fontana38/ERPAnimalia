@@ -32,13 +32,13 @@ namespace ERPAnimalia.EntityFramework
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<IdClienteIdProducto> IdClienteIdProducto { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<DetalleComprobante> DetalleComprobante { get; set; }
         public virtual DbSet<FormaDePago> FormaDePago { get; set; }
         public virtual DbSet<TipoComprobante> TipoComprobante { get; set; }
-        public virtual DbSet<Comprobante> Comprobante { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Proveedor> Proveedor { get; set; }
+        public virtual DbSet<Comprobante> Comprobante { get; set; }
     }
 }

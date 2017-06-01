@@ -14,11 +14,21 @@ namespace ERPAnimalia.EntityFramework
     
     public partial class Proveedor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Proveedor()
+        {
+            this.Comprobante = new HashSet<Comprobante>();
+        }
+    
         public System.Guid IdProveedor { get; set; }
         public string Nombre { get; set; }
         public string Dirección { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string Codigo { get; set; }
+        public string Apellido { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comprobante> Comprobante { get; set; }
     }
 }
