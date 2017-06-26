@@ -25,7 +25,8 @@ namespace ERPAnimalia
         {
             FacturaA = 1,
             FacturaB = 2,
-            NoteCredito=3
+            NoteCredito=3,
+            NotaPedido = 4
         }
 
         public enum FormaDePago : int

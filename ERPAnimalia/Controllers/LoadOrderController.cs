@@ -1,4 +1,5 @@
 ﻿using ERPAnimalia.Helper;
+using ERPAnimalia.Models;
 using ERPAnimalia.Models.Manager;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,13 @@ namespace ERPAnimalia.Controllers
     public class LoadOrderController : Controller
     {
         public LoadOrderManager _LoadOrderManager { get; set; }
+        public ProductManager ProductManagers { get; set; }
 
         public LoadOrderController()
         {
             _LoadOrderManager = Factory.LoadOrderFacory.CreateOrderManager();
-         
-         }
+            ProductManagers = Factory.Factory.CreateProducManager();
+        }
         // GET: LoadOrder
         public ActionResult Index()
         {
@@ -46,6 +48,26 @@ namespace ERPAnimalia.Controllers
 
             return Json(proveedorName, JsonRequestBehavior.AllowGet);
 
+        }
+
+        [HttpGet]
+        public JsonResult GetProduct(int? page, int? limit, string sortBy, string direction, string searchString = null)
+        {
+            int total;
+
+
+            var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
+
+
+            return Json(new { records, total }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult Save(string cliente, string date, string fechaPago, int formaDePago, string[]precioCosto,string[]cantidad,Guid[]idProducto,string[] precioVenta)
+        {
+
+            _LoadOrderManager.Save(cliente, date, fechaPago, formaDePago, precioCosto, cantidad, idProducto, precioVenta);
+            return Json(true);
         }
 
     }

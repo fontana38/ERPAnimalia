@@ -667,6 +667,7 @@
     <Content Include="Views\Voucher\Voucher.cshtml" />
     <Content Include="Views\ListProduct\Index.cshtml" />
     <Content Include="Views\LoadOrder\Index.cshtml" />
+    <Content Include="Views\LoadOrder\DetailLoadOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

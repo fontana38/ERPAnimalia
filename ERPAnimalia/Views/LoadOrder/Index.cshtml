@@ -42,7 +42,20 @@
                     monthNamesShort:
                         ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
                         "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-                });
+        });
+
+        $('#date').datepicker({
+            dateFormat: "dd-mm-yy",
+            firstDay: 1,
+            dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
+            dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+            monthNames:
+                ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
+                "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            monthNamesShort:
+                ["Ene", "Feb", "Mar", "Abr", "May", "Jun",
+                "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+        });
 
                 $.datepicker.setDefaults($.datepicker.regional["es"]);
 
@@ -64,20 +77,25 @@
             <label class="label label-primary col-md-5" id="idTelefono"></label><div class="col-md-1"></div><label class="label label-primary col-md-5" id="idDireccion"></label>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-3" for="DateVoucher">Fecha de Pago</label>
-            <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="FechaPago" placeholder="Ingrese Fecha">
+            <label class="control-label col-md-3" for="fechaPago">Fecha de Pago</label>
+            <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="FechaPago" placeholder="Ingrese Fecha de Pago">
         </div>
-
+        <div class="form-group">
+            <label class="control-label col-md-3" for="date">Fecha</label>
+            <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="date" placeholder="Ingrese Fecha">
+        </div>
         <div class="form-group">
 
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-3">forma Pago:</label>
+            <label class="control-label col-md-3">Forma Pago:</label>
             @Html.DropDownList("formaDePago", new SelectList((System.Collections.IEnumerable)ViewData["listFormaPago"], "IdFormaDePago", "Descripcion"), new { @class = "form-control" })
         </div>
-
-
-    </form>
+  
+            @{
+                Html.RenderPartial("DetailLoadOrder");
+            }
+</form>
 </div>
 
