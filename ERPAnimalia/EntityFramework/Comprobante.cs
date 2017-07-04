@@ -31,7 +31,6 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<System.Guid> IdProveedor { get; set; }
         public Nullable<System.DateTime> FechaPago { get; set; }
     
-        public virtual Cliente Cliente { get; set; }
         public virtual Comprobante Comprobante1 { get; set; }
         public virtual Comprobante Comprobante2 { get; set; }
         public virtual FormaDePago FormaDePago { get; set; }
@@ -39,5 +38,6 @@ namespace ERPAnimalia.EntityFramework
         public virtual TipoComprobante TipoComprobante { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleComprobante> DetalleComprobante { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

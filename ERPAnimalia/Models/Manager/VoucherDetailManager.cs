@@ -70,7 +70,7 @@ namespace ERPAnimalia.Models.Manager
                             
                             if(verifyQuantyty(item, product))
                             {
-                                if(product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
+                                if(product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
                                 {
                                     product.Cantidad = product.Cantidad - item.Cantidad;
                                 }
@@ -127,7 +127,7 @@ namespace ERPAnimalia.Models.Manager
 
         private bool verifyQuantyty(DetalleComprobante comprobante,Product product)
         {
-           if(product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
+           if(product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
             {
                 if (comprobante.Cantidad < product.Cantidad)
                 {

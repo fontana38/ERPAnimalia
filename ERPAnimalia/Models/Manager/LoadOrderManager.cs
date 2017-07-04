@@ -25,57 +25,57 @@ namespace ERPAnimalia.Models.Manager
 
         public void Save(string cliente, string date, string fechaPago, int formaDePago, string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
         {
-            using (var context = new AnimaliaPetShopEntities())
-            {
-                using (var dbContextTransaction = context.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        db = Factory.Factory.CreateContextDataBase();
+            //using (var context = new AnimaliaPetShopEntities())
+            //{
+            //    using (var dbContextTransaction = context.Database.BeginTransaction())
+            //    {
+            //        try
+            //        {
+            //            db = Factory.Factory.CreateContextDataBase();
 
-                        SaveHead( cliente, date, formaDePago, fechaPago,db);
+            //            SaveHead( cliente, date, formaDePago, fechaPago,db);
 
-                        SaveDetail(precioCosto, cantidad, idProducto, precioVenta);
+            //            SaveDetail(precioCosto, cantidad, idProducto, precioVenta);
 
 
                        
 
-                        foreach (var item in voucherDetailDb)
-                        {
-                            item.IdDetalleComprobante = Guid.NewGuid();
-                            item.IdComprobante = headDb.IdComprobante;
-                            var product = db.Product.Find(item.IdProducto);
+            //            foreach (var item in voucherDetailDb)
+            //            {
+            //                item.IdDetalleComprobante = Guid.NewGuid();
+            //                item.IdComprobante = headDb.IdComprobante;
+            //                var product = db.Product.Find(item.IdProducto);
 
-                            if (verifyQuantyty(item, product))
-                            {
-                                if (product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
-                                {
-                                    product.Cantidad = product.Cantidad - item.Cantidad;
-                                }
-                                else
-                                {
-                                    product.Kg = product.Kg - item.Cantidad;
-                                }
+            //                if (verifyQuantyty(item, product))
+            //                {
+            //                    if (product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
+            //                    {
+            //                        product.Cantidad = product.Cantidad - item.Cantidad;
+            //                    }
+            //                    else
+            //                    {
+            //                        product.Kg = product.Kg - item.Cantidad;
+            //                    }
 
-                            }
-                            else
-                            {
-                                return message = "La cantidad del producto es menor que la cantidad vendida ";
-                            }
+            //                }
+            //                else
+            //                {
+            //                    return message = "La cantidad del producto es menor que la cantidad vendida ";
+            //                }
 
-                            db.DetalleComprobante.Add(item);
-                        }
-                        db.SaveChanges();
-                        dbContextTransaction.Commit();
-                        return message = "EL comprobante fue guardado exitosamente";
-                    }
-                    catch (Exception e)
-                    {
+            //                db.DetalleComprobante.Add(item);
+            //            }
+            //            db.SaveChanges();
+            //            dbContextTransaction.Commit();
+            //            return message = "EL comprobante fue guardado exitosamente";
+            //        }
+            //        catch (Exception e)
+            //        {
 
-                        throw new Exception(e.Message.ToString());
-                    }
-                }
-            }
+            //            throw new Exception(e.Message.ToString());
+            //        }
+            //    }
+            //}
         }
 
 

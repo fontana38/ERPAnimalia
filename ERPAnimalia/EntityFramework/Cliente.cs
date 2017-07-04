@@ -17,8 +17,8 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cliente()
         {
-            this.IdClienteIdProducto = new HashSet<IdClienteIdProducto>();
             this.Comprobante = new HashSet<Comprobante>();
+            this.IdClienteIdProducto = new HashSet<IdClienteIdProducto>();
         }
     
         public System.Guid IdCliente { get; set; }
@@ -34,8 +34,8 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<decimal> mail { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comprobante> Comprobante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
     }
 }

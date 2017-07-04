@@ -63,7 +63,7 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpPost]
-        public JsonResult Save(string cliente, string date, string fechaPago, int formaDePago, string[]precioCosto,string[]cantidad,Guid[]idProducto,string[] precioVenta)
+        public JsonResult Save(string cliente, string date, string fechaPago, int formaDePago, string[]precioCosto,int[]cantidad,Guid[]idProducto,string[] precioVenta)
         {
 
             _LoadOrderManager.Save(cliente, date, fechaPago, formaDePago, precioCosto, cantidad, idProducto, precioVenta);

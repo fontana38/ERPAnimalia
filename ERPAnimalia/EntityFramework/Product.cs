@@ -27,8 +27,8 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<decimal> Kg { get; set; }
         public System.Guid IdProducto { get; set; }
         public string CodigoBarra { get; set; }
-        public Nullable<int> IdCategoria { get; set; }
-        public Nullable<int> IdSubCategoria { get; set; }
+        public Nullable<int> IdCategory { get; set; }
+        public Nullable<int> IdSubCategory { get; set; }
         public string Descripcion2 { get; set; }
         public string Presentacion { get; set; }
         public Nullable<double> RentabilidadPesos { get; set; }
@@ -36,9 +36,9 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<decimal> PrecioVenta { get; set; }
         public Nullable<decimal> PrecioCosto { get; set; }
     
-        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
+        public virtual Category Category { get; set; }
         public virtual SubCategory SubCategory { get; set; }
     }
 }

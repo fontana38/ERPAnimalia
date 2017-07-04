@@ -4,36 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e5343840810a4ae8bfb552d13877fb84" Name="Diagram1">
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.C__MigrationHistory" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUsers" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
-        <AssociationConnector Association="AnimaliaPetShopModel.AspNetUserRoles" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="0.75" PointY="18.25" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="5" PointY="19.5" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Category_SubCategory" />
+      <Diagram DiagramId="e5343840810a4ae8bfb552d13877fb84" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="AnimaliaPetShopModel.IdClienteIdProducto" Width="1.5" PointX="13" PointY="14.375" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Cliente" Width="1.5" PointX="7.375" PointY="1" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.DetalleComprobante" Width="1.5" PointX="12.875" PointY="6.125" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.FormaDePago" Width="1.5" PointX="8.375" PointY="18.625" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.TipoComprobante" Width="1.5" PointX="8.375" PointY="6.625" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="7.25" PointY="21.625" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Proveedor" Width="1.5" PointX="3.125" PointY="6.375" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Comprobante" Width="1.5" PointX="10.625" PointY="8.5" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Cliente" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Comprobante" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Proveedor" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetRoles" Width="1.5" PointX="0.75" PointY="11.625" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUserClaims" Width="1.5" PointX="5.25" PointY="10.125" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUserLogins" Width="1.5" PointX="5.25" PointY="12.875" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.AspNetUsers" Width="1.5" PointX="3" PointY="10" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Cliente" Width="1.5" PointX="8.75" PointY="10.625" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Cliente" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" />
+        <AssociationConnector Association="AnimaliaPetShopModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="10.75" PointY="21.125" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="8.5" PointY="21.25" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="8.5" PointY="23.875" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Category_Category" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -28,8 +28,8 @@ namespace ERPAnimalia
 
                 foreach (var item in product)
                 {
-                    var cat= category.Find(x => x.IdCategory == item.IdCategoria);
-                    var subCat = subCategory.Find(x => x.IdSubCategory == item.IdSubCategoria);
+                    var cat= category.Find(x => x.IdCategory == item.IdCategory);
+                    var subCat = subCategory.Find(x => x.IdSubCategory == item.IdSubCategory);
                     var productMap = mapper.Map<ProductModels>(item);
                     var subCategoryMap = CreateSubCategory(subCat);
                     var categoryMap = CreateCategory(cat);
@@ -145,7 +145,7 @@ namespace ERPAnimalia
                     {
                         var category = CreateCategory(item.Category);
                         var productMap = mapper.Map<ProductModels>(item);
-                        var subCategoryMap = CreateSubCategory(item.Category.SubCategory);
+                        var subCategoryMap = CreateSubCategory(item.SubCategory);
                         productMap.CategoryItem = category;
                         productMap.SubCategoryItem = subCategoryMap;
                         listaMap.Productos.Add(productMap);
@@ -198,8 +198,8 @@ namespace ERPAnimalia
         public static SubCategoryModel CreateSubCategoryModel(Product p)
         {
             var newSubCategory = new SubCategoryModel();
-            newSubCategory.IdSubCategory = p.Category.SubCategory.IdSubCategory;
-            newSubCategory.Name = p.Category.SubCategory.Name;
+            newSubCategory.IdSubCategory = p.SubCategory.IdSubCategory;
+            newSubCategory.Name = p.SubCategory.Name;
             return newSubCategory;
         }
 
@@ -211,7 +211,7 @@ namespace ERPAnimalia
                 
                 var productMap = mapper.Map<ProductModels>(product);
                 
-                var subCategoryMap = CreateSubCategory(product.Category.SubCategory);
+                var subCategoryMap = CreateSubCategory(product.SubCategory);
                 productMap.CategoryItem = category;
                 productMap.SubCategoryItem = subCategoryMap;
                 
@@ -232,8 +232,8 @@ namespace ERPAnimalia
                 NewProduct.Kg = product.kg;
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
-                NewProduct.IdCategoria = product.IdCategory;
-                NewProduct.IdSubCategoria = product.IdSubCategory;
+                NewProduct.IdCategory = product.IdCategory;
+                NewProduct.IdSubCategory = product.IdSubCategory;
                 NewProduct.PrecioVenta = product.PrecioVenta;
                 NewProduct.PrecioCosto = product.PrecioCosto;
                 NewProduct.Presentacion = product.Presentacion;
@@ -256,8 +256,8 @@ namespace ERPAnimalia
                
                 productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
-                productDb.IdCategoria = product.CategoryItem.IdCategory;
-                productDb.IdSubCategoria = product.SubCategoryItem.IdSubCategory;
+                productDb.IdCategory = product.CategoryItem.IdCategory;
+                productDb.IdSubCategory = product.SubCategoryItem.IdSubCategory;
                 productDb.RentabilidadPesos = Convert.ToDouble(Helper.CalCulos.CalcularRentabilidad(product.PrecioCosto, product.PrecioVenta));
                 productDb.Rentabilidad = Convert.ToDouble(Helper.CalCulos.CalcularRentabilidadPorcentage(product.PrecioCosto.Value, product.PrecioVenta.Value));
 
