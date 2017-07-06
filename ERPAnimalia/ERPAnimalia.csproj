@@ -258,6 +258,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="EntityFramework\Animalias1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -275,10 +279,6 @@
     <Compile Include="EntityFramework\AspNetUsers.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="EntityFramework\Category.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>

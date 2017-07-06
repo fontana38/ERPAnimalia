@@ -71,10 +71,10 @@ namespace ERPAnimalia.Models
 
                         dbContextTransaction.Commit();
                     }
-                    catch (Exception)
+                    catch (Exception exepction)
                     {
                         dbContextTransaction.Rollback();
-                        throw;
+                        throw exepction;
                     }
                 }
             }

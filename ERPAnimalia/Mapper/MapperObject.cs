@@ -253,7 +253,8 @@ namespace ERPAnimalia
                 productDb.Marca = product.Marca;
                 productDb.Cantidad = product.Cantidad;
                 productDb.Kg = product.kg;
-               
+                productDb.PrecioVenta = product.PrecioVenta;
+                productDb.PrecioCosto = product.PrecioCosto;
                 productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
                 productDb.IdCategory = product.CategoryItem.IdCategory;

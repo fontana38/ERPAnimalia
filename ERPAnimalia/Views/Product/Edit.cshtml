@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
     {
 
         @Html.HiddenFor(m => m.IdProducto)

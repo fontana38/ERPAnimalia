@@ -152,15 +152,15 @@ namespace ERPAnimalia.Models.Manager
             
         }
 
-        public decimal CalculateDiscountPorcentage(DetailGrid row,decimal discount)
+        public double CalculateDiscountPorcentage(DetailGrid row,double discount)
         {
             row.Descuento = discount;
-            row.Subtotal = ((row.PrecioVenta * row.Cantidad) - discount).ToString("F");
-            row.Porcentage = Decimal.Round((discount / row.PrecioVenta),2) ;
+            row.Subtotal = ((row.PrecioVenta * Convert.ToInt16(row.Cantidad)) - discount).ToString("F");
+            row.Porcentage = (discount / row.PrecioVenta) ;
             return row.Porcentage;
         }
 
-        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad,  decimal descuento)
+        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad,  double descuento)
         {
             if (detailGrid.SubCategoryItem != (int)Enumeration.Subcategory.Suelto)
             {
@@ -171,11 +171,11 @@ namespace ERPAnimalia.Models.Manager
                 detailGrid.Cantidad = cantidad;
             }
 
-            detailGrid.Descuento = Decimal.Round(descuento,2);
+            detailGrid.Descuento = descuento;
 
             detailGrid.Porcentage = CalculateDiscountPorcentage(detailGrid, descuento);
 
-            detailGrid.Subtotal = ((detailGrid.PrecioVenta * detailGrid.Cantidad) - descuento).ToString("F");
+            detailGrid.Subtotal = ((detailGrid.PrecioVenta * Convert.ToInt16( detailGrid.Cantidad)) - descuento).ToString("F");
 
             return detailGrid;
         }

@@ -33,12 +33,12 @@ namespace ERPAnimalia.EntityFramework
         public string Presentacion { get; set; }
         public Nullable<double> RentabilidadPesos { get; set; }
         public Nullable<double> Rentabilidad { get; set; }
-        public Nullable<decimal> PrecioVenta { get; set; }
-        public Nullable<decimal> PrecioCosto { get; set; }
+        public Nullable<double> PrecioVenta { get; set; }
+        public Nullable<double> PrecioCosto { get; set; }
     
+        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
-        public virtual Category Category { get; set; }
         public virtual SubCategory SubCategory { get; set; }
     }
 }

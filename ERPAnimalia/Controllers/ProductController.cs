@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ERPAnimalia.Controllers
 {
-    [RoutePrefix("Product")]
+    [RoutePrefix("Producto")]
     public class ProductController : Controller
     {
         public ProductManager ProductManagers { get; set; }
@@ -84,7 +84,7 @@ namespace ERPAnimalia.Controllers
             if (ModelState.IsValid)
             {
                 ProductManagers.SaveProduct(product);
-                return RedirectToAction("Producto/Index");
+                return RedirectToAction("Index", "ListProduct");
             }
             product.Category = ProductManagers.GetCategory();
             product.SubCategory = ProductManagers.GetSubCategory();
@@ -125,7 +125,7 @@ namespace ERPAnimalia.Controllers
             {
                 ProductManagers.EditProduct(product);
 
-                return RedirectToAction("/Producto/Index");
+                return RedirectToAction("Index", "ListProduct");
             }
             catch
             {
@@ -137,7 +137,7 @@ namespace ERPAnimalia.Controllers
         public ActionResult Delete(Guid id)
         {
             ProductManagers.Delete(id);
-            return RedirectToAction("../Producto/Index");
+            return RedirectToAction("/Producto/Index");
         }
 
         //public ActionResult SearchProduct(ProductModels product)

@@ -48,10 +48,10 @@ namespace ERPAnimalia.Models
         public double? Rentabilidad { get; set; }
 
         [Display(Name = "Precio Costo")]
-        public decimal? PrecioCosto { get; set; }
+        public double? PrecioCosto { get; set; }
 
         [Display(Name = "Precio Venta")]
-        public decimal? PrecioVenta { get; set; }
+        public double? PrecioVenta { get; set; }
 
 
         public int? kg { get; set; }

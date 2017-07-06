@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="e5343840810a4ae8bfb552d13877fb84" Name="Diagram1" ZoomLevel="94">
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.IdClienteIdProducto" Width="1.5" PointX="13" PointY="14.375" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.DetalleComprobante" Width="1.5" PointX="12.875" PointY="6.125" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.FormaDePago" Width="1.5" PointX="8.375" PointY="18.625" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.TipoComprobante" Width="1.5" PointX="8.375" PointY="6.625" />
@@ -25,14 +24,15 @@
         <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Cliente" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" />
         <AssociationConnector Association="AnimaliaPetShopModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="10.75" PointY="21.125" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="8.5" PointY="21.25" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="8.5" PointY="23.875" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="13.375" PointY="14.25" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.IdClienteIdProducto" Width="1.5" PointX="17.875" PointY="11.25" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="13.375" PointY="11.5" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Category_Category" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="15.625" PointY="11.625" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         </Diagram>
     </edmx:Diagrams>
