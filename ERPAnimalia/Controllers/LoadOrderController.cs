@@ -58,6 +58,7 @@ namespace ERPAnimalia.Controllers
 
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
 
+            records = _LoadOrderManager.GetRecordsNewQuantity(records);
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }

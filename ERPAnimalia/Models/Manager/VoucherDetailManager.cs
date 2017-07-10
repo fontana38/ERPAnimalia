@@ -112,7 +112,7 @@ namespace ERPAnimalia.Models.Manager
                 {
                     voucherDetailModel.Cantidad = item.Cantidad;
                     voucherDetailModel.Subtotal = Convert.ToDecimal(item.Subtotal);
-                 
+                    voucherDetailModel.PrecioCosto = item.PrecioCosto;
                     voucherDetailModel.PrecioVenta = item.PrecioVenta;
                     voucherDetailModel.Descuento = item.Descuento;
                     voucherDetailModel.IdProducto = item.IdProduct;
@@ -127,7 +127,32 @@ namespace ERPAnimalia.Models.Manager
 
         private bool verifyQuantyty(DetalleComprobante comprobante,Product product)
         {
-           if(product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
+            if(product.IdCategory == (int)Enumeration.Category.Alimento)
+            {
+                if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
+                {
+                    if (comprobante.Cantidad < product.Cantidad)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (comprobante.Cantidad < product.Kg)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
             {
                 if (comprobante.Cantidad < product.Cantidad)
                 {
@@ -138,18 +163,6 @@ namespace ERPAnimalia.Models.Manager
                     return false;
                 }
             }
-           else
-            {
-                if (comprobante.Cantidad < product.Kg)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            
         }
 
         public double CalculateDiscountPorcentage(DetailGrid row,double discount)

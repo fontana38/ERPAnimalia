@@ -130,6 +130,7 @@ namespace ERPAnimalia.Controllers
                     detailGrid.Codigo = Descripcion1[0].N.Codigo;
                     detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
                     detailGrid.PrecioVenta =  Descripcion1[0].N.PrecioVenta.Value;
+                    detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto.Value;
                     detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
                     detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
 

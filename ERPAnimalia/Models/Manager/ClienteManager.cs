@@ -34,7 +34,7 @@ namespace ERPAnimalia.Models
 
                         clienteModel.FechaCompra = DateTime.Parse(clienteModel.FechaCompra1).Date;
                         clienteModel.FechaProximaCompra = DateTime.Parse(clienteModel.FechaCompra2).Date;
-                        clienteModel.FechaProximaCompra = clienteModel.FechaProximaCompra.AddDays(clienteModel.CantidadDias);
+                        clienteModel.FechaProximaCompra = clienteModel.FechaProximaCompra.AddDays(clienteModel.Dias);
                         var clienteDb = MapperObject.CreateClienteDb(clienteModel);
                         if (clienteDb.IdCliente == null || clienteDb.IdCliente == Guid.Empty)
                         {

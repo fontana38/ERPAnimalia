@@ -16,7 +16,7 @@ namespace ERPAnimalia.Models
         public Guid[] IdsProduct { get; set; }
 
         public string NombreProducto { get; set; }
-        public int CantidadDias { get; set; }
+        public int Dias { get; set; }
         public List<ProductModels> Productos { get; set; }
     }
 }

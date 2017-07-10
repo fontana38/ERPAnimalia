@@ -66,6 +66,7 @@
                 {
                     gridDetail.reload({ term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
                     SaveEnabled();
+                    $("#Descripcion1").val("");
                 }
                 
             });
@@ -111,6 +112,7 @@
                        $("#idTelefono").html("");
                        $("#idDireccion").html("");
                        $('#Descripcion1').val("");
+                       $('#totalVoucher').val("");
 
                     })
                     .fail(function () {

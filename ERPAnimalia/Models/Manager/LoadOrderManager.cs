@@ -108,6 +108,15 @@ namespace ERPAnimalia.Models.Manager
             db.Comprobante.Add(head);
 
         }
+        
+        public List<ProductModels> GetRecordsNewQuantity( List<ProductModels> product)
+        {
+            foreach (var item in collection)
+            {
+
+            }
+            return product;
+        }
 
         public void SaveDetail( string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
         {

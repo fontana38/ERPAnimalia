@@ -68,10 +68,8 @@
              var fechaPago = $("#fechaPago").val();
                 
              $.ajax({ url: "/DetailOrder/Save", type: "POST", data: { proveedor: client, date: date, comprobante: tipoComprobante, formaDePago: formaPago } })
-                 .done(function (data) {                     
-                    
-                     $("#NombreCompleto").val("");
-                    
+                 .done(function (data) {                                        
+                     $("#NombreCompleto").val(""); 
                  })
                  .fail(function () {
                      alert("Unable to save.");

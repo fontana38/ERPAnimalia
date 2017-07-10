@@ -19,7 +19,7 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<decimal> Cantidad { get; set; }
         public Nullable<decimal> Subtotal { get; set; }
         public Nullable<decimal> PrecioVenta { get; set; }
-        public Nullable<decimal> precioCosto { get; set; }
+        public Nullable<decimal> PrecioCosto { get; set; }
         public Nullable<System.Guid> IdComprobante { get; set; }
     
         public virtual Comprobante Comprobante { get; set; }

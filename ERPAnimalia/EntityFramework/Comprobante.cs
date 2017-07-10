@@ -36,8 +36,8 @@ namespace ERPAnimalia.EntityFramework
         public virtual FormaDePago FormaDePago { get; set; }
         public virtual Proveedor Proveedor { get; set; }
         public virtual TipoComprobante TipoComprobante { get; set; }
+        public virtual Cliente Cliente { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleComprobante> DetalleComprobante { get; set; }
-        public virtual Cliente Cliente { get; set; }
     }
 }

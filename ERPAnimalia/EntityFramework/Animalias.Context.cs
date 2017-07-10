@@ -25,7 +25,6 @@ namespace ERPAnimalia.EntityFramework
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<DetalleComprobante> DetalleComprobante { get; set; }
         public virtual DbSet<FormaDePago> FormaDePago { get; set; }
         public virtual DbSet<TipoComprobante> TipoComprobante { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
@@ -35,10 +34,11 @@ namespace ERPAnimalia.EntityFramework
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
-        public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<IdClienteIdProducto> IdClienteIdProducto { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Cliente> Cliente { get; set; }
+        public virtual DbSet<DetalleComprobante> DetalleComprobante { get; set; }
     }
 }
