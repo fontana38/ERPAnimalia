@@ -10,7 +10,7 @@ namespace ERPAnimalia.Interfaces
     interface ILoadOrderManager
     {
         List<ProveedorModel> GetProveedor();
-        List<ProductModels> GetRecordsNewQuantity();
+       
 
     }
 }

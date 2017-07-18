@@ -20,7 +20,7 @@ namespace ERPAnimalia.Models.Manager
         public List<TipoComprobante> GetTipoComprobante()
         {
 
-            var tipoComprobante = db.TipoComprobante.ToList();
+            var tipoComprobante = db.TipoComprobante.Where(x=>x.IdTipoComprobante != 4).ToList();
             return tipoComprobante;
         }
 
@@ -35,7 +35,7 @@ namespace ERPAnimalia.Models.Manager
             return _ProducManager.MapProduct();
         }
 
-        public string SaveVoucher(List<DetailGrid> detailGridTemp, VoucherHeadModel head)
+        public bool SaveVoucher(List<DetailGrid> detailGridTemp, VoucherHeadModel head)
         {
             var detail = MappModels(detailGridTemp);
             var message = string.Empty;
@@ -70,26 +70,36 @@ namespace ERPAnimalia.Models.Manager
                             
                             if(verifyQuantyty(item, product))
                             {
-                                if(product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
+                                if(product.IdCategory != (int)Enumeration.Category.Accesorios)
                                 {
-                                    product.Cantidad = product.Cantidad - item.Cantidad;
+                                    if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
+                                    {
+                                        product.Cantidad = product.Cantidad - item.Cantidad;
+                                        product.TotalKg = product.TotalKg - (item.Cantidad * product.Kg);
+                                    }
+                                    else
+                                    {
+                                        product.TotalKg = product.TotalKg - item.Cantidad;
+                                    }
                                 }
                                 else
                                 {
-                                    product.Kg = product.Kg - item.Cantidad;
+                                    product.Cantidad = product.Cantidad - item.Cantidad;
                                 }
+                                
                                
                             }
                             else
                             {
-                                return message = "La cantidad del producto es menor que la cantidad vendida ";
+                                return false;
                             }
 
                             db.DetalleComprobante.Add(item);
                         }
+                       
                         db.SaveChanges();
                         dbContextTransaction.Commit();
-                        return message = "EL comprobante fue guardado exitosamente";
+                        return true;
                     }
                     catch (Exception e)
                     {
@@ -131,7 +141,7 @@ namespace ERPAnimalia.Models.Manager
             {
                 if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
                 {
-                    if (comprobante.Cantidad < product.Cantidad)
+                    if (comprobante.Cantidad <= product.Cantidad)
                     {
                         return true;
                     }
@@ -142,7 +152,7 @@ namespace ERPAnimalia.Models.Manager
                 }
                 else
                 {
-                    if (comprobante.Cantidad < product.Kg)
+                    if (comprobante.Cantidad <= product.TotalKg)
                     {
                         return true;
                     }
@@ -154,7 +164,7 @@ namespace ERPAnimalia.Models.Manager
             }
             else
             {
-                if (comprobante.Cantidad < product.Cantidad)
+                if (comprobante.Cantidad <= product.Cantidad)
                 {
                     return true;
                 }
@@ -165,7 +175,7 @@ namespace ERPAnimalia.Models.Manager
             }
         }
 
-        public double CalculateDiscountPorcentage(DetailGrid row,double discount)
+        public decimal CalculateDiscountPorcentage(DetailGrid row,decimal discount)
         {
             row.Descuento = discount;
             row.Subtotal = ((row.PrecioVenta * Convert.ToInt16(row.Cantidad)) - discount).ToString("F");
@@ -173,7 +183,7 @@ namespace ERPAnimalia.Models.Manager
             return row.Porcentage;
         }
 
-        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad,  double descuento)
+        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad,  decimal descuento)
         {
             if (detailGrid.SubCategoryItem != (int)Enumeration.Subcategory.Suelto)
             {

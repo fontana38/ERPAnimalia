@@ -11,9 +11,9 @@ namespace ERPAnimalia.Models
         public Guid IdProducto;
         public decimal Cantidad;
         public decimal Subtotal;
-        public double PrecioVenta;
-        public double PrecioCosto;
-        public double Descuento;
+        public decimal PrecioVenta;
+        public decimal PrecioCosto;
+        public decimal Descuento;
         public List<ProductModels> ProductModel;
         public List<String> ProductName;
 

@@ -42,19 +42,20 @@ namespace ERPAnimalia.Models
         public decimal? Cantidad { get; set; }
 
         [Display(Name = "Rentabilidad Pesos")]
-        public double? RentabilidadPesos { get; set; }
+        public decimal? RentabilidadPesos { get; set; }
 
         [Display(Name = "Rentabilidad %")]
-        public double? Rentabilidad { get; set; }
+        public decimal? Rentabilidad { get; set; }
 
         [Display(Name = "Precio Costo")]
-        public double? PrecioCosto { get; set; }
+        public decimal? PrecioCosto { get; set; }
 
         [Display(Name = "Precio Venta")]
-        public double? PrecioVenta { get; set; }
+        public decimal? PrecioVenta { get; set; }
 
+        public decimal? TotalKg { get; set; }
 
-        public int? kg { get; set; }
+        public decimal? kg { get; set; }
 
         [Required(ErrorMessage = "Por favor Ingrese la Categoria")]
 

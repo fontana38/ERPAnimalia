@@ -11,7 +11,8 @@ namespace ERPAnimalia.Factory
     {
         public static LoadOrderManager CreateOrderManager()
         {
-            return new LoadOrderManager();
+            var productManager=Factory.CreateProducManager();
+            return new LoadOrderManager(productManager);
         }
         public static VoucherHeadLoadOrder CreateVoucherHeadLoadOrder()
         {

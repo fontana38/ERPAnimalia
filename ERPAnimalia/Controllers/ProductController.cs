@@ -114,6 +114,8 @@ namespace ERPAnimalia.Controllers
         {
            
            var productEdit = ProductManagers.GetProductById(ids);
+            productEdit.Category = ProductManagers.GetCategory();
+            productEdit.SubCategory = ProductManagers.GetSubCategory();
             return View(productEdit);
         }
 
@@ -137,7 +139,7 @@ namespace ERPAnimalia.Controllers
         public ActionResult Delete(Guid id)
         {
             ProductManagers.Delete(id);
-            return RedirectToAction("/Producto/Index");
+            return RedirectToAction("Index", "ListProduct");
         }
 
         //public ActionResult SearchProduct(ProductModels product)

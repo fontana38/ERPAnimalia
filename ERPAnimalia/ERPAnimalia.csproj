@@ -332,6 +332,7 @@
     <Compile Include="Models\DetailGrid.cs" />
     <Compile Include="Models\Manager\LoadOrderManager.cs" />
     <Compile Include="Models\Manager\VoucherDetailManager.cs" />
+    <Compile Include="Models\NotaPedidoModel.cs" />
     <Compile Include="Models\ProveedorModel.cs" />
     <Compile Include="Models\VoucherHeadGeneral.cs" />
     <Compile Include="Models\VoucherHeadLoadOrder.cs" />

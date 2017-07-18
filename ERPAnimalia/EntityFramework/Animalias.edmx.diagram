@@ -25,15 +25,15 @@
         <EntityTypeShape EntityType="AnimaliaPetShopModel.IdClienteIdProducto" Width="1.5" PointX="17.875" PointY="11.25" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.SubCategory" Width="1.5" PointX="13.375" PointY="11.5" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Category_Category" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="15.625" PointY="11.625" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Cliente" Width="1.5" PointX="8.375" PointY="9.125" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Cliente" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.DetalleComprobante" Width="1.5" PointX="12.875" PointY="7.375" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Product" Width="1.5" PointX="15.625" PointY="11.25" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

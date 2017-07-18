@@ -99,25 +99,37 @@
                     }
             }
             function Save() {
-                var  client= $("#NombreCompleto").val();
-                var  dateVoucher= $("#DateVoucher").val();
-                var tipoComprobante= $("#TipoComprobante").val();
+                var client = $("#NombreCompleto").val();
+                var dateVoucher = $("#DateVoucher").val();             
+                var tipoComprobante = $("#TipoComprobante").val();
                 var formaPago = $("#formaDePago").val();
                 
                 $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago } })
-                    .done(function (data) {                     
-                        gridDetail.clear();
-                       $("#NombreCompleto").val("");
-                       $("#DateVoucher").val("");
-                       $("#idTelefono").html("");
-                       $("#idDireccion").html("");
-                       $('#Descripcion1').val("");
-                       $('#totalVoucher').val("");
+                    .done(function (data) {
+                        debugger;
+                        if (data != 'El comprobante fue guardado')
+                        {
+                            alert(data)
+                        }
+                        else
+                        {
+                            debugger;  
+                            gridDetail.clear();
+                            $("#NombreCompleto").val("");
+                            $("#DateVoucher").val("");
+                            $("#idTelefono").html("");
+                            $("#idDireccion").html("");
+                            $('#Descripcion1').val("");
+                            $('#totalVoucher').val("");
+                            
+                            alert(data);
+                        }
+                       
 
                     })
-                    .fail(function () {
-                        alert("Unable to save.");
-                        $("#clienteModal").modal("hide");
+                    .fail(function (data) {
+                        debugger;
+                        alert(data);                      
                     }); 
             }
             function SaveEnabled()
@@ -141,7 +153,7 @@
             }
 
             function Delete(e) {
-                if (confirm('Are you sure?')) { 
+                if (confirm('Esta seguro que quiere eliminar?')) { 
                 $.ajax({
                     url: "/Voucher/Delete",
                     type: "post", dataType: "json",

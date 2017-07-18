@@ -99,7 +99,7 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, double descuento = 0)
+        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, decimal descuento = 0)
         {      
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var detailGridList = new List<DetailGrid>();
@@ -183,7 +183,7 @@ namespace ERPAnimalia.Controllers
 
 
         [HttpGet]
-        public JsonResult GetSubtotal(Guid? idProduct, int cantidad = 0, double descuento = 0)
+        public JsonResult GetSubtotal(Guid? idProduct, int cantidad = 0, decimal descuento = 0)
         {
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var records = new List<DetailGrid>();
@@ -232,10 +232,18 @@ namespace ERPAnimalia.Controllers
             voucherHeadModel.IdtipoComprobante = comprobante;
             voucherHeadModel.Fecha = DateTime.Parse(date).Date;
             voucherHeadModel.IdCliente = idClient;
-            var message =VoucherDetailManager.SaveVoucher(detailGridTemp,voucherHeadModel);
-
-            TempData["DetailGrid"] = null;
-
+            var IsSave =VoucherDetailManager.SaveVoucher(detailGridTemp,voucherHeadModel);
+            var message = string.Empty;
+            if (IsSave)
+            {
+                TempData["DetailGrid"] = null;
+                message = "El comprobante fue guardado";
+            }
+            else
+            {
+                message = "El stock es insuficiente";
+            }
+            
             return Json(message);
         }
 

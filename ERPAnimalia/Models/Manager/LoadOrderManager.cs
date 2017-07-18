@@ -4,16 +4,20 @@ using System.Linq;
 using System.Web;
 using ERPAnimalia.Interfaces;
 using ERPAnimalia.EntityFramework;
+using ERPAnimalia.Helper;
+
 
 namespace ERPAnimalia.Models.Manager
 {
     public class LoadOrderManager:ILoadOrderManager 
     {
         public AnimaliaPetShopEntities db { get; set; }
+        public ProductManager _productManager { get; set; }
 
-        public LoadOrderManager()
+        public LoadOrderManager(ProductManager productManager)
         {
             db = Factory.Factory.CreateContextDataBase();
+            _productManager = productManager;
         }
 
         public List<ProveedorModel> GetProveedor()
@@ -23,59 +27,50 @@ namespace ERPAnimalia.Models.Manager
             return proveedor; 
         }
 
-        public void Save(string cliente, string date, string fechaPago, int formaDePago, string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
+        public string Save(string proveedor, string date, string fechaPago, int formaDePago,string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
         {
-            //using (var context = new AnimaliaPetShopEntities())
-            //{
-            //    using (var dbContextTransaction = context.Database.BeginTransaction())
-            //    {
-            //        try
-            //        {
-            //            db = Factory.Factory.CreateContextDataBase();
+            var listProveedor = GetProveedor();
+            var idProveedor = listProveedor.Where(x => x.NombreCompleto == proveedor);
+            
+            using (var context = new AnimaliaPetShopEntities())
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var message = string.Empty; 
+                        db = Factory.Factory.CreateContextDataBase();
 
-            //            SaveHead( cliente, date, formaDePago, fechaPago,db);
+                        var head = SaveHead(idProveedor.First().IdProveedor, date, formaDePago, fechaPago, db);
 
-            //            SaveDetail(precioCosto, cantidad, idProducto, precioVenta);
+                        SaveProductChange(precioCosto, cantidad, idProducto, precioVenta);
 
+                        for (int i = 0; i < idProducto.Length; i++)
+                        {
+                           
+                                var detalleComprobante = new DetalleComprobante();
+                                detalleComprobante.IdComprobante = head.IdComprobante;
+                                detalleComprobante.IdDetalleComprobante = Guid.NewGuid();
+                                detalleComprobante.IdProducto = idProducto[i];
+                                detalleComprobante.PrecioCosto = Convert.ToDecimal(precioCosto[i]);
+                                detalleComprobante.PrecioVenta = Convert.ToDecimal(precioVenta[i]);
+                                detalleComprobante.Cantidad = Convert.ToDecimal(cantidad[i]);
 
+                                db.DetalleComprobante.Add(detalleComprobante);
+                            
+                        }
                        
+                        db.SaveChanges();
+                        dbContextTransaction.Commit();
+                        return message = "EL comprobante fue guardado exitosamente";
+                    }
+                    catch (Exception e)
+                    {
 
-            //            foreach (var item in voucherDetailDb)
-            //            {
-            //                item.IdDetalleComprobante = Guid.NewGuid();
-            //                item.IdComprobante = headDb.IdComprobante;
-            //                var product = db.Product.Find(item.IdProducto);
-
-            //                if (verifyQuantyty(item, product))
-            //                {
-            //                    if (product.IdSubCategoria != (int)Enumeration.Subcategory.Suelto)
-            //                    {
-            //                        product.Cantidad = product.Cantidad - item.Cantidad;
-            //                    }
-            //                    else
-            //                    {
-            //                        product.Kg = product.Kg - item.Cantidad;
-            //                    }
-
-            //                }
-            //                else
-            //                {
-            //                    return message = "La cantidad del producto es menor que la cantidad vendida ";
-            //                }
-
-            //                db.DetalleComprobante.Add(item);
-            //            }
-            //            db.SaveChanges();
-            //            dbContextTransaction.Commit();
-            //            return message = "EL comprobante fue guardado exitosamente";
-            //        }
-            //        catch (Exception e)
-            //        {
-
-            //            throw new Exception(e.Message.ToString());
-            //        }
-            //    }
-            //}
+                        throw new Exception(e.Message.ToString());
+                    }
+                }
+            }
         }
 
 
@@ -87,40 +82,42 @@ namespace ERPAnimalia.Models.Manager
             return listClient;
         }
 
-        public void SaveHead(string cliente, string date,int formaDePago,string fechaPago, AnimaliaPetShopEntities db)
+        public Comprobante SaveHead(Guid idProveedor, string date,int formaDePago,string fechaPago, AnimaliaPetShopEntities db)
         {
-
-            var listProveedor = GetProveedor();
-
-            var proveedorName = (from N in listProveedor
-                                 where N.Nombre.StartsWith(cliente) || N.Apellido.StartsWith(cliente)
-                                 select new { N.IdProveedor }).ToList();
-
             var head = new Comprobante();
 
-            head.IdComprobante = new Guid();
-            head.IdProveedor = proveedorName[0].IdProveedor;
+            head.IdComprobante = Guid.NewGuid();
+            head.IdProveedor = idProveedor;
             head.IdTipoComprobante = (int)Enumeration.TipoComprobante.NotaPedido;
             head.IdFormaDePago = formaDePago;
             head.FechaPago = Convert.ToDateTime(fechaPago);
             head.Fecha = Convert.ToDateTime(date);
 
             db.Comprobante.Add(head);
+            return head;
 
         }
         
-        public List<ProductModels> GetRecordsNewQuantity( List<ProductModels> product)
+      
+
+        public void SaveProductChange( string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
         {
-            foreach (var item in collection)
+            var listproduct = new List<ProductModels>();
+            for (int i = 0; i < idProducto.Length; i++)
             {
+                     var prod = idProducto[i];
+                    var producto = db.Product.Where(x => x.IdProducto == prod);
 
+
+                    var cantidadTotal = Convert.ToDecimal(producto.First().Cantidad) + Convert.ToDecimal(cantidad[i]);
+                    producto.First().PrecioCosto = Convert.ToDecimal((Convert.ToDecimal(producto.First().Cantidad) * producto.First().PrecioCosto) + (Convert.ToDecimal(cantidad[i]) * Convert.ToDecimal(precioCosto[i]))) / cantidadTotal;
+                    producto.First().Cantidad = Convert.ToDecimal(cantidadTotal);
+                    producto.First().PrecioVenta = Convert.ToDecimal(precioVenta[i]);
+                    producto.First().Rentabilidad = Convert.ToDecimal(CalCulos.CalcularRentabilidadPorcentage(producto.First().PrecioCosto.Value, producto.First().PrecioVenta.Value));
+                    producto.First().RentabilidadPesos = Convert.ToDecimal(CalCulos.CalcularRentabilidad(producto.First().PrecioCosto, producto.First().PrecioVenta));
+                    db.SaveChanges();
             }
-            return product;
-        }
-
-        public void SaveDetail( string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
-        {
-
+            
         }
 
     }

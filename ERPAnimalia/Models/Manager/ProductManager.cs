@@ -151,8 +151,12 @@ namespace ERPAnimalia.Models
            
             var productById = db.Product.Find(id);
 
-            db.Product.Remove(productById);
-            db.SaveChanges();
+            if(productById != null)
+            {
+                db.Product.Remove(productById);
+                db.SaveChanges();
+            }
+           
         }
         public ProductModels NewProductModel()
         {
@@ -264,7 +268,7 @@ namespace ERPAnimalia.Models
         public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             var map = MapProduct();
-
+            
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 map = map.Where(p => p.Codigo.Contains(searchString) || p.Descripcion1.Contains(searchString)).ToList();
@@ -315,6 +319,8 @@ namespace ERPAnimalia.Models
             modelState.Remove("IdCategory");
             modelState.Remove("IdSubCategory");
         }
+
+
            
     }
 }

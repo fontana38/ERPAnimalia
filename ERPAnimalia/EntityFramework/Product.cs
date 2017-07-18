@@ -31,10 +31,11 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<int> IdSubCategory { get; set; }
         public string Descripcion2 { get; set; }
         public string Presentacion { get; set; }
-        public Nullable<double> RentabilidadPesos { get; set; }
-        public Nullable<double> Rentabilidad { get; set; }
-        public Nullable<double> PrecioVenta { get; set; }
-        public Nullable<double> PrecioCosto { get; set; }
+        public Nullable<decimal> RentabilidadPesos { get; set; }
+        public Nullable<decimal> Rentabilidad { get; set; }
+        public Nullable<decimal> PrecioVenta { get; set; }
+        public Nullable<decimal> PrecioCosto { get; set; }
+        public Nullable<decimal> TotalKg { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

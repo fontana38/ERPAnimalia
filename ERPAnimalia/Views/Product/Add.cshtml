@@ -12,11 +12,30 @@
 </head>
 <body>
     <script type="text/javascript">
-       
-       
+        $(document).ready(function () {
+           
 
+        })
         
-        
+        function HideSubcategory()
+        {
+            debugger;
+            var idCategory = $('#IdCategory').val();
+            if(idCategory== 2)
+            {
+                $('#IdSubCategory').val(1);
+                $('#IdSubCategory').attr('disabled', 'disabled');
+                $('#kg').hide();
+                $('#kgLabel').hide();
+            }
+            else
+            {
+                $('#IdSubCategory').val(0);
+                $('#IdSubCategory').removeAttr('disabled');
+                $('#kg').show();
+                $('#kgLabel').show();
+            }
+        }
     </script>
     </br>
     </br>
@@ -37,7 +56,7 @@
                     <div class="form-group">
                         <label class="col-md-4" for="desc">Categoria:</label>
                         @Html.DropDownListFor(model => Model.IdCategory,
-                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()" })
 
                     </div><div class="form-group">
                         <label class="col-md-4" for="desc">Subcategoria:</label>
@@ -66,7 +85,7 @@
                         
                        
                             <div class="form-group">
-                                <label class="col-md-4" for="cant">Kg:</label>
+                                <label class="col-md-4" id="kgLabel"  for="kg">Kg:</label>
                                 @Html.TextBoxFor(m => m.kg, new { @class = "form-control", type = "text", placeholder = "Ingrese Kg" })
 
                             

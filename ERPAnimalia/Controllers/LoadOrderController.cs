@@ -58,16 +58,19 @@ namespace ERPAnimalia.Controllers
 
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
 
-            records = _LoadOrderManager.GetRecordsNewQuantity(records);
+            foreach (var item in records)
+            {
+                item.PrecioCosto= Math.Round(item.PrecioCosto.Value, 2);
+                item.PrecioVenta=Math.Round(item.PrecioVenta.Value, 2);
+            }
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public JsonResult Save(string cliente, string date, string fechaPago, int formaDePago, string[]precioCosto,int[]cantidad,Guid[]idProducto,string[] precioVenta)
+        public JsonResult Save(string proveedor, string date, string fechaPago,int formaPago, Guid[] idProducto, string[]precioCosto,int[]cantidad, string[] precioVenta)
         {
-
-            _LoadOrderManager.Save(cliente, date, fechaPago, formaDePago, precioCosto, cantidad, idProducto, precioVenta);
+            _LoadOrderManager.Save(proveedor, date, fechaPago, formaPago, precioCosto, cantidad, idProducto, precioVenta);
             return Json(true);
         }
 

@@ -23,7 +23,7 @@
              { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
              { field: "CategoryName", title: "Categoria", sortable: true, width: 100 },
              { field: "Kg", title: "Kg",editor: true, sortable: true, width: 80 },
-             { field: "Cantidad", title: "Cantidad",editor: true, sortable: true, width: 80 },
+             { field: "CantidadPedida", title: "Cantidad",editor: true, sortable: true, width: 80 },
              { field: "PrecioCosto", title: "Precio Costo", editor: true,sortable: true, width: 80 },
              { field: "PrecioVenta", title: "Precio Venta",editor: true, sortable: true, width: 80 }
              ],
@@ -34,6 +34,7 @@
   
              $("#btnSearchGridProduct").on("click", SearchProduct);
              $("#btnSave").on("click", Save);
+            
          });
      
         
@@ -50,6 +51,7 @@
              var cantidad= new Array();
              var precioCosto=new Array();
              var idProducto=new Array();
+             var precioVenta=new Array();
 
              var selections = gridProduct.getSelections();
             
@@ -58,7 +60,8 @@
                  var row = gridProduct.get(element);
                  idProducto[index] = row.IdProducto;
                  precioCosto[index]=row.PrecioCosto;
-                 cantidad[index]=row.Cantidad;
+                 cantidad[index]=row.CantidadPedida;
+                 precioVenta[index]=row.PrecioVenta;
 
              });
 
@@ -67,13 +70,15 @@
              var date= $("#date").val();
              var fechaPago = $("#fechaPago").val();
                 
-             $.ajax({ url: "/DetailOrder/Save", type: "POST", data: { proveedor: client, date: date, comprobante: tipoComprobante, formaDePago: formaPago } })
+             $.ajax({ url: "/LoadOrder/Save", type: "POST", data: { proveedor: proveedor, date: date, fechaPago:fechaPago,formaPago: formaPago, idProducto: idProducto,precioCosto:precioCosto,cantidad:cantidad,precioVenta:precioVenta } })
                  .done(function (data) {                                        
                      $("#NombreCompleto").val(""); 
+                     gridProduct.clear();
+                     alert("La orden fue guardad con éxito");
                  })
                  .fail(function () {
                      alert("Unable to save.");
-                     $("#clienteModal").modal("hide");
+                     
                  }); 
          }
         
@@ -95,7 +100,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
+                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-primary" id="btnSave">Guardar</button>
