@@ -229,11 +229,13 @@ namespace ERPAnimalia
                 NewProduct.Descripcion2 = product.Descripcion2;
                 NewProduct.Marca = product.Marca;
                 NewProduct.Cantidad = product.Cantidad;
-                if(product.CategoryItem.IdCategory != (int)Enumeration.Category.Accesorios)
+                if(product.IdCategory != (int)Enumeration.Category.Accesorios)
                 {
-                     NewProduct.Kg = product.kg;
+                    NewProduct.Kg = product.kg;
                     NewProduct.TotalKg = product.kg * product.Cantidad;
-                 }
+                    NewProduct.TotalKg = Helper.CalCulos.CalculateTotalKg(NewProduct.Kg.Value, NewProduct.Cantidad.Value);
+                    NewProduct.IdSubCategory =1;
+                }
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
                 NewProduct.IdCategory = product.IdCategory;
@@ -243,7 +245,7 @@ namespace ERPAnimalia
                 NewProduct.Presentacion = product.Presentacion;
                 NewProduct.RentabilidadPesos = Convert.ToDecimal(Helper.CalCulos.CalcularRentabilidad(product.PrecioCosto, product.PrecioVenta));
                 NewProduct.Rentabilidad =Convert.ToDecimal( Helper.CalCulos.CalcularRentabilidadPorcentage(product.PrecioCosto.Value, product.PrecioVenta.Value));
-                NewProduct.TotalKg = Helper.CalCulos.CalculateTotalKg(NewProduct.Kg.Value, NewProduct.Cantidad.Value);
+               
 
             return NewProduct;
         }

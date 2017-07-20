@@ -64,6 +64,7 @@
             $('#Descripcion1').blur(function () {
                 if ($("#Descripcion1").val() != "")
                 {
+                    debugger;
                     gridDetail.reload({ term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
                     SaveEnabled();
                     $("#Descripcion1").val("");
@@ -77,7 +78,6 @@
             $("#btnSave").on("click", Save);
         });
            
-
             function CalculateRow(record) {
                 $.ajax({
                     url: "/Voucher/GetSubtotal",
@@ -98,6 +98,7 @@
                         $("#totalVoucher").val(row.Total);
                     }
             }
+
             function Save() {
                 var client = $("#NombreCompleto").val();
                 var dateVoucher = $("#DateVoucher").val();             
@@ -106,14 +107,12 @@
                 
                 $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago } })
                     .done(function (data) {
-                        debugger;
                         if (data != 'El comprobante fue guardado')
                         {
                             alert(data)
                         }
                         else
-                        {
-                            debugger;  
+                        { 
                             gridDetail.clear();
                             $("#NombreCompleto").val("");
                             $("#DateVoucher").val("");

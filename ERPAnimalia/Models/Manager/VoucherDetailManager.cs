@@ -112,7 +112,7 @@ namespace ERPAnimalia.Models.Manager
 
                public List<VoucherDetailModel> MappModels(List<DetailGrid> detailGridTemp)
         {
-            var voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
+           
             var voucherDetailModelList = Factory.VoucherFactory.CreateVoucherDetailModelList();
             var listProduct = GetProduct();
 
@@ -120,6 +120,7 @@ namespace ERPAnimalia.Models.Manager
             {
                 foreach (var item in detailGridTemp)
                 {
+                    var voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
                     voucherDetailModel.Cantidad = item.Cantidad;
                     voucherDetailModel.Subtotal = Convert.ToDecimal(item.Subtotal);
                     voucherDetailModel.PrecioCosto = item.PrecioCosto;
@@ -183,7 +184,7 @@ namespace ERPAnimalia.Models.Manager
             return row.Porcentage;
         }
 
-        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, int cantidad,  decimal descuento)
+        public DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, decimal cantidad,  decimal descuento)
         {
             if (detailGrid.SubCategoryItem != (int)Enumeration.Subcategory.Suelto)
             {

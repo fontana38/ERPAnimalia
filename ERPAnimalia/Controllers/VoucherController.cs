@@ -99,7 +99,7 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProductDetail(int? page, int? limit, string term, int cantidad = 0, decimal descuento = 0)
+        public JsonResult GetProductDetail(int? page, int? limit, string term, decimal cantidad = 0, decimal descuento = 0)
         {      
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var detailGridList = new List<DetailGrid>();
@@ -242,6 +242,7 @@ namespace ERPAnimalia.Controllers
             else
             {
                 message = "El stock es insuficiente";
+                TempData["DetailGrid"] = detailGridTemp;
             }
             
             return Json(message);
