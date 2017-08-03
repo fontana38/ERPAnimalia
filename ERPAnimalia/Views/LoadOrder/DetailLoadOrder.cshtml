@@ -22,29 +22,31 @@
              { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200 },
              { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
              { field: "CategoryName", title: "Categoria", sortable: true, width: 100 },
-             { field: "Kg", title: "Kg",editor: true, sortable: true, width: 80 },
+             { field: "kg", title: "Kg", sortable: true, width: 80 },
+             { field: "Cantidad", title: "Stock Actual", sortable: true, width: 80 },
              { field: "CantidadPedida", title: "Cantidad",editor: true, sortable: true, width: 80 },
              { field: "PrecioCosto", title: "Precio Costo", editor: true,sortable: true, width: 80 },
              { field: "PrecioVenta", title: "Precio Venta",editor: true, sortable: true, width: 80 }
+             
              ],
              selectionMethod: 'checkbox',
              selectionType: 'multiple',
              pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
          });
-  
+
              $("#btnSearchGridProduct").on("click", SearchProduct);
              $("#btnSave").on("click", Save);
-            
+
          });
-     
-        
-     
+
+
+
          function SearchProduct() {
-          
-             gridProduct.reload({ searchString: $("#searchProduct").val() });
+             debugger;
+             gridProduct.reload({ searchString: $("#search").val() });
          }
 
-    
+
 
          function Save() {
              debugger;
@@ -54,8 +56,13 @@
              var precioVenta=new Array();
 
              var selections = gridProduct.getSelections();
-            
-             $(selections).each(function (index, element) {
+             if ($('#NombreCompleto').val() == "")
+             {
+                 return alert("Debe Seleccionar Un Proveedor");
+             }
+             if (selections.length!= 0)
+             {           
+                 $(selections).each(function (index, element) {
                  debugger;
                  var row = gridProduct.get(element);
                  idProducto[index] = row.IdProducto;
@@ -64,30 +71,36 @@
                  precioVenta[index]=row.PrecioVenta;
 
              });
+             }
+             else
+             {
+                return alert("Debe Seleccionar Un Producto");
+             }
 
              var  proveedor= $("#NombreCompleto").val();
              var  formaPago= $("#formaPago").val();
              var date= $("#date").val();
              var fechaPago = $("#fechaPago").val();
-                
+
              $.ajax({ url: "/LoadOrder/Save", type: "POST", data: { proveedor: proveedor, date: date, fechaPago:fechaPago,formaPago: formaPago, idProducto: idProducto,precioCosto:precioCosto,cantidad:cantidad,precioVenta:precioVenta } })
-                 .done(function (data) {                                        
-                     $("#NombreCompleto").val(""); 
+                 .done(function (data) {
+                     $("#NombreCompleto").val("");
                      gridProduct.clear();
                      alert("La orden fue guardad con éxito");
+                     gridProduct.reload();
                  })
                  .fail(function () {
                      alert("Unable to save.");
-                     
-                 }); 
+
+                 });
          }
-        
+
 
   </script>
 
 </head>
 <body>
-    <div class="panel panel-primary">
+   
         <div class="panel-heading">Producto</div>
         <br class="panel-body">
         <div class="form-group row">
@@ -95,19 +108,18 @@
                 <div class="input-group">
                     <input type="text" id="search" class="form-control" placeholder="Search for...">
                     <span class="input-group-btn">
-                        <button type="button" id="btnSearch" class="btn btn-default">Go!</button>
+                        <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
                     </span>
+                   
                 </div>
-            </div>
-            <div class="col-md-2">
+                <br />
                 <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
-            </div>
-            <div class="col-md-2">
                 <button type="button" class="btn btn-primary" id="btnSave">Guardar</button>
             </div>
+           
         </div>
         <br />
         <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
-    </div>
+   
 </body>
 </html>

@@ -14,28 +14,57 @@
     <script type="text/javascript">
         $(document).ready(function () {
            
+            $('#PrecioVenta').blur(function () {
+                debugger;
+                idSubcategory = $('#IdSubCategory').val();
 
+                if (idSubcategory== 1)
+                {
+                    var precioVenta = $('#PrecioVenta').val();
+                    var precioCosto = $('#PrecioCosto').val();
+                    var kg = $('#kg').val();
+                    var kgXP = (precioCosto / kg);
+                    var rentPesos = (precioVenta - kgXP);
+                    var rentPorc = (1 - (kgXP / precioVenta)) * 100;
+
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2));
+                    $('#Rentabilidad').val(rentPorc.toFixed(2));
+                }
+                else
+                {
+                    var precioVenta = $('#PrecioVenta').val();
+                    var precioCosto = $('#PrecioCosto').val();
+                    var rentPesos = (precioVenta - precioCosto);
+                    var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
+
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2));
+                    $('#Rentabilidad').val(rentPorc.toFixed(2));
+                }
+                
+                
+            });
         })
+            function HideSubcategory()
+            {
+                debugger;
+                var idCategory = $('#IdCategory').val();
+                if(idCategory== 2)
+                {
+                    $('#IdSubCategory').val(1);
+                    $('#IdSubCategory').attr('disabled', 'disabled');
+                    $('#kg').hide();
+                    $('#kgLabel').hide();
+                }
+                else
+                {
+                    $('#IdSubCategory').val(0);
+                    $('#IdSubCategory').removeAttr('disabled');
+                    $('#kg').show();
+                    $('#kgLabel').show();
+                }
+            }
+         
         
-        function HideSubcategory()
-        {
-            debugger;
-            var idCategory = $('#IdCategory').val();
-            if(idCategory== 2)
-            {
-                $('#IdSubCategory').val(1);
-                $('#IdSubCategory').attr('disabled', 'disabled');
-                $('#kg').hide();
-                $('#kgLabel').hide();
-            }
-            else
-            {
-                $('#IdSubCategory').val(0);
-                $('#IdSubCategory').removeAttr('disabled');
-                $('#kg').show();
-                $('#kgLabel').show();
-            }
-        }
     </script>
     </br>
     </br>
@@ -110,6 +139,15 @@
                                     <label class="col-md-4" for="pwd">Precio Venta</label>
                                     @Html.TextBoxFor(m => m.PrecioVenta, new { type = "number", min = "0", step = "0.01" , @class = "form-control" }) 
                                 </div>
+                            <div class="form-group">
+                                <label class="col-md-4" for="rentabilidad$">Rentabilidad $</label>
+                                @Html.TextBoxFor(m => m.RentabilidadPesos, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4" for="rentabilidad%">Rentabilidad %</label>
+                                @Html.TextBoxFor(m => m.Rentabilidad, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                            </div>
+
                             </div>
                             <button type="submit" name="SaveProduct" value="save" class="btn btn-primary">Agregar Producto</button>
 </form>

@@ -67,23 +67,24 @@
 
 </script>
 
-<div id="factura" class="panel panel-primary-factura">
-    <div class="panel-heading">Crear Factura</div>
+<div id="loadOrderPanel" class="panel panel-primary">
+    <div class="panel-heading">Cargar Pedido</div>
     <br class="panel-body">
-    <form class="container-fluid" action="LoadOrder">
+    <form class="container-fluid " action="LoadOrder">
         <div class="form-group">
             <label class="control-label col-md-3" for="proveedor">Proveedor:</label>
             @Html.EditorFor(model => model.ProveedorModel.First().NombreCompleto, new { htmlAttributes = new { @class = "form-control" } })
             <label class="label label-primary col-md-5" id="idTelefono"></label><div class="col-md-1"></div><label class="label label-primary col-md-5" id="idDireccion"></label>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-3" for="fechaPago">Fecha de Pago</label>
-            <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaPago" placeholder="Ingrese Fecha de Pago">
-        </div>
-        <div class="form-group">
             <label class="control-label col-md-3" for="date">Fecha</label>
             <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="date" placeholder="Ingrese Fecha">
         </div>
+        <div class="form-group">
+            <label class="control-label col-md-3" for="fechaPago">Fecha de Pago</label>
+            <input type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaPago" placeholder="Ingrese Fecha de Pago">
+        </div>
+       
         <div class="form-group">
 
         </div>

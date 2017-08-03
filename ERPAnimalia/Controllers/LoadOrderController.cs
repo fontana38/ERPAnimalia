@@ -57,7 +57,7 @@ namespace ERPAnimalia.Controllers
 
 
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
-
+            records = ProductManagers.GetProducBugtList(records);
             foreach (var item in records)
             {
                 item.PrecioCosto= Math.Round(item.PrecioCosto.Value, 2);

@@ -15,7 +15,7 @@
 <body>
     
     <script type="text/javascript">
-        var id;
+        var idProducto= new Array;
         var isLoad;
         var gridDetail;
         $(document).ready(function () {
@@ -28,14 +28,30 @@
                         data: { term: request.term },
                         success: function (data) {
                             response($.map(data, function (item) {
-                                return { label: item.Descripcion1, value: item.Descripcion1 };
+                                debugger;
+                               
+                                var res = item.Descripcion1.concat(", ").concat(item.Marca).concat(", ").concat(item.SubCategoryName).concat(", ").concat( item.kg);
+                                
+                                return { label: res, value: item.IdProducto, };
                                 GetTotal();
                                 SaveEnabled();
                             }));
                         }
+                       
+                       
                     });
                 },
-                messages: { noResults: "", results: "" }
+                select: function(event, ui) {                   
+                    $("#Descripcion1").val(ui.item.label); // display the selected text
+                    $("#IdProducto").val(ui.item.value);
+                    return false;
+                   
+                },
+                focus: function (event, ui) {                   
+                    $("#Descripcion1").val(ui.item.label);
+                    return false; // Prevent the widget from inserting the value.
+                }
+              
             });
 
          
@@ -47,6 +63,10 @@
                      { field: "IdProduct", hidden: true },
                     { field: "Codigo", title: "Código", sortable: true, width:100 },
                     { field: "Descripcion1", title: "Descripcion1", sortable: true, width: 150 },
+                    { field: "Marca", title: "Marca", sortable: true, width: 150 },
+                    { field: "Category", title: "Categoria", sortable: true, width: 150 },
+                     { field:"SubCategory", title: "SubCategoría", sortable: true, width: 150 },
+                    { field: "kg", title: "Kg", sortable: true, width: 150 },
                     { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 120 },
                     { field: "Cantidad", title: "Cantidad", editor: true, width: 100 },
                     { field: "Descuento", title: "Descuento", editor: true, width: 100 },
@@ -62,15 +82,17 @@
             });
 
             $('#Descripcion1').blur(function () {
+               
                 if ($("#Descripcion1").val() != "")
                 {
                     debugger;
-                    gridDetail.reload({ term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
+                    gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
                     SaveEnabled();
                     $("#Descripcion1").val("");
                 }
                 
             });
+
             gridDetail.on('dataBound', function (e, records, totalRecords) {
                 GetTotal();
                 SaveEnabled();
@@ -189,6 +211,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <label class="control-label col-md-2">Producto:</label>
+                                @Html.HiddenFor(model => model.ProductModel.First().IdProducto)
                                 @Html.EditorFor(model => model.ProductModel.First().Descripcion1, new { htmlAttributes = new { @class = "form-control col-md-offset-3" } })
                             </div>
                         </div>

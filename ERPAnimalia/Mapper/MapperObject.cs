@@ -243,8 +243,8 @@ namespace ERPAnimalia
                 NewProduct.PrecioVenta = product.PrecioVenta;
                 NewProduct.PrecioCosto = product.PrecioCosto;
                 NewProduct.Presentacion = product.Presentacion;
-                NewProduct.RentabilidadPesos = Convert.ToDecimal(Helper.CalCulos.CalcularRentabilidad(product.PrecioCosto, product.PrecioVenta));
-                NewProduct.Rentabilidad =Convert.ToDecimal( Helper.CalCulos.CalcularRentabilidadPorcentage(product.PrecioCosto.Value, product.PrecioVenta.Value));
+                NewProduct.RentabilidadPesos = product.RentabilidadPesos;
+                NewProduct.Rentabilidad = product.Rentabilidad;
                
 
             return NewProduct;
@@ -266,8 +266,8 @@ namespace ERPAnimalia
                 productDb.Codigo = product.Codigo;
                 productDb.IdCategory = product.CategoryItem.IdCategory;
                 productDb.IdSubCategory = product.SubCategoryItem.IdSubCategory;
-                productDb.RentabilidadPesos = Convert.ToDecimal(Helper.CalCulos.CalcularRentabilidad(product.PrecioCosto, product.PrecioVenta));
-                productDb.Rentabilidad = Convert.ToDecimal(Helper.CalCulos.CalcularRentabilidadPorcentage(product.PrecioCosto.Value, product.PrecioVenta.Value));
+                productDb.RentabilidadPesos = product.RentabilidadPesos;
+                productDb.Rentabilidad = product.Rentabilidad;
 
 
                 return productDb;

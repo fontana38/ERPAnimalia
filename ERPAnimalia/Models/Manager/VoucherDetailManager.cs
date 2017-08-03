@@ -204,6 +204,7 @@ namespace ERPAnimalia.Models.Manager
             return detailGrid;
         }
 
+       
     }
 }
 

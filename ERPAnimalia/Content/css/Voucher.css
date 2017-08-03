@@ -8,3 +8,14 @@ input{
 {
     width:900px !important;
 }
+
+#loadOrderPanel
+{
+    width:1300px  !important;
+}
+.panel-heading
+{
+    background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
+   color:white;
+}
+ 

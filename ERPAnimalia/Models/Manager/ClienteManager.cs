@@ -40,7 +40,7 @@ namespace ERPAnimalia.Models
                         {
                             
                             clienteDb.IdCliente = Guid.NewGuid();
-
+                          
                             db.Cliente.Add(clienteDb);
 
                             if (clienteModel.IdsProduct != null)

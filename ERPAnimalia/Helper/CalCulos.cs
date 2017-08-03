@@ -15,7 +15,7 @@ namespace ERPAnimalia.Helper
 
         public static string CalcularRentabilidadPorcentage(decimal precioCosto, decimal PrecioVenta)
         {
-            var porcentage = (1 - precioCosto / PrecioVenta).ToString("f2");
+            var porcentage = ((precioCosto / PrecioVenta) * 100).ToString("f2");
             return porcentage;
         }
 

@@ -53,7 +53,7 @@ namespace ERPAnimalia.Controllers
             voucherModel.ClientModel = listClient;
 
             var clientName = (from N in listClient
-                              where N.Nombre.StartsWith(term) || N.Apellido.StartsWith(term)
+                              where (N.Nombre.ToUpper().StartsWith(term.ToUpper()) || N.Nombre.ToUpper().EndsWith(term.ToUpper()) )|| (N.Apellido.ToUpper().StartsWith(term.ToUpper()) || N.Apellido.ToUpper().EndsWith(term.ToUpper()))
                               select new {N.NombreCompleto,N.Direccion,N.Telefono }).ToList();
 
             return Json(clientName, JsonRequestBehavior.AllowGet);
@@ -71,9 +71,9 @@ namespace ERPAnimalia.Controllers
             voucherModel.ClientModel = listClient;
 
             var clientName = (from N in listClient
-                              where N.NombreCompleto.Equals(term)
+                              where N.NombreCompleto.ToLower().Contains(term.ToLower().Trim())
                               select new { N.NombreCompleto, N.Direccion, N.Telefono }).ToList();
-
+           
             return Json(clientName, JsonRequestBehavior.AllowGet);
 
 
@@ -85,11 +85,11 @@ namespace ERPAnimalia.Controllers
 
             voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
             var listProduct = VoucherDetailManager.GetProduct();
-            voucherDetailModel.ProductModel = listProduct;
-
+         
+         
           var Descripcion1 = (from N in listProduct
-                              where N.Descripcion1.StartsWith(term) || N.Codigo.StartsWith(term)
-                              select new { N.Descripcion1 }).ToList();
+                              where (N.Descripcion1.ToUpper().StartsWith(term.ToUpper()) || N.Descripcion1.ToUpper().EndsWith(term.ToUpper())) || ( N.Marca.ToUpper().StartsWith(term.ToUpper()) || N.Marca.ToUpper().EndsWith(term.ToUpper()))
+                              select new { N.Descripcion1,N.Marca, N.kg, N.SubCategoryName,N.IdProducto }).ToList();
           
 
 
@@ -99,7 +99,7 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProductDetail(int? page, int? limit, string term, decimal cantidad = 0, decimal descuento = 0)
+        public JsonResult GetProductDetail(int? page, int? limit, string term, Guid? idProducto, decimal cantidad = 0, decimal descuento = 0)
         {      
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var detailGridList = new List<DetailGrid>();
@@ -117,11 +117,11 @@ namespace ERPAnimalia.Controllers
                 voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
                 var listProduct = VoucherDetailManager.GetProduct();
                 voucherDetailModel.ProductModel = listProduct;
-
-                var Descripcion1 = (from N in listProduct
-                                    where N.Descripcion1.StartsWith(term)
-                                    select new { N }).ToList();
-
+                            
+                    var Descripcion1 = (from N in listProduct
+                                        where (N.IdProducto == idProducto)
+                                        select new { N }).ToList();
+   
                 var detailGrid = new DetailGrid();
 
                 if (Descripcion1.Count != 0 && term != string.Empty)
@@ -133,6 +133,10 @@ namespace ERPAnimalia.Controllers
                     detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto.Value;
                     detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
                     detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
+                    detailGrid.Category= Descripcion1[0].N.CategoryItem.Name;
+                    detailGrid.SubCategory = Descripcion1[0].N.SubCategoryItem.Name;
+                    detailGrid.Marca = Descripcion1[0].N.Marca;
+                    detailGrid.kg = Descripcion1[0].N.kg;
 
                     detailGrid = VoucherDetailManager.SetValuesNewRowTable(detailGrid, cantidad, descuento);
                 }
@@ -183,7 +187,7 @@ namespace ERPAnimalia.Controllers
 
 
         [HttpGet]
-        public JsonResult GetSubtotal(Guid? idProduct, int cantidad = 0, decimal descuento = 0)
+        public JsonResult GetSubtotal(Guid? idProduct, decimal cantidad = 0, decimal descuento = 0)
         {
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var records = new List<DetailGrid>();

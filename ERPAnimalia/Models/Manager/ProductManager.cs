@@ -268,10 +268,13 @@ namespace ERPAnimalia.Models
         public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             var map = MapProduct();
-            
+           
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                map = map.Where(p => p.Codigo.Contains(searchString) || p.Descripcion1.Contains(searchString)).ToList();
+                map = map.Where(p => (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+               (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper()))||
+                 (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper()))||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper()))).ToList();
             }
 
             total = map.Count();
@@ -290,7 +293,6 @@ namespace ERPAnimalia.Models
                     productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
                 }
             }
-
             if (page.HasValue && limit.HasValue)
             {
                 int start = (page.Value - 1) * limit.Value;
@@ -299,6 +301,17 @@ namespace ERPAnimalia.Models
 
             return productQueryable.ToList();
         }
+
+
+        public List<ProductModels> GetProducBugtList(List<ProductModels> list)
+        {
+
+            var listProduct = list.Where(x => x.IdSubCategory == (int)Enumeration.Subcategory.Bolsa || x.IdCategory == (int)Enumeration.Category.Accesorios).ToList();
+            return listProduct;
+
+        }
+
+           
 
         public List<ProductModels> MapProduct()
         {
