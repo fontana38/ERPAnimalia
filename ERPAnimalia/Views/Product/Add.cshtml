@@ -44,6 +44,25 @@
                 
             });
         })
+
+        function MyFunction()
+        {
+            debugger;
+            var _Filepath = $("#CodigoBarra").val();
+            $.ajax({ url: "/Product/ReadBarcodeFromFile", type: "POST", data: { _Filepath: _Filepath } })
+                .done(function (data) {
+                   
+                    gridProduct.clear();
+                    alert("La orden fue guardad con éxito");
+                    gridProduct.reload();
+                })
+                .fail(function () {
+                    alert("Unable to save.");
+
+                });
+        }
+
+
             function HideSubcategory()
             {
                 debugger;
@@ -128,7 +147,7 @@
 
                                 <div class="form-group">
                                     <label class="col-md-4" for="pwd">Código de barra:</label>
-                                    @Html.TextBoxFor(m => m.CodigoBarra, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra" })
+                                    @Html.TextBoxFor(m => m.CodigoBarra, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra", onkeyPress = "MyFunction();" })
                                 </div>
 
                                 <div class="form-group">

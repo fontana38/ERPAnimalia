@@ -1,0 +1,195 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Detalle Producto</title>
+
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery.1.10.1.js"></script>
+    <script src="~/Scripts/gijgo.js"></script>
+
+    <script type="text/javascript">
+
+     $(document).ready(function () {
+         gridProductBug = $("#gridProductBug").grid({
+             dataKey: "IdProducto",
+             uiLibrary: "bootstrap",
+             columns: [
+             { field: "IdProducto", hidden: true },
+             { field: "Codigo", title: "Código", sortable: true, width: 80 },
+             { field: "Marca", title: "Marca", sortable: true, width: 150 },
+             { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
+             { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200 },
+              { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
+             { field: "CategoryName", title: "Categoria", sortable: true, width: 100 },
+             { field: "kg", title: "Kg", sortable: true, width: 80 },
+             { field: "Cantidad", title: "Stock Actual", sortable: true, width: 80 },
+             { field: "TotalKg", title: "Total Kg", sortable: true, width: 80 },
+             { field: "PrecioCosto", title: "Precio Costo", editor: true,sortable: true, width: 80 },
+             { field: "PrecioVenta", title: "Precio Venta",editor: true, sortable: true, width: 80 }
+
+             ],
+             selectionMethod: 'checkbox', 
+             pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+         });
+         
+
+             $("#btnSearchGridProduct").on("click", SearchProduct);
+             $("#btnSave").on("click", Save);
+
+
+
+             gridProductLoose = $("#gridProductLoose").grid({
+                 dataKey: "IdProducto",
+                 uiLibrary: "bootstrap",
+                 columns: [
+                 { field: "IdProducto", hidden: true },
+                 { field: "Codigo", title: "Código", sortable: true, width: 80 },
+                 { field: "Marca", title: "Marca", sortable: true, width: 150 },
+                 { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
+                 { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200 },
+                  { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
+             { field: "CategoryName", title: "Categoria", sortable: true, width: 100 },
+                 { field: "kg", title: "Kg", sortable: true, width: 80 },
+                 { field: "TotalKg", title: "Stock Actual", sortable: true, width: 80 },
+                 { field: "PrecioCosto", title: "Precio Costo", editor: true,sortable: true, width: 80 },
+                 { field: "PrecioVenta", title: "Precio Venta",editor: true, sortable: true, width: 80 }
+
+                 ],
+                 selectionMethod: 'checkbox', 
+                 pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+             });
+
+            
+             //gridProductLoose.on('cellDataChanged', function (e, $cell, column, record, oldValue, newValue) {
+             //    debugger;
+             //    CalculateTotal(record,e,$cell.length)
+             //});
+
+         });
+
+
+     
+     //function CalculateTotal(record,e,row)
+     //{
+     //    debugger;
+     //    var selectionRowLoose = gridProductLoose.getSelections();
+     //    var selectionRowBug= gridProductBug.getSelections();
+     //    if(selectionRowLoose.length != 0 &&  selectionRowBug.length != 0  )
+     //    {
+     //        record.TotalKg = parseFloat(record.CantidadAgregarSuelto) + parseFloat( record.TotalKg);
+     //        gridProductLoose.updateRow(selectionRowLoose, { 'IdProducto': record.IdProducto,'Codigo':record.Codigo,'Marca':record.Marca, 'Descripcion1':record.Descripcion1, 'Descripcion2':record.Descripcion2,'SubCategoryName':record.SubCategoryName,'CategoryName':record.CategoryName,'kg' : record.kg,
+     //            'CantidadAgregarSuelto':record.CantidadAgregarSuelto, 'TotalKg':  record.TotalKg,'PrecioCosto':record.PrecioCosto,'PrecioVenta':record.PrecioVenta});
+     //        gridProductLoose.setSelected(selectionRowLoose);
+         
+     //    }
+     //    else  if(selectionRowLoose.length == 0)
+     //    {
+     //        alert("Debe Seleccionar un Item en la grilla Producto Suelto");
+     //    }
+     //    else  if(selectionRowBug.length == 0)
+     //    {
+     //        alert("Debe Seleccionar un Item en la grilla Alimentos Bolsas");
+     //    }
+        
+         
+     //}
+         function SearchProduct() {
+             debugger;
+             gridProduct.reload({ searchString: $("#search").val() });
+         }
+
+
+
+         function Save() {
+             debugger;
+            
+             var rowSelectionsBug = gridProductBug.getSelections();
+             var rowSelectionsLoose = gridProductLoose.getSelections();
+             
+             if (rowSelectionsBug.length != 0 && rowSelectionsLoose.length  != 0 )
+             {
+                 var rowLoose= gridProductLoose.get(rowSelectionsLoose);
+                 var idLoose = rowLoose.IdProducto;
+                 var precioCosto = rowLoose.PrecioCosto;
+                 var precioVenta = rowLoose.PrecioVenta;
+                 
+
+                 var rowBug= gridProductBug.get(rowSelectionsBug);
+                 var idBug = rowBug.IdProducto;
+                    
+             }
+             else
+             {
+                return alert("Debe Seleccionar Un Producto");
+             }
+
+            
+             $.ajax({ url: "/ListProduct/Save", type: "POST", data: {idBug:idBug, idLoose: idLoose, precioCosto: precioCosto, precioVenta:precioVenta} })
+             
+                 .done(function (data) {
+                   
+                    
+                     alert("La orden fue guardad con éxito");
+                     gridProductLoose.reload();
+                     gridProductBug.reload();
+                    
+                 })
+                 .fail(function () {
+                     alert("Unable to save.");
+
+                 });
+         }
+
+        
+    </script>
+
+</head>
+<body>
+    <div id="passLoose" class="container-fluid">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Producto Bolsa</div>
+            <div class="panel-body">
+                <div class="form-group row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <div class="input-group">
+                            <input type="text" id="search" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                            </span>
+
+                        </div>
+                        <br />
+                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
+                        
+                    </div>
+                </div>
+
+                <br />
+                <table id="gridProductBug" data-source="@Url.Action("GetProductBug")"></table>
+            </div>
+            </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Producto Suelto</div>
+            <div class="panel-body">
+                <div class="form-group row">
+                    <div class="col-md-3 col-md-offset-1">
+                        <div class="input-group">
+                            <input type="text" id="search" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                            </span>
+
+                        </div>
+                        <br />
+                        <button type="button" class="btn btn-primary" id="btnSave">Guardar</button>
+                    </div>
+                </div>
+
+                <table id="gridProductLoose" data-source="@Url.Action("GetProductLoose")"></table>
+            </div>
+        </div>
+        </div>
+</body>
+</html>

@@ -42,24 +42,14 @@ namespace ERPAnimalia.Models
                             clienteDb.IdCliente = Guid.NewGuid();
                           
                             db.Cliente.Add(clienteDb);
+                            SaveProductsId(clienteModel, clienteDb.IdCliente);
 
-                            if (clienteModel.IdsProduct != null)
-                            {
-                                foreach (var item in clienteModel.IdsProduct)
-                                {
-                                    var IdClienteIdProducto = new IdClienteIdProducto();
-                                    IdClienteIdProducto.IdClienteProducto = Guid.NewGuid();
-                                    IdClienteIdProducto.IdCliente = clienteDb.IdCliente;
-                                    IdClienteIdProducto.IdProducto = item;
-                                    db.IdClienteIdProducto.Add(IdClienteIdProducto);
-
-                                }
-                            }
                             db.SaveChanges();
                             dbContextTransaction.Commit();
                         }
                         else
                         {
+                            SaveProductsId(clienteModel, clienteDb.IdCliente);
                             db.Cliente.Attach(clienteDb);
                             db.Entry(clienteDb).State = EntityState.Modified;
                             db.SaveChanges();
@@ -75,6 +65,21 @@ namespace ERPAnimalia.Models
             }
         }
 
+        private void SaveProductsId(ClienteModel clienteModel, Guid idClient)
+        {
+            if (clienteModel.IdsProduct != null)
+            {
+                foreach (var item in clienteModel.IdsProduct)
+                {
+                    var IdClienteIdProducto = new IdClienteIdProducto();
+                    IdClienteIdProducto.IdClienteProducto = Guid.NewGuid();
+                    IdClienteIdProducto.IdCliente = idClient;
+                    IdClienteIdProducto.IdProducto = item;
+                    db.IdClienteIdProducto.Add(IdClienteIdProducto);
+
+                }
+            }
+        }
         public List<ClienteModel> ObtenerCliente(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             
@@ -97,10 +102,12 @@ namespace ERPAnimalia.Models
                 var map = MapperObject.CreateClienteProductModel(item, productList);
                 listClient.Add(map);
             }
-
+           
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                listClient = listClient.Where(p => p.Nombre.Contains(searchString) || p.Codigo.Contains(searchString)).ToList();
+                listClient = listClient.Where(p => (p.Nombre.ToUpper().StartsWith(searchString.ToUpper()) || p.Nombre.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Apellido.ToUpper().StartsWith(searchString.ToUpper()) || p.Apellido.ToUpper().EndsWith(searchString.ToUpper()))).ToList();
             }
 
             total = clienteList.Count();
@@ -131,6 +138,15 @@ namespace ERPAnimalia.Models
         public void BorrarCliente(Guid idCliente)
         {
             var cliente=db.Cliente.Where(x => x.IdCliente == idCliente).ToList();
+            var product = db.IdClienteIdProducto.Where(x => x.IdCliente == idCliente).ToList();
+
+            if (product.Count > 0)
+            {
+                foreach (var item in product)
+                {
+                    db.IdClienteIdProducto.Remove(item);
+                }
+            }
             db.Cliente.Remove(cliente[0]);
             db.SaveChanges();
         }

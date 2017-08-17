@@ -8,6 +8,6 @@ namespace ERPAnimalia.Models
     public class VoucherHeadLoadOrder:VoucherHeadGeneral
     {
         public Guid IdProveedor;
-        public List<ProveedorModel> ProveedorModel;
+        public List<ProviderModel> ProveedorModel;
     }
 }

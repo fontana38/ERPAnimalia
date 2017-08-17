@@ -18,17 +18,21 @@ namespace ERPAnimalia.EntityFramework
         public Proveedor()
         {
             this.Comprobante = new HashSet<Comprobante>();
+            this.IdProveedorProducto = new HashSet<IdProveedorProducto>();
         }
     
         public System.Guid IdProveedor { get; set; }
         public string Nombre { get; set; }
-        public string Dirección { get; set; }
+        public string Direccion { get; set; }
         public string Telefono { get; set; }
-        public string Email { get; set; }
+        public string Mail { get; set; }
         public string Codigo { get; set; }
         public string Apellido { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comprobante> Comprobante { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IdProveedorProducto> IdProveedorProducto { get; set; }
     }
 }

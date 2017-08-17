@@ -20,7 +20,7 @@ namespace ERPAnimalia.Models.Manager
             _productManager = productManager;
         }
 
-        public List<ProveedorModel> GetProveedor()
+        public List<ProviderModel> GetProveedor()
         {
             var proveedor = GetProveedorList();
             
@@ -74,7 +74,7 @@ namespace ERPAnimalia.Models.Manager
         }
 
 
-        private List<ProveedorModel> GetProveedorList()
+        private List<ProviderModel> GetProveedorList()
         {
             var ProveedorList = db.Proveedor.ToList();
             var listClient = MapperObject.CreateListProveedorModel(ProveedorList);

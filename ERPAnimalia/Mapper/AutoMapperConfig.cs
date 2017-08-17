@@ -39,7 +39,8 @@ namespace ERPAnimalia.Mapper
                  .ForMember(t => t.TipoComprobante, opt => opt.Ignore())
                  .ForMember(t => t.FormaDePago, opt => opt.Ignore());
                 cfg.CreateMap<VoucherDetailModel, DetalleComprobante>();
-                cfg.CreateMap<Proveedor, ProveedorModel>();
+                cfg.CreateMap<Proveedor, ProviderModel>();
+                cfg.CreateMap<ProviderModel, Proveedor>();
             });
 
            

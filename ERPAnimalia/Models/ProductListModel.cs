@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ERPAnimalia.Models
 {
-    public class ProductoListaModel
+    public class ProductListModel
     {
         public Guid IdProductoLista { get; set; }
         public Guid? IdProducto { get; set; }

@@ -1,4 +1,5 @@
 ﻿using ERPAnimalia.Models;
+using OnBarcode.Barcode.BarcodeScanner;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -134,6 +135,14 @@ namespace ERPAnimalia.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        private ActionResult ReadBarcodeFromFile(string _Filepath)
+        {
+            String[] barcodes = BarcodeScanner.Scan(_Filepath, BarcodeType.Code39);
+            return View();
+        }
+
 
         // GET: Product/Delete/5
         public ActionResult Delete(Guid id)

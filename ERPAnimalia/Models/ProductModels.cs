@@ -55,6 +55,8 @@ namespace ERPAnimalia.Models
 
         public decimal? TotalKg { get; set; }
 
+        public decimal? CantidadAgregarSuelto { get; set; }
+
         public decimal? kg { get; set; }
 
         [Required(ErrorMessage = "Por favor Ingrese la Categoria")]

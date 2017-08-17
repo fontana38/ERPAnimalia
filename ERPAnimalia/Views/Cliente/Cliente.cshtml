@@ -18,6 +18,7 @@
             $(document).ready(function () {
 
                
+
                 $('#fechaCompra')
                 .datepicker({
                     dateFormat: "dd-mm-yy",
@@ -178,7 +179,16 @@
                 debugger;
                 if (SaveValidation())
                 {
+                    var idProducto=new Array();
                     var selections = gridProduct.getSelections();
+                    if (selections.length!= 0)
+                    {           
+                        $(selections).each(function (index, element) {
+                            debugger;
+                            var row = gridProduct.get(element);
+                            idProducto[index] = row.IdProducto;                           
+                        });
+                    }
                     var cliente = {
                         IdCliente: $("#idCliente").val(),
                         Codigo: $("#codigo").val(),
@@ -190,7 +200,7 @@
                         Telefono: $("#telefono").val(),
                         Mail: $("#mail").val(),
                         Mascota: $("#mascota").val(),
-                        IdsProduct: selections,
+                        IdsProduct: idProducto,
                         dias: $("#dias").val()
 
                     };
@@ -250,14 +260,13 @@
 
             function  SaveValidation()
             {
-                if($("#codigo").val()=="" ||$("#dias").val()=="" || $("#apellido").val()=="" || $("#direccion").val()=="")
+                if($("#codigo").val()==""  || $("#apellido").val()=="" || $("#direccion").val()=="")
                 {
                    alert("Complete los campos necesarios para poder guardar.Codigo,nombre,apellido,direccion y dias")
                     return false;
                 }
                 else
-                {
-                   
+                {                
                     return true;
                 }
 
@@ -266,7 +275,7 @@
 
 </head>
 <body>
-
+    
     <div class="panel panel-primary">
         <div class="panel-heading">Cliente</div>
         <br class="panel-body">
@@ -311,7 +320,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="clienteTab">
-                                    <form id="loginForm">
+                                    <form id="loginForm" data-toggle="validator" role="form">
                                         <input type="hidden" id="idCliente" />
                                         <div class="form-group">
                                             <label for="name">Código</label>
@@ -335,10 +344,11 @@
                                             <span class="error">Debe ingresar una dirección</span>
                                         </div>
                                         <div class="form-group">
-                                            <label for="direccion">Mail</label>
-                                            <input type="text" class="form-control" id="mail" placeholder="Ingrese mail">
-                                            <span class="error">Debe ingresar una dirección</span>
+                                            <label for="inputEmail" class="control-label">Email</label>
+                                            <input type="email" class="form-control" id="mail" placeholder="Email" data-error="El mail es inválido" required>
+                                            <div class="help-block with-errors"></div>
                                         </div>
+                                      
                                         <div class="form-group">
                                             <label for="direccion">Mascota</label>
                                             <input type="text" class="form-control" id="mascota" placeholder="Ingrese la Mascota">

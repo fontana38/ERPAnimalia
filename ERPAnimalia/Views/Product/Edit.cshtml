@@ -13,7 +13,7 @@
 
             $('#PrecioVenta').blur(function () {
                 debugger;
-                var precioVenta= $('#PrecioVenta').val();
+                var precioVenta = $('#PrecioVenta').val();
                 var precioCosto= $('#PrecioCosto').val();
                 var rentPesos = (precioVenta - precioCosto);
                 var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
@@ -55,18 +55,18 @@
         @Html.HiddenFor(m => m.IdProducto)
         <div class="form-group">
             <label class="col-md-4" for="desc">Código:</label>
-                @Html.EditorFor(m => m.Codigo, new { @class = "form-control", type = "text", placeholder = "Ingrese el código" })
+                @Html.EditorFor(m => m.Codigo, new { htmlAttributes = new { @class = "form-control", type = "text", placeholder = "Ingrese el código" } })
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Categoria:</label>
             @Html.DropDownListFor(model => Model.CategoryItem.IdCategory,
-                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()" })
+                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()"  })
 
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Subcategoria:</label>
             @Html.DropDownListFor(model => model.SubCategoryItem.IdSubCategory,
-                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"),  new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Marca:</label>
@@ -98,7 +98,7 @@
 
                         <div class="form-group">
                             <label class="col-md-4" for="cant">Cantidad:</label>
-                            @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "text", placeholder = "Ingrese Cantidad" })
+                            @Html.EditorFor(m => m.Cantidad, new { @class = "form-control", type = "number", min = "0", step = "0.01", placeholder = "Ingrese Cantidad"  })
 
                         </div>
 
@@ -108,20 +108,20 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-md-4" for="pwd">Precio Costo</label>
-                            @Html.TextBoxFor(m => m.PrecioCosto, new { @class = "form-control", type = "number", min = "0", step = "0.01", placeholder = "Precio Costo" })
+                            <label class="col-md-4" >Precio Costo</label>
+                            @Html.EditorFor(m => m.PrecioCosto,   new { @class = "form-control", type = "number", min = "0", step = "999999", placeholder = "Precio Costo"  })
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4" for="pwd">Precio Venta</label>
-                            @Html.TextBoxFor(m => m.PrecioVenta, new { @class = "form-control", type = "number", min = "0", step = "0.01", placeholder = "Precio Venta" })
+                            <label class="col-md-4" >Precio Venta</label>
+                            @Html.EditorFor(m => m.PrecioVenta,   new { @class = "form-control", type = "number", min = "0", step = "999999", placeholder = "Precio Venta" })
                         </div>
                         <div class="form-group">
                             <label class="col-md-4" for="rentabilidad$">Rentabilidad $</label>
-                            @Html.TextBoxFor(m => m.RentabilidadPesos, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                            @Html.EditorFor(m => m.RentabilidadPesos, new { type = "number", min = "0", step = "0,01", @class = "form-control"  })
                         </div>
                             <div class="form-group">
                                 <label class="col-md-4" for="rentabilidad%">Rentabilidad %</label>
-                                @Html.TextBoxFor(m => m.Rentabilidad, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                                @Html.EditorFor(m => m.Rentabilidad,  new { type = "number", min = "0", step = "0.01", @class = "form-control" })
                             </div>
 
 

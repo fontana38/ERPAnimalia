@@ -18,6 +18,7 @@ namespace ERPAnimalia.EntityFramework
         public Product()
         {
             this.IdClienteIdProducto = new HashSet<IdClienteIdProducto>();
+            this.IdProveedorProducto = new HashSet<IdProveedorProducto>();
         }
     
         public string Codigo { get; set; }
@@ -37,9 +38,11 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<decimal> PrecioCosto { get; set; }
         public Nullable<decimal> TotalKg { get; set; }
     
-        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IdClienteIdProducto> IdClienteIdProducto { get; set; }
         public virtual SubCategory SubCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IdProveedorProducto> IdProveedorProducto { get; set; }
+        public virtual Category Category { get; set; }
     }
 }

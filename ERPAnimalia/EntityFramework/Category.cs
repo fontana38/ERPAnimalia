@@ -23,8 +23,6 @@ namespace ERPAnimalia.EntityFramework
         public int IdCategory { get; set; }
         public string Name { get; set; }
     
-        public virtual Category Category1 { get; set; }
-        public virtual Category Category2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Product { get; set; }
     }

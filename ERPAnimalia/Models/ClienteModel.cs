@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ERPAnimalia.Models
 {
-    public class ClienteModel:PersonaModels
+    public class ClienteModel:PersonModels
     {
         public Guid IdCliente { get; set; }
         public string Mascota { get; set; }

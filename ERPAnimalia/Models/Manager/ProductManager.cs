@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using AutoMapper;
 using System.Web.Http.ModelBinding;
+using OnBarcode.Barcode.BarcodeScanner;
 
 namespace ERPAnimalia.Models
 {
@@ -14,9 +15,14 @@ namespace ERPAnimalia.Models
 
         public TransferToFreeProductManager ProductOpenManagers { get; set; }
 
+        public List<ProductListModel> map;
+
+        private static readonly Object obj = new Object();
+
         public ProductManager()
         {
-       
+            
+                db = Factory.Factory.CreateContextDataBase();
             
         }
 
@@ -40,7 +46,7 @@ namespace ERPAnimalia.Models
         {
             try
             {
-                db = Factory.Factory.CreateContextDataBase();
+               
                 var productDb = MapperObject.CreateProductDb(product);
                 db.Product.Add(productDb);
 
@@ -83,7 +89,7 @@ namespace ERPAnimalia.Models
      
         public void DeleteProduct(ProductModels product)
         {
-            db = Factory.Factory.CreateContextDataBase();
+           
             var deleteProduct =db.Product.Find(product);
             db.Product.Remove(deleteProduct);
             db.SaveChanges();
@@ -92,7 +98,7 @@ namespace ERPAnimalia.Models
 
         public List<CategoryModel> GetCategoryList()
         {
-            db = Factory.Factory.CreateContextDataBase();
+           
             var CategoryList = db.Category.ToList();
             var map = MapperObject.CreateCategoryList(CategoryList);
             return map;
@@ -101,7 +107,7 @@ namespace ERPAnimalia.Models
 
         public List<SubCategoryModel> GetSubCategoryList()
         {
-            db = Factory.Factory.CreateContextDataBase();
+           
             var CategoryList = db.SubCategory.ToList();
             var map = MapperObject.CreateSubCategoryList(CategoryList);
             return map;
@@ -110,7 +116,7 @@ namespace ERPAnimalia.Models
 
         public virtual ProductModels GetProductById (Guid id)
         {
-            db = Factory.Factory.CreateContextDataBase();
+            
             var  productById = db.Product.Find(id);
             var  productMap =MapperObject.CreateProductModel(productById);
             productMap.Category = GetCategoryList();
@@ -120,7 +126,7 @@ namespace ERPAnimalia.Models
 
         public void EditProduct(ProductModels product)
         {
-            db = Factory.Factory.CreateContextDataBase();
+            
             var id = product.IdProducto;
             var productById = db.Product.Find(id);
             var productDb = MapperObject.EditProductDb(product, productById);
@@ -131,7 +137,7 @@ namespace ERPAnimalia.Models
 
         public List<CategoryModel> GetCategory()
         {
-            db = Factory.Factory.CreateContextDataBase();
+           
             var category = db.Category.ToList();
            
             return MapperObject.CreateCategoryList(category);
@@ -139,7 +145,7 @@ namespace ERPAnimalia.Models
 
         public List<SubCategoryModel> GetSubCategory()
         {
-            db = Factory.Factory.CreateContextDataBase();
+           
             var subCategory = db.SubCategory.ToList();
 
             return MapperObject.CreateSubCategoryList(subCategory);
@@ -147,7 +153,7 @@ namespace ERPAnimalia.Models
 
         public void Delete(Guid id)
         {
-            db = Factory.Factory.CreateContextDataBase();
+            
            
             var productById = db.Product.Find(id);
 
@@ -158,6 +164,7 @@ namespace ERPAnimalia.Models
             }
            
         }
+
         public ProductModels NewProductModel()
         {
            return Factory.Factory.NewProductModel();
@@ -267,8 +274,13 @@ namespace ERPAnimalia.Models
 
         public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
-            var map = MapProduct();
-           
+            var map = new List<ProductModels>();
+            lock (obj)
+            {
+                map = MapProduct();
+
+            }
+
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 map = map.Where(p => (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
@@ -311,13 +323,28 @@ namespace ERPAnimalia.Models
 
         }
 
-           
 
+        public List<ProductModels> GetProducBug(List<ProductModels> list)
+        {
+
+            var listProduct = list.Where(x => x.IdSubCategory == (int)Enumeration.Subcategory.Bolsa && x.IdCategory == (int)Enumeration.Category.Alimento).ToList();
+            return listProduct;
+
+        }
+
+        public List<ProductModels> GetProducLooseList(List<ProductModels> list)
+        {
+
+            var listProduct = list.Where(x => x.IdSubCategory == (int)Enumeration.Subcategory.Suelto && x.IdCategory == (int)Enumeration.Category.Alimento).ToList();
+            return listProduct;
+
+        }
+
+      
         public List<ProductModels> MapProduct()
         {
            
-            db = Factory.Factory.CreateContextDataBase();
-            var productList = db.Product.ToList();
+            var productList =  db.Product.ToList();
             var category = db.Category.ToList();
             var subcategoria = db.SubCategory.ToList();
 
@@ -332,6 +359,47 @@ namespace ERPAnimalia.Models
             modelState.Remove("IdCategory");
             modelState.Remove("IdSubCategory");
         }
+
+
+        public void SaveProductToLoose(Guid? idBug,Guid? idLoose, string precioCosto, string precioVenta)
+        {
+            using (var context = new AnimaliaPetShopEntities())
+            {
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        Product productBug = db.Product.Find(idBug);
+                        Product productLoose = db.Product.Find(idLoose);
+                        var totalQuantity = productLoose.TotalKg + productBug.Kg;
+
+
+                        var precioCostoNew = (productLoose.TotalKg * productLoose.PrecioCosto) + (Convert.ToDecimal(productBug.Kg) * (Convert.ToDecimal(precioCosto) / productBug.Kg)) / totalQuantity;
+                        productLoose.PrecioCosto = precioCostoNew;
+                        productLoose.PrecioVenta = Convert.ToDecimal(precioVenta);
+                        productLoose.TotalKg = productLoose.TotalKg + productBug.Kg;
+
+                        productBug.TotalKg = productBug.TotalKg - productBug.Kg;
+                        productBug.Cantidad = productBug.Cantidad - 1;
+
+                        context.SaveChanges();
+
+                        dbContextTransaction.Commit();
+
+
+                    }
+                    catch (Exception exepction)
+                    {
+                        dbContextTransaction.Rollback();
+                        throw exepction;
+                    }
+
+
+                    // producto.First().PrecioCosto = Convert.ToDecimal((Convert.ToDecimal(producto.First().Cantidad) * producto.First().PrecioCosto) + (Convert.ToDecimal(cantidad[i]) * Convert.ToDecimal(precioCosto[i]))) / cantidadTotal;
+
+                }
+            }
+         }
 
 
            

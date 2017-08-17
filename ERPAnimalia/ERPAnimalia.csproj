@@ -99,6 +99,12 @@
       <HintPath>..\packages\Mono.Reflection.1.0.0.0\lib\Mono.Reflection.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OnBarcode.Barcode.ASPNET">
+      <HintPath>..\packages\CodeBar\OnBarcode.Barcode.ASPNET.dll</HintPath>
+    </Reference>
+    <Reference Include="OnBarcode.Barcode.BarcodeScanner">
+      <HintPath>..\packages\CodeBar\OnBarcode.Barcode.BarcodeScanner.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
       <Private>True</Private>
@@ -234,6 +240,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ListProductController.cs" />
     <Compile Include="Controllers\LoadOrderController.cs" />
+    <Compile Include="Controllers\ProviderController.cs" />
     <Compile Include="Controllers\SearchProductController.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="DataBase\TransactionBase.cs" />
@@ -300,6 +307,9 @@
     <Compile Include="EntityFramework\IdClienteIdProducto.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\IdProveedorProducto.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\Product.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
@@ -322,6 +332,7 @@
     <Compile Include="Helper\CalCulos.cs" />
     <Compile Include="Helper\Common.cs" />
     <Compile Include="Interfaces\ILoadOrderManager.cs" />
+    <Compile Include="Interfaces\IProviderManager.cs" />
     <Compile Include="Interfaces\IVoucherDetailManager.cs" />
     <Compile Include="Interfaces\IVoucherHeadManager.cs" />
     <Compile Include="Interfaces\IDetalleComprobante.cs" />
@@ -331,9 +342,10 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DetailGrid.cs" />
     <Compile Include="Models\Manager\LoadOrderManager.cs" />
+    <Compile Include="Models\Manager\ProviderManager.cs" />
     <Compile Include="Models\Manager\VoucherDetailManager.cs" />
     <Compile Include="Models\NotaPedidoModel.cs" />
-    <Compile Include="Models\ProveedorModel.cs" />
+    <Compile Include="Models\ProviderModel.cs" />
     <Compile Include="Models\VoucherHeadGeneral.cs" />
     <Compile Include="Models\VoucherHeadLoadOrder.cs" />
     <Compile Include="Models\VoucherHeadModel.cs" />
@@ -344,13 +356,13 @@
     <Compile Include="Models\VoucherDetailModel.cs" />
     <Compile Include="Models\ListProductManager.cs" />
     <Compile Include="Models\Manager\VoucheHeadManager.cs" />
-    <Compile Include="Models\PersonaModels.cs" />
+    <Compile Include="Models\PersonModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProductDetailModel.cs" />
     <Compile Include="Models\Manager\ProductManager.cs" />
     <Compile Include="Models\ProductModels.cs" />
-    <Compile Include="Models\ProductoListaModel.cs" />
+    <Compile Include="Models\ProductListModel.cs" />
     <Compile Include="Models\SortHelper.cs" />
     <Compile Include="Models\TipoComprobante.cs" />
     <Compile Include="Models\TransferToFreeProductManager.cs" />
@@ -669,6 +681,8 @@
     <Content Include="Views\ListProduct\Index.cshtml" />
     <Content Include="Views\LoadOrder\Index.cshtml" />
     <Content Include="Views\LoadOrder\DetailLoadOrder.cshtml" />
+    <Content Include="Views\Provider\Provider.cshtml" />
+    <Content Include="Views\ListProduct\PassToLoose.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

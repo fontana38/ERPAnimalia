@@ -1,4 +1,5 @@
 ﻿using ERPAnimalia.Models;
+using ERPAnimalia.Models.Manager;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,14 @@ namespace ERPAnimalia.Factory
     public static class Factory
     {
 
- 
-        public static PersonaModels NewClienteModels()
+        public static ProviderManager NewProviderManager()
         {
-            return new PersonaModels();
+            return new ProviderManager();
+        }
+
+        public static PersonModels NewClienteModels()
+        {
+            return new PersonModels();
         }
 
         public static List<ClienteModel>  ListClienteModels()
@@ -21,10 +26,13 @@ namespace ERPAnimalia.Factory
             return new List<ClienteModel>();
         }
 
-        
-        public static ProductoListaModel NewProductoListaModel()
+        public static List<ProviderModel> ListProviderModels()
         {
-            return new ProductoListaModel();
+            return new List<ProviderModel>();
+        }
+        public static ProductListModel NewProductoListaModel()
+        {
+            return new ProductListModel();
         }
 
         public static ProductModels NewProduct()
@@ -37,6 +45,7 @@ namespace ERPAnimalia.Factory
 
         public static AnimaliaPetShopEntities CreateContextDataBase()
         {
+           
             return new AnimaliaPetShopEntities();
             
         }

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ERPAnimalia.Models
 {
-    public  class PersonaModels
+    public  class PersonModels
     {
         
         public string Nombre { get; set; }

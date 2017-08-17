@@ -102,6 +102,25 @@ namespace ERPAnimalia
 
         }
 
+
+        public static Proveedor CreateProviderDb(ProviderModel provider)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+
+                var provicerMap = mapper.Map<Proveedor>(provider);
+
+                return provicerMap;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+
+        }
+
         public static List<CategoryModel> CreateCategoryList(List<Category> category)
         {
             try
@@ -132,7 +151,7 @@ namespace ERPAnimalia
             try
             {
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
-                var list = Factory.Factory.Cliente();
+               
                 
 
                 var listaMap = mapper.Map<ClienteModel>(cliente);
@@ -164,11 +183,47 @@ namespace ERPAnimalia
                 throw new Exception(e.Message.ToString());
             }
         }
-       
-           
 
-        
-       
+
+
+        public static ProviderModel CreateProveedorProductModel(Proveedor proveedor, List<Product> product)
+        {
+            try
+            {
+                var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
+                
+
+
+                var listaMap = mapper.Map<ProviderModel>(proveedor);
+
+                listaMap.Productos = Factory.Factory.CreateListProduct();
+
+                if (product != null && product.Count > 0)
+                {
+                    foreach (var item in product)
+                    {
+                        var category = CreateCategory(item.Category);
+                        var productMap = mapper.Map<ProductModels>(item);
+                        var subCategoryMap = CreateSubCategory(item.SubCategory);
+                        productMap.CategoryItem = category;
+                        productMap.SubCategoryItem = subCategoryMap;
+                        listaMap.Productos.Add(productMap);
+                    }
+
+
+                }
+
+
+                return listaMap;
+            }
+
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message.ToString());
+            }
+        }
+
 
         public static List<SubCategoryModel> CreateSubCategoryList(List<SubCategory> subCategory)
         {
@@ -232,16 +287,21 @@ namespace ERPAnimalia
                 if(product.IdCategory != (int)Enumeration.Category.Accesorios)
                 {
                     NewProduct.Kg = product.kg;
-                    NewProduct.TotalKg = product.kg * product.Cantidad;
                     NewProduct.TotalKg = Helper.CalCulos.CalculateTotalKg(NewProduct.Kg.Value, NewProduct.Cantidad.Value);
-                    NewProduct.IdSubCategory =1;
                 }
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
                 NewProduct.IdCategory = product.IdCategory;
                 NewProduct.IdSubCategory = product.IdSubCategory;
                 NewProduct.PrecioVenta = product.PrecioVenta;
-                NewProduct.PrecioCosto = product.PrecioCosto;
+                if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
+                {
+                    NewProduct.PrecioCosto = product.PrecioCosto;
+                }
+                else if(product.IdSubCategory == (int)Enumeration.Subcategory.Suelto)
+                {
+                    NewProduct.PrecioCosto = product.PrecioCosto / product.kg;
+                }
                 NewProduct.Presentacion = product.Presentacion;
                 NewProduct.RentabilidadPesos = product.RentabilidadPesos;
                 NewProduct.Rentabilidad = product.Rentabilidad;
@@ -259,10 +319,22 @@ namespace ERPAnimalia
                 productDb.Descripcion2 = product.Descripcion2;
                 productDb.Marca = product.Marca;
                 productDb.Cantidad = product.Cantidad;
-                productDb.Kg = product.kg;
+
+                if (product.IdCategory != (int)Enumeration.Category.Accesorios)
+                {
+                    productDb.Kg = product.kg;
+                    productDb.TotalKg = Helper.CalCulos.CalculateTotalKg(productDb.Kg.Value, productDb.Cantidad.Value);
+                }
                 productDb.PrecioVenta = product.PrecioVenta;
-                productDb.PrecioCosto = product.PrecioCosto;
-                productDb.CodigoBarra = product.CodigoBarra;
+                if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
+                {
+                    productDb.PrecioCosto = product.PrecioCosto ;
+                }
+                else if (product.IdSubCategory == (int)Enumeration.Subcategory.Suelto)
+                {
+                    productDb.PrecioCosto = product.PrecioCosto / product.kg;
+                }
+                    productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
                 productDb.IdCategory = product.CategoryItem.IdCategory;
                 productDb.IdSubCategory = product.SubCategoryItem.IdSubCategory;
@@ -299,13 +371,13 @@ namespace ERPAnimalia
         }
 
 
-        public static List<ProveedorModel> CreateListProveedorModel(List<Proveedor> listProveedor)
+        public static List<ProviderModel> CreateListProveedorModel(List<Proveedor> listProveedor)
         {
             try
             {
 
                 var mapper = AutoMapperConfig.MapperConfiguration.CreateMapper();
-                var proveedor = mapper.Map<List<ProveedorModel>>(listProveedor);
+                var proveedor = mapper.Map<List<ProviderModel>>(listProveedor);
                 foreach (var item in proveedor)
                 {
                     item.NombreCompleto = item.Apellido + " " + item.Nombre;
