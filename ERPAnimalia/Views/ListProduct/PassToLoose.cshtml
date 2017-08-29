@@ -35,7 +35,8 @@
          });
          
 
-             $("#btnSearchGridProduct").on("click", SearchProduct);
+         $("#btnSearchProductBug").on("click", SearchProductBug);
+         $("#btnSearchProductLoose").on("click", SearchProductLoose);
              $("#btnSave").on("click", Save);
 
 
@@ -49,8 +50,8 @@
                  { field: "Marca", title: "Marca", sortable: true, width: 150 },
                  { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
                  { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200 },
-                  { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
-             { field: "CategoryName", title: "Categoria", sortable: true, width: 100 },
+                 { field: "SubCategoryName", title: "SubCategoria", sortable: true, width: 100 },
+                 { field: "CategoryName", title: "Categoria", sortable: true, width: 100 },
                  { field: "kg", title: "Kg", sortable: true, width: 80 },
                  { field: "TotalKg", title: "Stock Actual", sortable: true, width: 80 },
                  { field: "PrecioCosto", title: "Precio Costo", editor: true,sortable: true, width: 80 },
@@ -95,15 +96,19 @@
         
          
      //}
-         function SearchProduct() {
-             debugger;
-             gridProduct.reload({ searchString: $("#search").val() });
+     function SearchProductLoose() {
+           
+             gridProductLoose.reload({ searchString: $("#searchLoose").val() });
+         }
+
+         function SearchProductBug() {
+            
+             gridProductBug.reload({ searchString: $("#searchsearchBug").val() });
          }
 
 
-
          function Save() {
-             debugger;
+            
             
              var rowSelectionsBug = gridProductBug.getSelections();
              var rowSelectionsLoose = gridProductLoose.getSelections();
@@ -147,16 +152,16 @@
 
 </head>
 <body>
-    <div id="passLoose" class="container-fluid">
+   
         <div class="panel panel-primary">
             <div class="panel-heading">Producto Bolsa</div>
             <div class="panel-body">
                 <div class="form-group row">
                     <div class="col-md-3 col-md-offset-1">
                         <div class="input-group">
-                            <input type="text" id="search" class="form-control" placeholder="Search for...">
+                            <input type="text" id="searchBug" class="form-control" placeholder="Search for...">
                             <span class="input-group-btn">
-                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                                <button type="button" id="btnSearchProductBug" class="btn btn-default">Go!</button>
                             </span>
 
                         </div>
@@ -176,9 +181,9 @@
                 <div class="form-group row">
                     <div class="col-md-3 col-md-offset-1">
                         <div class="input-group">
-                            <input type="text" id="search" class="form-control" placeholder="Search for...">
+                            <input type="text" id="searchLoose" class="form-control" placeholder="Search for...">
                             <span class="input-group-btn">
-                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                                <button type="button" id="btnSearchProductLoose" class="btn btn-default">Go!</button>
                             </span>
 
                         </div>
@@ -190,6 +195,6 @@
                 <table id="gridProductLoose" data-source="@Url.Action("GetProductLoose")"></table>
             </div>
         </div>
-        </div>
+        
 </body>
 </html>

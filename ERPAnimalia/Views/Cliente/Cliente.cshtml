@@ -21,7 +21,7 @@
 
                 $('#fechaCompra')
                 .datepicker({
-                    dateFormat: "dd-mm-yy",
+                    dateFormat: "dd/mm/yy",
                     firstDay: 1,
                     dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
                     dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
@@ -35,7 +35,7 @@
 
                 $('#fechaProximaCompra')
                 .datepicker({
-                    dateFormat: "dd-mm-yy",
+                    dateFormat: "dd/mm/yy",
                     firstDay: 1,
                     dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
                     dayNamesShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
@@ -91,6 +91,7 @@
             });
 
             function Edit(e) {
+                debugger;
 
                 var dateNext = e.data.record.FechaProximaCompra;
                 var dateBuy = e.data.record.FechaCompra;
@@ -155,7 +156,7 @@
             }
 
             function SearchProduct() {
-                debugger;
+             
                 gridProduct.reload({ searchString: $("#searchProduct").val() });
             }
 
@@ -176,7 +177,7 @@
             }
 
             function Save() {
-                debugger;
+               
                 if (SaveValidation())
                 {
                     var idProducto=new Array();
@@ -184,7 +185,7 @@
                     if (selections.length!= 0)
                     {           
                         $(selections).each(function (index, element) {
-                            debugger;
+                          
                             var row = gridProduct.get(element);
                             idProducto[index] = row.IdProducto;                           
                         });
@@ -206,12 +207,12 @@
                     };
                     $.ajax({ url: "Cliente/Save", type: "POST", data: { cliente: cliente } })
                         .done(function () {
-                            debugger;
+                          
                             grid.reload();
                             $("#clienteModal").modal("hide");
                         })
                         .fail(function () {
-                            debugger;
+                         
                             alert("Unable to save.");
                             $("#clienteModal").modal("hide");
                         });
@@ -232,28 +233,43 @@
 
 
             function CalculateDate() {
-                var tt = $('#fechaCompra').val();
-                var date = new Date(tt);
-                var newdate = new Date(date);
+                debugger;
+                
 
-                var dd = newdate.getDate();
-                var mm = newdate.getMonth() + 1;
-                var y = newdate.getFullYear();
-                var dateNew = dd + '/' + mm + '/' + y;
+               
 
-                var date = new Date(dateNew);
-                var newdate = new Date(date);
+                var dateStringSelected = $('#fechaCompra').val();
 
+                var ds = dateStringSelected.split("/");
+                var startDate = new Date(ds[2], ds[1] - 1, ds[0]);
                 var days = $("#dias").val();
-                newdate.setDate(newdate.getDate() + parseInt(days));
 
+                var daysAhead = days;
+                startDate.setTime(startDate.getTime() + (daysAhead * 24 * 60 * 60 * 1000));
+                var futureDate = startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear();
+                futureDate = futureDate.replace(/^(\d{1}\/)/, "0$1").replace(/(\d{2}\/)(\d{1}\/)/, "$10$2");
 
-                var dd = newdate.getDate();
-                var mm = newdate.getMonth() + 1;
-                var y = newdate.getFullYear();
+                ////var currentTime = new Date(parseInt(startDate));
+                ////var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
+                ////var day = ("0" + currentTime.getDate()).slice(-2);
+                ////var year = currentTime.getFullYear();
+                //var date = year + '/' + month + '/' + day ;
+                //var newdate = new Date(date);
+                //var dd = newdate.getDate();
+                //var mm = newdate.getMonth() + 1;
+                //var y = newdate.getFullYear();
+                //var dateNew = dd + '/' + mm + '/' + y;
+                //var date = new Date(dateNew);
+                //var newdate = new Date(date);
 
-                var someFormattedDate = dd + '/' + mm + '/' + y;
-                $("#fechaProximaCompra").val(someFormattedDate);
+                //var days = $("#dias").val();
+                //newdate.setDate(newdate.getDate() + parseInt(days));
+                //var dd = newdate.getDate();
+                //var mm = newdate.getMonth() + 1;
+                //var y = newdate.getFullYear();
+
+                //var someFormattedDate = dd + '/' + mm + '/' + y;
+                $("#fechaProximaCompra").val(futureDate);
 
 
             }
@@ -304,7 +320,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Player</h4>
+                        <h4 class="modal-title" id="myModalLabel">Cliente</h4>
                     </div>
                     <div class="modal-body">
                         <!-- Nav tabs -->

@@ -28,7 +28,7 @@
                         data: { term: request.term },
                         success: function (data) {
                             response($.map(data, function (item) {
-                                debugger;
+                              
                                
                                 var res = item.Descripcion1.concat(", ").concat(item.Marca).concat(", ").concat(item.SubCategoryName).concat(", ").concat( item.kg);
                                 
@@ -61,18 +61,18 @@
                 uiLibrary: "bootstrap",
                 columns: [
                      { field: "IdProduct", hidden: true },
-                    { field: "Codigo", title: "Código", sortable: true, width:100 },
+                    { field: "Codigo", title: "Código", sortable: true,align: 'center', width:100 },
                     { field: "Descripcion1", title: "Descripcion1", sortable: true, width: 150 },
-                    { field: "Marca", title: "Marca", sortable: true, width: 150 },
-                    { field: "Category", title: "Categoria", sortable: true, width: 150 },
-                     { field:"SubCategory", title: "SubCategoría", sortable: true, width: 150 },
-                    { field: "kg", title: "Kg", sortable: true, width: 150 },
-                    { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 120 },
-                    { field: "Cantidad", title: "Cantidad", editor: true, width: 100 },
-                    { field: "Descuento", title: "Descuento", editor: true, width: 100 },
-                    { field: "Porcentage", title: "%", sortable: true, width: 100},
-                    { field: "Subtotal", title: "Subtotal", sortable: true, width: 100},
-                    { width: 150, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
+                    { field: "Marca", title: "Marca", sortable: true,align: 'center', width: 150 },
+                    { field: "Category", title: "Categoria", sortable: true,align: 'center', width: 100 },
+                     { field:"SubCategory", title: "SubCategoría", sortable: true,align: 'center', width: 100 },
+                    { field: "kg", title: "Kg", sortable: true,align: 'center', width: 100 },
+                    { field: "PrecioVenta", title: "Precio Venta", sortable: true,align: 'center', width: 100 },
+                    { field: "Cantidad", title: "Cantidad", editor: true, align: 'center',width: 100 },
+                    { field: "Descuento", title: "Descuento", editor: true, align: 'center', width: 100 },
+                    { field: "Porcentage", title: "%", sortable: true, align: 'center',width: 100},
+                    { field: "Subtotal", title: "Subtotal", sortable: true,align: 'center', width: 100},
+                    { width: 80, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
                 ],
                 optimisticPersistence: { sessionStorage: ["page", "limit"] },
                 pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
@@ -81,17 +81,31 @@
                 CalculateRow(record)
             });
 
-            $('#Descripcion1').blur(function () {
+            $('#Descripcion1').keypress(function (event) {
+
                
-                if ($("#Descripcion1").val() != "")
-                {
-                    debugger;
-                    gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
-                    SaveEnabled();
-                    $("#Descripcion1").val("");
+                if (event.keyCode == 13) {
+                    if ($("#Descripcion1").val() != "") {
+                      
+                        gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
+                        SaveEnabled();
+                        $("#Descripcion1").val("");
+                    }
                 }
-                
             });
+            function reloadGrid(e) {
+               
+                if (e.keyCode == 13) {
+                    if ($("#Descripcion1").val() != "") {
+                        
+                        gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
+                        SaveEnabled();
+                        $("#Descripcion1").val("");
+                    }
+                }
+            }
+
+           
 
             gridDetail.on('dataBound', function (e, records, totalRecords) {
                 GetTotal();
@@ -149,7 +163,7 @@
 
                     })
                     .fail(function (data) {
-                        debugger;
+                     
                         alert(data);                      
                     }); 
             }
@@ -181,7 +195,7 @@
                     data: { idProduct: e.data.record.IdProduct },
                     success: function (data) {
                         gridDetail.reload();
-                       
+                        GetTotal();
                     }
                 
                 });
@@ -193,6 +207,7 @@
         @{
             Html.RenderPartial("HeadVoucher");
         }
+
         <!-- Nav tabs -->
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
@@ -220,7 +235,10 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <table id="gridDetail" ></table>
-                                @Html.Label("Total=") @Html.TextBox("totalVoucher")
+                                </br>
+                                <div id="total">
+                                  <input type="text" id="totalVoucher" readonly>
+                                </div>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="informationTab">

@@ -11,6 +11,7 @@ namespace ERPAnimalia.Models.Manager
     {
         
         public AnimaliaPetShopEntities db { get; set; }
+        private static readonly Object obj = new Object();
 
         public VoucheHeadManager()
         {
@@ -19,10 +20,13 @@ namespace ERPAnimalia.Models.Manager
 
         public List<ClienteModel> GetClient()
         {
-            var clienteList = db.Cliente.ToList();
-            var listClient = MapperObject.CreateListClientModel(clienteList);
-           
-            return listClient;
+            lock (obj)
+            {
+                var clienteList = db.Cliente.ToList();
+                var listClient = MapperObject.CreateListClientModel(clienteList);
+
+                return listClient;
+            }
         }
 
         

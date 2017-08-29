@@ -8,6 +8,11 @@
 {
     background-color: #ffffff !important;
     padding: 0 15px;
+    width: 100%;
+}
+
+.container {
+    width: 100% !important;
 }
 /* Set padding to keep content from hitting the edges */
 .body-content {

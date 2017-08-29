@@ -42,14 +42,14 @@
 
 
          function SearchProduct() {
-             debugger;
+           
              gridProduct.reload({ searchString: $("#search").val() });
          }
 
 
 
          function Save() {
-             debugger;
+           
              var cantidad= new Array();
              var precioCosto=new Array();
              var idProducto=new Array();
@@ -63,7 +63,7 @@
              if (selections.length!= 0)
              {           
                  $(selections).each(function (index, element) {
-                 debugger;
+                
                  var row = gridProduct.get(element);
                  idProducto[index] = row.IdProducto;
                  precioCosto[index]=row.PrecioCosto;

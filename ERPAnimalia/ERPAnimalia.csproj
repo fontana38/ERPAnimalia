@@ -389,6 +389,7 @@
     <Content Include="Content\css\product.css" />
     <Content Include="Content\css\Voucher.css" />
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap3.3.7.min.js" />
     <Content Include="Content\css\gijgo.css" />
     <Content Include="Content\css\gijgo.min.css" />
@@ -475,6 +476,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <EntityDeploy Include="EntityFramework\Animalias.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -540,6 +542,7 @@
     <Content Include="Scripts\grid\grid.min.js" />
     <Content Include="Scripts\jquery-1.11.2.min.js" />
     <Content Include="Scripts\1.12.1\jquery-ui.js" />
+    <None Include="Properties\PublishProfiles\Animalias.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />

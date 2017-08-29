@@ -6,7 +6,7 @@ input{
 
 #factura
 {
-    width:900px !important;
+    width: 100% !important;
 }
 
 #loadOrderPanel
@@ -17,5 +17,16 @@ input{
 {
     background-image: linear-gradient(to bottom,#337ab7 0,#2e6da4 100%);
    color:white;
+}
+#total
+{
+    float:right;
+    background-color: #DF3A01;
+}
+#totalVoucher
+{
+    background-color: #DF3A01;
+    color:#F2F2F2;
+    text-align: center;
 }
  

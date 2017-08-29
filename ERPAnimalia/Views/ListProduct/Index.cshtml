@@ -54,25 +54,10 @@
             $("#btnSearch").on("click", Search);
         });
 
-        @*function Edit(e) {
-            debugger;
-            $.ajax({
-                type: 'Get',
-                url:'@Url.Action("Edit","Product")',
-                data: {ids: e.data.record.IdProducto },
-
-                success: function (msg) {
-                    debugger;
-                    // Notice that msg.d is used to retrieve the result object
-                    alert(msg.d);
-                }
-            });
-
-
-        }*@
+      
 
         function Search() {
-            debugger;
+           
             gridProduct.reload({ searchString: $("#search").val() });
         }
 

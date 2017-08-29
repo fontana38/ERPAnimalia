@@ -70,8 +70,9 @@ namespace ERPAnimalia.Controllers
             var listClient = HeadVoucherManager.GetClient();
             voucherModel.ClientModel = listClient;
 
+
             var clientName = (from N in listClient
-                              where N.NombreCompleto.ToLower().Contains(term.ToLower().Trim())
+                              where ((N.Apellido.ToLower().StartsWith(term.ToUpper()) || N.Apellido.ToLower().EndsWith(term.ToUpper()))||(N.Nombre.ToLower().StartsWith(term.ToUpper()) || N.Nombre.ToLower().EndsWith(term.ToUpper())))
                               select new { N.NombreCompleto, N.Direccion, N.Telefono }).ToList();
            
             return Json(clientName, JsonRequestBehavior.AllowGet);
@@ -84,15 +85,11 @@ namespace ERPAnimalia.Controllers
         {
 
             voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
-            var listProduct = VoucherDetailManager.GetProduct();
-         
-         
-          var Descripcion1 = (from N in listProduct
-                              where (N.Descripcion1.ToUpper().StartsWith(term.ToUpper()) || N.Descripcion1.ToUpper().EndsWith(term.ToUpper())) || ( N.Marca.ToUpper().StartsWith(term.ToUpper()) || N.Marca.ToUpper().EndsWith(term.ToUpper()))
+            var listProduct = VoucherDetailManager.GetProduct(term);
+                 
+             var Descripcion1 = (from N in listProduct
                               select new { N.Descripcion1,N.Marca, N.kg, N.SubCategoryName,N.IdProducto }).ToList();
-          
-
-
+  
             return Json(Descripcion1, JsonRequestBehavior.AllowGet);
 
 
@@ -117,19 +114,19 @@ namespace ERPAnimalia.Controllers
                 voucherDetailModel = Factory.VoucherFactory.CreateVoucherDetailModel();
                 var listProduct = VoucherDetailManager.GetProduct();
                 voucherDetailModel.ProductModel = listProduct;
-                            
-                    var Descripcion1 = (from N in listProduct
-                                        where (N.IdProducto == idProducto)
-                                        select new { N }).ToList();
-   
+
+                var Descripcion1 = (from N in listProduct
+                                    where (N.IdProducto == idProducto)
+                                    select new { N }).ToList();
+
                 var detailGrid = new DetailGrid();
 
-                if (Descripcion1.Count != 0 && term != string.Empty)
+                if (listProduct.Count != 0 && term != string.Empty)
                 {
                     detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
                     detailGrid.Codigo = Descripcion1[0].N.Codigo;
                     detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
-                    detailGrid.PrecioVenta =  Descripcion1[0].N.PrecioVenta.Value;
+                    detailGrid.PrecioVenta = Descripcion1[0].N.PrecioVenta.Value;
                     detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto.Value;
                     detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
                     detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
@@ -197,7 +194,23 @@ namespace ERPAnimalia.Controllers
                 DetailGrid product = detailGridTemp.Find(x => x.IdProduct == idProduct);
                 product.Cantidad = cantidad;
                 product.Descuento = descuento;
-                product.Subtotal = ((product.PrecioVenta * cantidad) - descuento).ToString("F"); 
+                if(product.SubCategoryItem ==1)
+                {
+                    if( cantidad < 1)
+                    {
+                        cantidad = cantidad * 1000;
+                        product.Subtotal = ((product.PrecioVenta * ( cantidad/1000)) - descuento).ToString("F");
+                    }
+                    else
+                    {
+                        product.Subtotal = ((product.PrecioVenta * cantidad) - descuento).ToString("F");
+                    }
+                }
+                else
+                {
+                    product.Subtotal = ((product.PrecioVenta * cantidad) - descuento).ToString("F");
+                }
+               
                 product.Total = CalculateTotal(detailGridTemp);
                 product.Porcentage = VoucherDetailManager.CalculateDiscountPorcentage(product, descuento);
 

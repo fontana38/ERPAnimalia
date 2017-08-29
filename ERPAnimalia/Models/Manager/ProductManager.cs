@@ -16,8 +16,9 @@ namespace ERPAnimalia.Models
         public TransferToFreeProductManager ProductOpenManagers { get; set; }
 
         public List<ProductListModel> map;
-
         private static readonly Object obj = new Object();
+
+
 
         public ProductManager()
         {
@@ -275,18 +276,23 @@ namespace ERPAnimalia.Models
         public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             var map = new List<ProductModels>();
-            lock (obj)
-            {
+            
                 map = MapProduct();
 
-            }
+           
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                map = map.Where(p => (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
-               (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper()))||
-                 (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper()))||
-                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper()))).ToList();
+                
+                    map = map.Where(p => (p.CodigoBarra != null) ?(((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))): ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
+                
+               
             }
 
             total = map.Count();
@@ -343,12 +349,14 @@ namespace ERPAnimalia.Models
       
         public List<ProductModels> MapProduct()
         {
-           
-            var productList =  db.Product.ToList();
-            var category = db.Category.ToList();
-            var subcategoria = db.SubCategory.ToList();
+            lock (obj)
+            {
+                var productList = db.Product.ToList();
+                var category = db.Category.ToList();
+                var subcategoria = db.SubCategory.ToList();
 
-            return  MapperObject.CreateProductList(productList, category, subcategoria);
+                return MapperObject.CreateProductList(productList, category, subcategoria);
+            }
         }
 
         public void RemoveModelView(ModelStateDictionary modelState)
@@ -374,7 +382,7 @@ namespace ERPAnimalia.Models
                         var totalQuantity = productLoose.TotalKg + productBug.Kg;
 
 
-                        var precioCostoNew = (productLoose.TotalKg * productLoose.PrecioCosto) + (Convert.ToDecimal(productBug.Kg) * (Convert.ToDecimal(precioCosto) / productBug.Kg)) / totalQuantity;
+                        var precioCostoNew = ((Math.Round(productLoose.TotalKg.Value,2) * Math.Round(productLoose.PrecioCosto.Value,2)) + ((Math.Round(productBug.Kg.Value,2)) * (Convert.ToDecimal(precioCosto) ))) / Math.Round(totalQuantity.Value,2);
                         productLoose.PrecioCosto = precioCostoNew;
                         productLoose.PrecioVenta = Convert.ToDecimal(precioVenta);
                         productLoose.TotalKg = productLoose.TotalKg + productBug.Kg;
@@ -382,7 +390,8 @@ namespace ERPAnimalia.Models
                         productBug.TotalKg = productBug.TotalKg - productBug.Kg;
                         productBug.Cantidad = productBug.Cantidad - 1;
 
-                        context.SaveChanges();
+                       
+                        db.SaveChanges();
 
                         dbContextTransaction.Commit();
 

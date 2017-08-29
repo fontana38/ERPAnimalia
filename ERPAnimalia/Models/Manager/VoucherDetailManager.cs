@@ -11,6 +11,7 @@ namespace ERPAnimalia.Models.Manager
     {
         public AnimaliaPetShopEntities db { get; set; }
         public ProductManager _ProducManager { get; set; }
+      
 
         public VoucherDetailManager()
         {
@@ -28,6 +29,12 @@ namespace ERPAnimalia.Models.Manager
         {
             var formaDePago = db.FormaDePago.ToList();
             return formaDePago;
+        }
+
+        public List<ProductModels> GetProduct(string term)
+        {
+            int total = 0;   
+            return _ProducManager.GetProductList(null,null,null, null,term, out total);
         }
 
         public List<ProductModels> GetProduct()
@@ -178,9 +185,14 @@ namespace ERPAnimalia.Models.Manager
 
         public decimal CalculateDiscountPorcentage(DetailGrid row,decimal discount)
         {
-            row.Descuento = discount;
-            row.Subtotal = ((row.PrecioVenta * Convert.ToInt16(row.Cantidad)) - discount).ToString("F");
-            row.Porcentage = (discount / row.PrecioVenta) ;
+            if(row.Subtotal != null)
+            {
+                row.Descuento = discount;
+                //row.Subtotal = ((row.PrecioVenta * Convert.ToInt16(row.Cantidad)) - discount).ToString("F");
+                row.Porcentage = (discount / Convert.ToDecimal(row.Subtotal));
+                return row.Porcentage;
+            }
+            
             return row.Porcentage;
         }
 

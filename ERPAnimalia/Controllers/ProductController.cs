@@ -63,7 +63,7 @@ namespace ERPAnimalia.Controllers
                 product.SubCategory = ProductManagers.GetSubCategory();
                
                 ModelState.Remove("Codigo");
-                ModelState.Remove("Description1");
+                ModelState.Remove("Descripcion1");
                 ModelState.Remove("Cantidad");
                 ModelState.Remove("IdCategory");
                 ModelState.Remove("Descripcion2");

@@ -77,6 +77,7 @@ namespace ERPAnimalia.Controllers
                 item.PrecioCosto = Math.Round(item.PrecioCosto.Value, 2);
                 item.PrecioVenta = Math.Round(item.PrecioVenta.Value, 2);
             }
+
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
 
