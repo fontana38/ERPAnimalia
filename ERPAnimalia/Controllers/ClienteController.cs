@@ -60,17 +60,39 @@ namespace ERPAnimalia.Controllers
             return Json(true);
         }
 
+
+        [HttpPost]
+        public JsonResult RemoveProduct(Guid idCliente,Guid idProducto)
+        {
+            ClienteManagers.DeleteProductClient(idCliente, idProducto);
+            return Json(true);
+        }
+
         // GET: ListProduct
 
 
         [HttpGet]
-        public JsonResult GetProduct(int? page, int? limit, string sortBy, string direction, string searchString = null)
+        public JsonResult GetProduct(Guid? idCliente,int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
             int total;
+            
+       
+               var records = ProductManagers.GetProductNotSelected(idCliente,page, limit, sortBy, direction, searchString, out total);
+                
            
 
-           var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
-            
+           return Json(new { records, total }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult GetProductByIdClient(Guid? idCliente, int? page, int? limit, string sortBy, string direction, string searchString = null)
+        {
+            int total;
+
+
+            var records = ProductManagers.GetProductListByIdClient(idCliente,page, limit, sortBy, direction, searchString, out total);
+
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }

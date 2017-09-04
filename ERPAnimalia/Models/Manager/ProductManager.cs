@@ -171,108 +171,7 @@ namespace ERPAnimalia.Models
            return Factory.Factory.NewProductModel();
         }
 
-        //public virtual List<ProductModels> SortGrid(string currentSort,string sortOrder)
-        //{
-        //    var model = GetAllProduct();
-
-        //    switch (sortOrder)
-        //    {
-        //        case "codigo":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.Codigo).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.Codigo).ToList();
-        //            break;
-        //        case "descripcion1":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.Descripcion1).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.Descripcion1).ToList();
-        //            break;
-                   
-        //        case "Categoria":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.CategoryItem.Name).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.CategoryItem.Name).ToList();
-        //            break;
-        //        case "Descripcion2":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.Descripcion2).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.Descripcion2).ToList();
-        //            break;
-        //        case "Cantidad":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.Cantidad).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.Cantidad).ToList();
-        //            break;
-        //        case "Presentacion":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.Presentacion).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.Presentacion).ToList();
-        //            break;
-        //        case "RentabilidadPesos":
-        //            if (sortOrder.Equals(currentSort))
-        //                model = model.OrderByDescending
-        //                        (p => p.RentabilidadPesos).ToList();
-        //            else
-        //                model = model.OrderBy
-        //                        (p => p.Presentacion).ToList();
-        //            break;
-
-
-        //        default:
-                   
-        //            break;
-                
-        //    }
-        //    return model;
-           
-        //}
-
-        //public List<ProductModels> SearchProduct(ProductModels search)
-        //{
-        //    try
-        //    {
-        //        db = Factory.Factory.CreateContextDataBase();
-
-        //        var searchProduct = string.Empty;
-
-        //        var product = db.Product.ToList();
-
-        //        if (!String.IsNullOrWhiteSpace(search.Codigo)) product = product.Where(u => u.Codigo.Contains(search.Codigo)).ToList();
-        //        if (!String.IsNullOrWhiteSpace(search.Descripcion1)) product = product.Where(u => u.Descripcion1.Contains(search.Descripcion1)).ToList();
-        //        if ((search.IdSubCategoria != 0)) product = product.Where(u => u.Category.IdCategory == search.IdCategoria).ToList();
-        //        if ((search.Descripcion2 != null)) product = product.Where(u => u.Descripcion2 == search.Descripcion2).ToList();
-
-        //        //product = db.Product.Where(b => b.Codigo.Contains(codigo) || b.Name.Contains(name) || b.IdCategory ==category || b.IdSubCategory == subCategory).ToList();
-
-        //        var productModel = MapperObject.CreateProductList(product);
-        //        return productModel;
-        //    }
-
-        //    catch (Exception e)
-        //    {
-
-        //        throw new Exception(e.Message.ToString());
-        //    }
-        //}
-
+       
         public List<ProductModels> GetProductList(int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             var map = new List<ProductModels>();
@@ -320,6 +219,111 @@ namespace ERPAnimalia.Models
             return productQueryable.ToList();
         }
 
+
+        public List<ProductModels> GetProductNotSelected(Guid? idClient,int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        {
+            total = 0;
+            var map = new List<ProductModels>();
+
+            if (idClient!=null)
+            {
+                var productList = db.IdClienteIdProducto.Where(x => x.IdCliente == idClient).ToList();
+
+                map = MapProduct();
+
+                foreach (var item in productList)
+                {
+                    var deleteProduct = map.Where(x => x.IdProducto == item.IdProducto).First();
+                    map.Remove(deleteProduct);
+                }
+
+
+                if (!string.IsNullOrWhiteSpace(searchString))
+                {
+
+                    map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
+
+
+                }
+
+                total = map.Count();
+
+                var productQueryable = map.AsQueryable();
+
+                if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
+                {
+
+                    if (direction.Trim().ToLower() == "asc")
+                    {
+                        productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
+                    }
+                    else
+                    {
+                        productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
+                    }
+                }
+                if (page.HasValue && limit.HasValue)
+                {
+                    int start = (page.Value - 1) * limit.Value;
+                    productQueryable = productQueryable.Skip(start).Take(limit.Value);
+                }
+
+                return productQueryable.ToList();
+            }
+
+            return map;
+        }
+
+
+
+        public List<ProductModels> GetProductListByIdClient(Guid? idClient,int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        {
+            total = 0;
+            var productList = new List<ProductModels>();
+
+            if(idClient != null)
+            {
+                var pc = db.IdClienteIdProducto.Where(x => x.IdCliente == idClient).ToList();
+
+                foreach (var itemproduct in pc)
+                {
+                    var product = GetProductById(itemproduct.IdProducto.Value);
+                    productList.Add(product);
+                }
+
+
+                total = productList.Count();
+
+                var productQueryable = productList.AsQueryable();
+
+                if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
+                {
+
+                    if (direction.Trim().ToLower() == "asc")
+                    {
+                        productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
+                    }
+                    else
+                    {
+                        productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
+                    }
+                }
+                if (page.HasValue && limit.HasValue)
+                {
+                    int start = (page.Value - 1) * limit.Value;
+                    productQueryable = productQueryable.Skip(start).Take(limit.Value);
+                }
+                return productQueryable.ToList();
+            }
+
+            return new List<ProductModels>();
+        }
 
         public List<ProductModels> GetProducBugtList(List<ProductModels> list)
         {

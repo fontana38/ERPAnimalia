@@ -12,5 +12,6 @@ namespace ERPAnimalia.Interface
         void BorrarCliente(Guid IdCliente);
         List<ClienteModel> ObtenerCliente();
         List<ClienteModel> ObtenerCliente(int? page, int? limit, string sortBy, string direction, string searchString, out int total);
+        void DeleteProductClient(Guid idCliente, Guid idProduct);
     }
 }

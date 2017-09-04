@@ -167,11 +167,14 @@ namespace ERPAnimalia
                         var subCategoryMap = CreateSubCategory(item.SubCategory);
                         productMap.CategoryItem = category;
                         productMap.SubCategoryItem = subCategoryMap;
+                      
                         listaMap.Productos.Add(productMap);
                     }
 
                     
                 }
+
+
                     
 
                 return listaMap;

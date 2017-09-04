@@ -11,7 +11,10 @@
 
      <script type="text/javascript">
 
-            ids = new Array();
+         ids = new Array();
+         idProduct = new Array();
+         idRowProduct = new Array();
+         var idCheck;
             var grid;
             var gridProduct;
            
@@ -51,9 +54,10 @@
 
                 var $j = jQuery.noConflict();
                 gridProduct = $j("#gridProduct").grid({
-                    dataKey: "IdProducto",
+                    dataKey: "Id",
                     uiLibrary: "bootstrap",
                     columns: [
+                       
                         { field: "IdProducto", hidden: true },
                         { field: "Codigo", title: "Código", sortable: true, width: 80 },
                         { field: "Marca", title: "Marca", sortable: true, width: 150 },
@@ -64,11 +68,12 @@
                     selectionType: 'multiple',
                     pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
                 });
-
+                
                 grid = $j("#grid").grid({
                     dataKey: "Id",
                     uiLibrary: "bootstrap",
                     columns: [
+                        { field: "IdCliente", hidden: true },
                         { field: "Codigo", title: "Código", sortable: true, width: 80 },
                         { field: "Nombre", sortable: true, width: 100 },
                         { field: "Apellido", sortable: true, width: 100 },
@@ -78,21 +83,42 @@
                         { field: "Mascota", sortable: true, width: 100 },
                         { field: "FechaCompra", title: "Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true, width: 150 },
                         { field: "FechaProximaCompra", title: "Proxima Compra", type: 'date', format: 'dd/mm/yyyy', sortable: true, width: 150 },
+                       
                         { title: "", field: "Edit", width: 34, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
                         { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
                     ],
                     pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
                 });
+                grid.on('rowSelect', function (e, $row, id, record) {
+                    debugger;
+                    idCheck = record.IdCliente;
+                    gridProductDetail.reload({ idCliente: record.IdCliente, page: 1 });
+                });
+               
+                gridProductDetail = $("#gridProductDetail").grid({
+                    dataKey: "Id",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                        { field: "id", hidden: true },
+                        { field: "IdProducto", hidden: true },
+                        { field: "Codigo", title: "Código", sortable: true, width: 80 },
+                        { field: "Marca", title: "Marca", sortable: true, width: 150 },
+                        { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
+                        { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200 },
+                    { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": RemoveProduct } }
+                    ],
+                   
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+
 
                 $("#btnAddCliente").on("click", Add);
                 $("#btnSave").on("click", Save);
-                $("#btnSearch").on("click", Search);
-                $("#btnSearchGridProduct").on("click", SearchProduct);
             });
 
             function Edit(e) {
+               
                 debugger;
-
                 var dateNext = e.data.record.FechaProximaCompra;
                 var dateBuy = e.data.record.FechaCompra;
 
@@ -110,19 +136,6 @@
                 var yearBuy = currentTime.getFullYear();
                 var dateBuy = dayBuy + '-' + monthbuy + '-' + yearBuy;
 
-
-                $('#fechaProximaCompra')
-               .datepicker({
-                   autoclose: true,    // It is false, by default
-                   format: 'dd/mm/yyyy'
-               })
-
-                $('#fechaCompra')
-               .datepicker({
-                   autoclose: true,    // It is false, by default
-                   format: 'dd/mm/yyyy'
-               })
-
                 $("#idCliente").val(e.data.record.IdCliente);
                 $("#codigo").val(e.data.record.Codigo);
                 $("#fechaProximaCompra").val(date);
@@ -132,33 +145,29 @@
                 $("#apellido").val(e.data.record.Apellido);
                 $("#direccion").val(e.data.record.Direccion);
                 $("#telefono").val(e.data.record.Telefono);
-                $("#mail").val(e.data.record.Telefono);
+                $("#mail").val(e.data.record.Mail);
                 $("#IdProducto").val(e.data.record.IdProducto);
                 $("#mascota").val(e.data.record.Mascota);
                 $("#dias").val(e.data.record.Dias)
-                
-                $(e.data.record.Productos).each(function (index, element) {
 
-                    ids[index] = $(element).attr('IdProducto');
-
-                });
-
-                $(ids).each(function (index, element) {
-                    gridProduct.setSelected(element);
-
-                });
+                gridProduct.reload({ idCliente: e.data.record.IdCliente });
+               
+ 
                 $("#clienteModal").modal("show");
             }
           
-            function Search() {
+         
+            $('#btnSearchGridProduct').keypress(function (event) {
+                if (event.keyCode == 13) {
+                    gridProduct.reload({ searchString: $("#searchProduct").val() });                  
+                }
+            });
 
-                grid.reload({ searchString: $("#search").val() });
-            }
-
-            function SearchProduct() {
-             
-                gridProduct.reload({ searchString: $("#searchProduct").val() });
-            }
+             $("#btnSearch").keypress(function (event) {
+                if (event.keyCode == 13) {
+                    grid.reload({ searchString: $("#search").val() });
+                }
+            });
 
             function Add() {
                
@@ -180,12 +189,14 @@
                
                 if (SaveValidation())
                 {
-                    var idProducto=new Array();
+                    var idProducto = new Array();
+                    debugger;
                     var selections = gridProduct.getSelections();
                     if (selections.length!= 0)
-                    {           
+                    {
+                       
                         $(selections).each(function (index, element) {
-                          
+                            debugger;
                             var row = gridProduct.get(element);
                             idProducto[index] = row.IdProducto;                           
                         });
@@ -209,11 +220,12 @@
                         .done(function () {
                           
                             grid.reload();
+                            gridProductDetail.reload();
                             $("#clienteModal").modal("hide");
                         })
                         .fail(function () {
                          
-                            alert("Unable to save.");
+                            alert("Ocurrió un error al guardar el cliente ");
                             $("#clienteModal").modal("hide");
                         });
                 }
@@ -222,12 +234,27 @@
 
             function Remove(e) {
 
-                $.ajax({ url: "Remove", type: "POST", data: { idCliente: e.data.record.IdCliente } })
+                $.ajax({ url: "Cliente/Remove", type: "POST", data: { idCliente: e.data.record.IdCliente } })
                     .done(function () {
                         grid.reload();
+                        gridProductDetail.reload();
                     })
                     .fail(function () {
-                        alert("Unable to remove.");
+                        alert("Error al eleiminar");
+                    });
+            }
+
+
+            function RemoveProduct(e) {
+                debugger;
+                $.ajax({ url: "Cliente/RemoveProduct", type: "POST", data: { idCliente: idCheck, idProducto: e.data.record.IdProducto } })
+
+                    .done(function () {
+                        debugger;
+                        gridProductDetail.reload();
+                    })
+                    .fail(function () {
+                        alert("Error al eleiminar");
                     });
             }
 
@@ -235,9 +262,6 @@
             function CalculateDate() {
                 debugger;
                 
-
-               
-
                 var dateStringSelected = $('#fechaCompra').val();
 
                 var ds = dateStringSelected.split("/");
@@ -249,28 +273,7 @@
                 var futureDate = startDate.getDate() + "/" + (startDate.getMonth() + 1) + "/" + startDate.getFullYear();
                 futureDate = futureDate.replace(/^(\d{1}\/)/, "0$1").replace(/(\d{2}\/)(\d{1}\/)/, "$10$2");
 
-                ////var currentTime = new Date(parseInt(startDate));
-                ////var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
-                ////var day = ("0" + currentTime.getDate()).slice(-2);
-                ////var year = currentTime.getFullYear();
-                //var date = year + '/' + month + '/' + day ;
-                //var newdate = new Date(date);
-                //var dd = newdate.getDate();
-                //var mm = newdate.getMonth() + 1;
-                //var y = newdate.getFullYear();
-                //var dateNew = dd + '/' + mm + '/' + y;
-                //var date = new Date(dateNew);
-                //var newdate = new Date(date);
-
-                //var days = $("#dias").val();
-                //newdate.setDate(newdate.getDate() + parseInt(days));
-                //var dd = newdate.getDate();
-                //var mm = newdate.getMonth() + 1;
-                //var y = newdate.getFullYear();
-
-                //var someFormattedDate = dd + '/' + mm + '/' + y;
                 $("#fechaProximaCompra").val(futureDate);
-
 
             }
 
@@ -278,6 +281,7 @@
             {
                 if($("#codigo").val()==""  || $("#apellido").val()=="" || $("#direccion").val()=="")
                 {
+
                    alert("Complete los campos necesarios para poder guardar.Codigo,nombre,apellido,direccion y dias")
                     return false;
                 }
@@ -294,7 +298,7 @@
     
     <div class="panel panel-primary">
         <div class="panel-heading">Cliente</div>
-        <br class="panel-body">
+        <div class="panel-body">
         <div class="form-group row">
             <div class="col-md-3 col-md-offset-1">
                 <div class="input-group">
@@ -311,6 +315,8 @@
         <br />
 
         <table id="grid" data-source="@Url.Action("GetCliente")"></table>
+        <br />
+        <table id="gridProductDetail" data-source="@Url.Action("GetProductByIdClient")" ></table>
     </div>
  
     
@@ -318,6 +324,7 @@
         <div class="modal fade" id="clienteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div id="modalDialog" class="modal-dialog">
                 <div class="modal-content">
+                   
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">Cliente</h4>
@@ -325,6 +332,7 @@
                     <div class="modal-body">
                         <!-- Nav tabs -->
                         <div role="tabpanel">
+                           
                             <ul class="nav nav-tabs" role="tablist">
                                 <li role="presentation" class="active">
                                     <a href="#clienteTab" aria-controls="clienteTab" role="tab" data-toggle="tab">Cliente</a>
@@ -336,6 +344,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane active" id="clienteTab">
+                                    <br />
                                     <form id="loginForm" data-toggle="validator" role="form">
                                         <input type="hidden" id="idCliente" />
                                         <div class="form-group">
@@ -396,10 +405,11 @@
                                     </form>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="productoTab">
+                                    <br />
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
 
-                                            <div class="input-group col-md-offset-4">
+                                            <div class="input-group">
                                                 <input type="text" id="searchProduct" class="form-control" placeholder="Search for...">
                                                 <span class="input-group-btn">
                                                     <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
@@ -407,8 +417,8 @@
                                             </div>
                                         </div>
                                     </div>
-                              
-                           
+                                    <br />
+                                    <br />
                                     <div class="row">
                                         <div class="col-md-12">
                                             <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
