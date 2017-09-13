@@ -39,7 +39,7 @@ namespace ERPAnimalia.EntityFramework
         public virtual DbSet<DetalleComprobante> DetalleComprobante { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<IdProveedorProducto> IdProveedorProducto { get; set; }
-        public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Proveedor> Proveedor { get; set; }
     }
 }

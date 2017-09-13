@@ -12,6 +12,8 @@ namespace ERPAnimalia.Models
         public string FechaString { get; set; }
         public List<ProductModels> Productos { get; set; }
         public Guid[] IdsProduct { get; set; }
+       
+        public String RazonSocial { get; set; }
 
     }
 }

@@ -89,7 +89,7 @@ namespace ERPAnimalia.Models.Manager
                     {
                         db = Factory.Factory.CreateContextDataBase();
 
-                        providerModel.Fecha = DateTime.Parse(providerModel.FechaString).Date;
+                        providerModel.Fecha = DateTime.Now;
 
                         var providerDb = MapperObject.CreateProviderDb(providerModel);
 
@@ -152,6 +152,21 @@ namespace ERPAnimalia.Models.Manager
             }
             
             db.Proveedor.Remove(proveedor[0]);
+            db.SaveChanges();
+        }
+
+        public void DeleteProductProvider(Guid idProvider, Guid idProduct)
+        {
+            var product = db.IdProveedorProducto.Where(x => x.IdProveedor == idProvider && x.IdProducto == idProduct).ToList();
+
+            if (product.Count > 0)
+            {
+                foreach (var item in product)
+                {
+                    db.IdProveedorProducto.Remove(item);
+                }
+            }
+
             db.SaveChanges();
         }
     }

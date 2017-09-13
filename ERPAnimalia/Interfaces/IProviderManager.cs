@@ -13,5 +13,6 @@ namespace ERPAnimalia.Interfaces
         void DeleteProvider(Guid idProvider);
         
         List<ProviderModel> GetProvider(int? page, int? limit, string sortBy, string direction, string searchString, out int total);
+        void DeleteProductProvider(Guid idProvider, Guid idProduct);
     }
 }

@@ -92,6 +92,7 @@
                 grid.on('rowSelect', function (e, $row, id, record) {
                     debugger;
                     idCheck = record.IdCliente;
+                    gridProductDetail.clear();
                     gridProductDetail.reload({ idCliente: record.IdCliente, page: 1 });
                 });
                
@@ -114,6 +115,35 @@
 
                 $("#btnAddCliente").on("click", Add);
                 $("#btnSave").on("click", Save);
+                $("#btnSearch").on("click", Search);
+                $("#SearchGridProduct").on("click", SearchProduct);
+
+
+
+                function Search() {
+                    debugger;
+                    grid.reload({ searchString: $("#search").val() });
+                }
+
+                function SearchProduct() {
+                    debugger;
+                    gridProduct.reload({ searchString: $("#searchProduct").val() });
+                }
+
+                $('#search').keypress(function (event) {
+                    debugger;
+                    if (event.keyCode == 13) {
+                        $("#btnSearch").click();
+                    }
+                });
+
+                $('#searchProduct').keypress(function (event) {
+                    if (event.keyCode == 13) {
+                        $("#SearchGridProduct").click();                     
+                    }
+                });
+
+
             });
 
             function Edit(e) {
@@ -150,6 +180,7 @@
                 $("#mascota").val(e.data.record.Mascota);
                 $("#dias").val(e.data.record.Dias)
 
+                gridProduct.clear();
                 gridProduct.reload({ idCliente: e.data.record.IdCliente });
                
  
@@ -157,31 +188,23 @@
             }
           
          
-            $('#btnSearchGridProduct').keypress(function (event) {
-                if (event.keyCode == 13) {
-                    gridProduct.reload({ searchString: $("#searchProduct").val() });                  
-                }
-            });
-
-             $("#btnSearch").keypress(function (event) {
-                if (event.keyCode == 13) {
-                    grid.reload({ searchString: $("#search").val() });
-                }
-            });
+            
 
             function Add() {
-               
+                debugger;
                 $("#idCliene").val("");
                 $("#codigo").val("");
                 $("#fechaCompra").val("");
                 $("#fechaProximaCompra").val("");
                 $("#nombre").val("");
                 $("#apellido").val("");
-                $("#direccion").val("");
+                $("#direccion").val(""); 
                 $("#telefono").val("");
                 $("#mail").val("");
                 $("#mascota").val("");
                 $("#dias").val("")
+                gridProduct.clear();
+                gridProduct.reload({ idCliente: $("#idCliene").val() });
                 $("#clienteModal").modal("show");
             }
 
@@ -189,6 +212,7 @@
                
                 if (SaveValidation())
                 {
+                    debugger;
                     var idProducto = new Array();
                     debugger;
                     var selections = gridProduct.getSelections();
@@ -226,6 +250,7 @@
                         .fail(function () {
                          
                             alert("Ocurrió un error al guardar el cliente ");
+
                             $("#clienteModal").modal("hide");
                         });
                 }
@@ -300,7 +325,7 @@
         <div class="panel-heading">Cliente</div>
         <div class="panel-body">
         <div class="form-group row">
-            <div class="col-md-3 col-md-offset-1">
+            <div class="col-md-2 col-md-offset-1">
                 <div class="input-group">
                     <input type="text" id="search" class="form-control" placeholder="Search for...">
                     <span class="input-group-btn">

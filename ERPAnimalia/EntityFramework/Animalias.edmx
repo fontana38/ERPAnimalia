@@ -169,7 +169,7 @@
             <PropertyRef Name="IdProveedor" />
           </Key>
           <Property Name="IdProveedor" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+          <Property Name="RazonSocial" Type="nvarchar" MaxLength="50" />
           <Property Name="Direccion" Type="nvarchar" MaxLength="50" />
           <Property Name="Telefono" Type="nvarchar" MaxLength="50" />
           <Property Name="Mail" Type="nvarchar" MaxLength="50" />
@@ -537,6 +537,11 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="IdProveedorProducto" EntitySet="IdProveedorProducto" />
           </AssociationSet>
+          <EntitySet Name="Category" EntityType="AnimaliaPetShopModel.Category" />
+          <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
           <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
           <AssociationSet Name="FK_Comprobante_Proveedor" Association="AnimaliaPetShopModel.FK_Comprobante_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
@@ -545,11 +550,6 @@
           <AssociationSet Name="FK_IdProveedorProducto_Proveedor" Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="IdProveedorProducto" EntitySet="IdProveedorProducto" />
-          </AssociationSet>
-          <EntitySet Name="Category" EntityType="AnimaliaPetShopModel.Category" />
-          <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="FormaDePago">
@@ -877,12 +877,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="IdCategory" />
+          </Key>
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Product_Category">
+          <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="Proveedor">
           <Key>
             <PropertyRef Name="IdProveedor" />
           </Key>
           <Property Name="IdProveedor" Type="Guid" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RazonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -913,26 +933,6 @@
             </Principal>
             <Dependent Role="IdProveedorProducto">
               <PropertyRef Name="IdProveedor" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="IdCategory" />
-          </Key>
-          <Property Name="IdCategory" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_Product_Category">
-          <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="IdCategory" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="IdCategory" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1119,6 +1119,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Proveedor">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Proveedor">
               <MappingFragment StoreEntitySet="Proveedor">
@@ -1128,16 +1136,8 @@
                 <ScalarProperty Name="Mail" ColumnName="Mail" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Category">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

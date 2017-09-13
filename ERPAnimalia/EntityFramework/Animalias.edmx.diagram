@@ -31,11 +31,11 @@
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.IdProveedorProducto" Width="1.5" PointX="17.875" PointY="8.125" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Product" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="3.375" PointY="0.875" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
         <EntityTypeShape EntityType="AnimaliaPetShopModel.Proveedor" Width="1.5" PointX="5.375" PointY="6" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Proveedor" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Category" Width="1.5" PointX="3.375" PointY="0.875" />
-        <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_Category" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

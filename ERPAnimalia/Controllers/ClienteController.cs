@@ -5,6 +5,7 @@ namespace ERPAnimalia.Controllers
     using System.Web.Mvc;
     using ERPAnimalia.Models;
     using Interface;
+    using System.Collections.Generic;
 
     [RoutePrefix("Cliente")]
     public class ClienteController : Controller
@@ -74,13 +75,11 @@ namespace ERPAnimalia.Controllers
         [HttpGet]
         public JsonResult GetProduct(Guid? idCliente,int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
-            int total;
+            int total=0;
+          
+              var  records = ProductManagers.GetProductNotSelected(idCliente, page, limit, sortBy, direction, searchString, out total);
             
-       
-               var records = ProductManagers.GetProductNotSelected(idCliente,page, limit, sortBy, direction, searchString, out total);
-                
-           
-
+  
            return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
 

@@ -220,16 +220,20 @@ namespace ERPAnimalia.Models
         }
 
 
-        public List<ProductModels> GetProductNotSelected(Guid? idClient,int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        public List<ProductModels> GetProductNotSelected(Guid? idClient, int? page, int? limit, string sortBy, string direction, string searchString, out int total)
         {
             total = 0;
             var map = new List<ProductModels>();
+            map = MapProduct();
 
-            if (idClient!=null)
+            if (idClient != null)
             {
+
+
+
                 var productList = db.IdClienteIdProducto.Where(x => x.IdCliente == idClient).ToList();
 
-                map = MapProduct();
+
 
                 foreach (var item in productList)
                 {
@@ -237,47 +241,47 @@ namespace ERPAnimalia.Models
                     map.Remove(deleteProduct);
                 }
 
-
-                if (!string.IsNullOrWhiteSpace(searchString))
-                {
-
-                    map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
-
-
-                }
-
-                total = map.Count();
-
-                var productQueryable = map.AsQueryable();
-
-                if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
-                {
-
-                    if (direction.Trim().ToLower() == "asc")
-                    {
-                        productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
-                    }
-                    else
-                    {
-                        productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
-                    }
-                }
-                if (page.HasValue && limit.HasValue)
-                {
-                    int start = (page.Value - 1) * limit.Value;
-                    productQueryable = productQueryable.Skip(start).Take(limit.Value);
-                }
-
-                return productQueryable.ToList();
             }
 
-            return map;
+
+                if (!string.IsNullOrWhiteSpace(searchString))
+            {
+
+                map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
+
+
+            }
+
+            total = map.Count();
+
+            var productQueryable = map.AsQueryable();
+
+            if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
+            {
+
+                if (direction.Trim().ToLower() == "asc")
+                {
+                    productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
+                }
+                else
+                {
+                    productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
+                }
+            }
+            if (page.HasValue && limit.HasValue)
+            {
+                int start = (page.Value - 1) * limit.Value;
+                productQueryable = productQueryable.Skip(start).Take(limit.Value);
+            }
+
+            return productQueryable.ToList();
+       
         }
 
 
@@ -325,11 +329,119 @@ namespace ERPAnimalia.Models
             return new List<ProductModels>();
         }
 
+        public List<ProductModels> GetProductListByIdProvider(Guid? idProvider, int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        {
+            total = 0;
+            var productList = new List<ProductModels>();
+
+            if (idProvider != null)
+            {
+                var pc = db.IdProveedorProducto.Where(x => x.IdProveedor == idProvider).ToList();
+
+                foreach (var itemproduct in pc)
+                {
+                    var product = GetProductById(itemproduct.IdProducto.Value);
+                    productList.Add(product);
+                }
+
+
+                total = productList.Count();
+
+                var productQueryable = productList.AsQueryable();
+
+                if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
+                {
+
+                    if (direction.Trim().ToLower() == "asc")
+                    {
+                        productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
+                    }
+                    else
+                    {
+                        productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
+                    }
+                }
+                if (page.HasValue && limit.HasValue)
+                {
+                    int start = (page.Value - 1) * limit.Value;
+                    productQueryable = productQueryable.Skip(start).Take(limit.Value);
+                }
+                return productQueryable.ToList();
+            }
+
+            return new List<ProductModels>();
+        }
         public List<ProductModels> GetProducBugtList(List<ProductModels> list)
         {
 
             var listProduct = list.Where(x => x.IdSubCategory == (int)Enumeration.Subcategory.Bolsa || x.IdCategory == (int)Enumeration.Category.Accesorios).ToList();
             return listProduct;
+
+        }
+
+
+
+        public List<ProductModels> GetProductNotSelectedProvider(Guid? idProvider, int? page, int? limit, string sortBy, string direction, string searchString, out int total)
+        {
+            total = 0;
+            var map = new List<ProductModels>();
+            map = MapProduct();
+
+            if (idProvider != null)
+            {
+
+
+
+                var productList = db.IdProveedorProducto.Where(x => x.IdProveedor == idProvider).ToList();
+
+
+
+                foreach (var item in productList)
+                {
+                    var deleteProduct = map.Where(x => x.IdProducto == item.IdProducto).First();
+                    map.Remove(deleteProduct);
+                }
+
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+
+                map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
+
+
+            }
+
+            total = map.Count();
+
+            var productQueryable = map.AsQueryable();
+
+            if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
+            {
+
+                if (direction.Trim().ToLower() == "asc")
+                {
+                    productQueryable = SortHelper.OrderBy(productQueryable, sortBy);
+                }
+                else
+                {
+                    productQueryable = SortHelper.OrderByDescending(productQueryable, sortBy);
+                }
+            }
+            if (page.HasValue && limit.HasValue)
+            {
+                int start = (page.Value - 1) * limit.Value;
+                productQueryable = productQueryable.Skip(start).Take(limit.Value);
+            }
+
+            return productQueryable.ToList();
 
         }
 
