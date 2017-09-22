@@ -7,7 +7,7 @@ namespace ERPAnimalia.Models
 {
     public class TipoComprobantes
     {
-        public int IdTipoComprobante;
-        public string Descripcion;       
+        public int IdTipoComprobante { get; set; }
+        public string Descripcion { get; set; }  
     }
 }

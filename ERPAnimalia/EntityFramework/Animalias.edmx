@@ -107,6 +107,8 @@
           <Property Name="IdCliente" Type="uniqueidentifier" />
           <Property Name="IdProveedor" Type="uniqueidentifier" />
           <Property Name="FechaPago" Type="datetime" />
+          <Property Name="Comentarios" Type="nvarchar(max)" />
+          <Property Name="Comentario" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DetalleComprobante">
           <Key>
@@ -143,11 +145,181 @@
           <Property Name="IdProveedor" Type="uniqueidentifier" />
           <Property Name="IdProducto" Type="uniqueidentifier" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="planilla">
+          <Property Name="F1" Type="float" />
+          <Property Name="F2" Type="nvarchar" MaxLength="255" />
+          <Property Name="F3" Type="nvarchar" MaxLength="255" />
+          <Property Name="F4" Type="float" />
+          <Property Name="F5" Type="float" />
+          <Property Name="F6" Type="nvarchar" MaxLength="255" />
+          <Property Name="F7" Type="nvarchar" MaxLength="255" />
+          <Property Name="F8" Type="float" />
+          <Property Name="F9" Type="float" />
+          <Property Name="F10" Type="nvarchar" MaxLength="255" />
+          <Property Name="F11" Type="nvarchar" MaxLength="255" />
+          <Property Name="F12" Type="money" />
+          <Property Name="F13" Type="float" />
+          <Property Name="F14" Type="money" />
+          <Property Name="F15" Type="money" />
+          <Property Name="F16" Type="nvarchar" MaxLength="255" />
+          <Property Name="F17" Type="nvarchar" MaxLength="255" />
+          <Property Name="F18" Type="nvarchar" MaxLength="255" />
+          <Property Name="F19" Type="nvarchar" MaxLength="255" />
+          <Property Name="F20" Type="nvarchar" MaxLength="255" />
+          <Property Name="F21" Type="nvarchar" MaxLength="255" />
+          <Property Name="F22" Type="nvarchar" MaxLength="255" />
+          <Property Name="F23" Type="nvarchar" MaxLength="255" />
+          <Property Name="F24" Type="nvarchar" MaxLength="255" />
+          <Property Name="F25" Type="nvarchar" MaxLength="255" />
+          <Property Name="F26" Type="nvarchar" MaxLength="255" />
+          <Property Name="F27" Type="nvarchar" MaxLength="255" />
+          <Property Name="F28" Type="nvarchar" MaxLength="255" />
+          <Property Name="F29" Type="nvarchar" MaxLength="255" />
+          <Property Name="F30" Type="nvarchar" MaxLength="255" />
+          <Property Name="F31" Type="nvarchar" MaxLength="255" />
+          <Property Name="F32" Type="nvarchar" MaxLength="255" />
+          <Property Name="F33" Type="nvarchar" MaxLength="255" />
+          <Property Name="F34" Type="nvarchar" MaxLength="255" />
+          <Property Name="F35" Type="nvarchar" MaxLength="255" />
+          <Property Name="F36" Type="nvarchar" MaxLength="255" />
+          <Property Name="F37" Type="nvarchar" MaxLength="255" />
+          <Property Name="F38" Type="nvarchar" MaxLength="255" />
+          <Property Name="F39" Type="nvarchar" MaxLength="255" />
+          <Property Name="F40" Type="nvarchar" MaxLength="255" />
+          <Property Name="F41" Type="nvarchar" MaxLength="255" />
+          <Property Name="F42" Type="nvarchar" MaxLength="255" />
+          <Property Name="F43" Type="nvarchar" MaxLength="255" />
+          <Property Name="F44" Type="nvarchar" MaxLength="255" />
+          <Property Name="F45" Type="nvarchar" MaxLength="255" />
+          <Property Name="F46" Type="nvarchar" MaxLength="255" />
+          <Property Name="F47" Type="nvarchar" MaxLength="255" />
+          <Property Name="F48" Type="nvarchar" MaxLength="255" />
+          <Property Name="F49" Type="nvarchar" MaxLength="255" />
+          <Property Name="F50" Type="nvarchar" MaxLength="255" />
+          <Property Name="F51" Type="nvarchar" MaxLength="255" />
+          <Property Name="F52" Type="nvarchar" MaxLength="255" />
+          <Property Name="F53" Type="nvarchar" MaxLength="255" />
+          <Property Name="F54" Type="nvarchar" MaxLength="255" />
+          <Property Name="F55" Type="nvarchar" MaxLength="255" />
+          <Property Name="F56" Type="nvarchar" MaxLength="255" />
+          <Property Name="F57" Type="nvarchar" MaxLength="255" />
+          <Property Name="F58" Type="nvarchar" MaxLength="255" />
+          <Property Name="F59" Type="nvarchar" MaxLength="255" />
+          <Property Name="F60" Type="nvarchar" MaxLength="255" />
+          <Property Name="F61" Type="nvarchar" MaxLength="255" />
+          <Property Name="F62" Type="nvarchar" MaxLength="255" />
+          <Property Name="F63" Type="nvarchar" MaxLength="255" />
+          <Property Name="F64" Type="nvarchar" MaxLength="255" />
+          <Property Name="F65" Type="nvarchar" MaxLength="255" />
+          <Property Name="F66" Type="nvarchar" MaxLength="255" />
+          <Property Name="F67" Type="nvarchar" MaxLength="255" />
+          <Property Name="F68" Type="nvarchar" MaxLength="255" />
+          <Property Name="F69" Type="nvarchar" MaxLength="255" />
+          <Property Name="F70" Type="nvarchar" MaxLength="255" />
+          <Property Name="F71" Type="nvarchar" MaxLength="255" />
+          <Property Name="F72" Type="nvarchar" MaxLength="255" />
+          <Property Name="F73" Type="nvarchar" MaxLength="255" />
+          <Property Name="F74" Type="nvarchar" MaxLength="255" />
+          <Property Name="F75" Type="nvarchar" MaxLength="255" />
+          <Property Name="F76" Type="nvarchar" MaxLength="255" />
+          <Property Name="F77" Type="nvarchar" MaxLength="255" />
+          <Property Name="F78" Type="nvarchar" MaxLength="255" />
+          <Property Name="F79" Type="nvarchar" MaxLength="255" />
+          <Property Name="F80" Type="nvarchar" MaxLength="255" />
+          <Property Name="F81" Type="nvarchar" MaxLength="255" />
+          <Property Name="F82" Type="nvarchar" MaxLength="255" />
+          <Property Name="F83" Type="nvarchar" MaxLength="255" />
+          <Property Name="F84" Type="nvarchar" MaxLength="255" />
+          <Property Name="F85" Type="nvarchar" MaxLength="255" />
+          <Property Name="F86" Type="nvarchar" MaxLength="255" />
+          <Property Name="F87" Type="nvarchar" MaxLength="255" />
+          <Property Name="F88" Type="nvarchar" MaxLength="255" />
+          <Property Name="F89" Type="nvarchar" MaxLength="255" />
+          <Property Name="F90" Type="nvarchar" MaxLength="255" />
+          <Property Name="F91" Type="nvarchar" MaxLength="255" />
+          <Property Name="F92" Type="nvarchar" MaxLength="255" />
+          <Property Name="F93" Type="nvarchar" MaxLength="255" />
+          <Property Name="F94" Type="nvarchar" MaxLength="255" />
+          <Property Name="F95" Type="nvarchar" MaxLength="255" />
+          <Property Name="F96" Type="nvarchar" MaxLength="255" />
+          <Property Name="F97" Type="nvarchar" MaxLength="255" />
+          <Property Name="F98" Type="nvarchar" MaxLength="255" />
+          <Property Name="F99" Type="nvarchar" MaxLength="255" />
+          <Property Name="F100" Type="nvarchar" MaxLength="255" />
+          <Property Name="F101" Type="nvarchar" MaxLength="255" />
+          <Property Name="F102" Type="nvarchar" MaxLength="255" />
+          <Property Name="F103" Type="nvarchar" MaxLength="255" />
+          <Property Name="F104" Type="nvarchar" MaxLength="255" />
+          <Property Name="F105" Type="nvarchar" MaxLength="255" />
+          <Property Name="F106" Type="nvarchar" MaxLength="255" />
+          <Property Name="F107" Type="nvarchar" MaxLength="255" />
+          <Property Name="F108" Type="nvarchar" MaxLength="255" />
+          <Property Name="F109" Type="nvarchar" MaxLength="255" />
+          <Property Name="F110" Type="nvarchar" MaxLength="255" />
+          <Property Name="F111" Type="nvarchar" MaxLength="255" />
+          <Property Name="F112" Type="nvarchar" MaxLength="255" />
+          <Property Name="F113" Type="nvarchar" MaxLength="255" />
+          <Property Name="F114" Type="nvarchar" MaxLength="255" />
+          <Property Name="F115" Type="nvarchar" MaxLength="255" />
+          <Property Name="F116" Type="nvarchar" MaxLength="255" />
+          <Property Name="F117" Type="nvarchar" MaxLength="255" />
+          <Property Name="F118" Type="nvarchar" MaxLength="255" />
+          <Property Name="F119" Type="nvarchar" MaxLength="255" />
+          <Property Name="F120" Type="nvarchar" MaxLength="255" />
+          <Property Name="F121" Type="nvarchar" MaxLength="255" />
+          <Property Name="F122" Type="nvarchar" MaxLength="255" />
+          <Property Name="F123" Type="nvarchar" MaxLength="255" />
+          <Property Name="F124" Type="nvarchar" MaxLength="255" />
+          <Property Name="F125" Type="nvarchar" MaxLength="255" />
+          <Property Name="F126" Type="nvarchar" MaxLength="255" />
+          <Property Name="F127" Type="nvarchar" MaxLength="255" />
+          <Property Name="F128" Type="nvarchar" MaxLength="255" />
+          <Property Name="F129" Type="nvarchar" MaxLength="255" />
+          <Property Name="F130" Type="nvarchar" MaxLength="255" />
+          <Property Name="F131" Type="nvarchar" MaxLength="255" />
+          <Property Name="F132" Type="nvarchar" MaxLength="255" />
+          <Property Name="F133" Type="nvarchar" MaxLength="255" />
+          <Property Name="F134" Type="nvarchar" MaxLength="255" />
+          <Property Name="F135" Type="nvarchar" MaxLength="255" />
+          <Property Name="F136" Type="nvarchar" MaxLength="255" />
+          <Property Name="F137" Type="nvarchar" MaxLength="255" />
+          <Property Name="F138" Type="nvarchar" MaxLength="255" />
+          <Property Name="F139" Type="nvarchar" MaxLength="255" />
+          <Property Name="F140" Type="nvarchar" MaxLength="255" />
+          <Property Name="F141" Type="nvarchar" MaxLength="255" />
+          <Property Name="F142" Type="nvarchar" MaxLength="255" />
+          <Property Name="F143" Type="nvarchar" MaxLength="255" />
+          <Property Name="F144" Type="nvarchar" MaxLength="255" />
+          <Property Name="F145" Type="nvarchar" MaxLength="255" />
+          <Property Name="F146" Type="nvarchar" MaxLength="255" />
+          <Property Name="F147" Type="nvarchar" MaxLength="255" />
+          <Property Name="F148" Type="nvarchar" MaxLength="255" />
+          <Property Name="F149" Type="nvarchar" MaxLength="255" />
+          <Property Name="F150" Type="nvarchar" MaxLength="255" />
+          <Property Name="F151" Type="nvarchar" MaxLength="255" />
+          <Property Name="F152" Type="nvarchar" MaxLength="255" />
+          <Property Name="F153" Type="nvarchar" MaxLength="255" />
+          <Property Name="F154" Type="nvarchar" MaxLength="255" />
+          <Property Name="F155" Type="nvarchar" MaxLength="255" />
+          <Property Name="F156" Type="nvarchar" MaxLength="255" />
+          <Property Name="F157" Type="nvarchar" MaxLength="255" />
+          <Property Name="F158" Type="nvarchar" MaxLength="255" />
+          <Property Name="F159" Type="nvarchar" MaxLength="255" />
+          <Property Name="F160" Type="nvarchar" MaxLength="255" />
+          <Property Name="F161" Type="nvarchar" MaxLength="255" />
+          <Property Name="F162" Type="nvarchar" MaxLength="255" />
+          <Property Name="F163" Type="nvarchar" MaxLength="255" />
+          <Property Name="F164" Type="nvarchar" MaxLength="255" />
+          <Property Name="F165" Type="nvarchar" MaxLength="255" />
+          <Property Name="F166" Type="nvarchar" MaxLength="255" />
+        </EntityType>-->
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="Codigo" Type="nvarchar(max)" />
+          <Property Name="Codigo" Type="float" />
           <Property Name="Marca" Type="nvarchar(max)" />
           <Property Name="Descripcion1" Type="nvarchar(max)" />
           <Property Name="Cantidad" Type="decimal" Precision="18" Scale="4" />
@@ -477,19 +649,6 @@
         <EntityContainer Name="AnimaliaPetShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FormaDePago" EntityType="AnimaliaPetShopModel.FormaDePago" />
           <EntitySet Name="TipoComprobante" EntityType="AnimaliaPetShopModel.TipoComprobante" />
-          <EntitySet Name="Comprobante" EntityType="AnimaliaPetShopModel.Comprobante" />
-          <AssociationSet Name="FK_Comprobante_Comprobante" Association="AnimaliaPetShopModel.FK_Comprobante_Comprobante">
-            <End Role="Comprobante" EntitySet="Comprobante" />
-            <End Role="Comprobante1" EntitySet="Comprobante" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comprobante_FormaDePago" Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago">
-            <End Role="FormaDePago" EntitySet="FormaDePago" />
-            <End Role="Comprobante" EntitySet="Comprobante" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comprobante_TipoComprobante" Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante">
-            <End Role="TipoComprobante" EntitySet="TipoComprobante" />
-            <End Role="Comprobante" EntitySet="Comprobante" />
-          </AssociationSet>
           <EntitySet Name="AspNetRoles" EntityType="AnimaliaPetShopModel.AspNetRoles" />
           <EntitySet Name="AspNetUserClaims" EntityType="AnimaliaPetShopModel.AspNetUserClaims" />
           <EntitySet Name="AspNetUserLogins" EntityType="AnimaliaPetShopModel.AspNetUserLogins" />
@@ -510,46 +669,59 @@
           <EntitySet Name="IdClienteIdProducto" EntityType="AnimaliaPetShopModel.IdClienteIdProducto" />
           <EntitySet Name="SubCategory" EntityType="AnimaliaPetShopModel.SubCategory" />
           <EntitySet Name="Cliente" EntityType="AnimaliaPetShopModel.Cliente" />
-          <AssociationSet Name="FK_Comprobante_Cliente" Association="AnimaliaPetShopModel.FK_Comprobante_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Comprobante" EntitySet="Comprobante" />
-          </AssociationSet>
           <AssociationSet Name="FK_IdClienteIdProducto_Cliente" Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
           </AssociationSet>
           <EntitySet Name="DetalleComprobante" EntityType="AnimaliaPetShopModel.DetalleComprobante" />
-          <AssociationSet Name="FK_DetalleComprobante_Comprobante" Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante">
-            <End Role="Comprobante" EntitySet="Comprobante" />
-            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
+          <EntitySet Name="IdProveedorProducto" EntityType="AnimaliaPetShopModel.IdProveedorProducto" />
+          <EntitySet Name="Category" EntityType="AnimaliaPetShopModel.Category" />
+          <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
+          <AssociationSet Name="FK_IdProveedorProducto_Proveedor" Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor">
+            <End Role="Proveedor" EntitySet="Proveedor" />
+            <End Role="IdProveedorProducto" EntitySet="IdProveedorProducto" />
           </AssociationSet>
           <EntitySet Name="Product" EntityType="AnimaliaPetShopModel.Product" />
+          <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
           <AssociationSet Name="FK_IdClienteIdProducto_Product" Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="IdClienteIdProducto" EntitySet="IdClienteIdProducto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdProveedorProducto_Product" Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="IdProveedorProducto" EntitySet="IdProveedorProducto" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_SubCategory" Association="AnimaliaPetShopModel.FK_Product_SubCategory">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <EntitySet Name="IdProveedorProducto" EntityType="AnimaliaPetShopModel.IdProveedorProducto" />
-          <AssociationSet Name="FK_IdProveedorProducto_Product" Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="IdProveedorProducto" EntitySet="IdProveedorProducto" />
+          <EntitySet Name="Comprobante" EntityType="AnimaliaPetShopModel.Comprobante" />
+          <AssociationSet Name="FK_Comprobante_Cliente" Association="AnimaliaPetShopModel.FK_Comprobante_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
           </AssociationSet>
-          <EntitySet Name="Category" EntityType="AnimaliaPetShopModel.Category" />
-          <AssociationSet Name="FK_Product_Category" Association="AnimaliaPetShopModel.FK_Product_Category">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Product" EntitySet="Product" />
+          <AssociationSet Name="FK_Comprobante_Comprobante" Association="AnimaliaPetShopModel.FK_Comprobante_Comprobante">
+            <End Role="Comprobante" EntitySet="Comprobante" />
+            <End Role="Comprobante1" EntitySet="Comprobante" />
           </AssociationSet>
-          <EntitySet Name="Proveedor" EntityType="AnimaliaPetShopModel.Proveedor" />
+          <AssociationSet Name="FK_Comprobante_FormaDePago" Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago">
+            <End Role="FormaDePago" EntitySet="FormaDePago" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comprobante_Proveedor" Association="AnimaliaPetShopModel.FK_Comprobante_Proveedor">
             <End Role="Proveedor" EntitySet="Proveedor" />
             <End Role="Comprobante" EntitySet="Comprobante" />
           </AssociationSet>
-          <AssociationSet Name="FK_IdProveedorProducto_Proveedor" Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor">
-            <End Role="Proveedor" EntitySet="Proveedor" />
-            <End Role="IdProveedorProducto" EntitySet="IdProveedorProducto" />
+          <AssociationSet Name="FK_Comprobante_TipoComprobante" Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante">
+            <End Role="TipoComprobante" EntitySet="TipoComprobante" />
+            <End Role="Comprobante" EntitySet="Comprobante" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleComprobante_Comprobante" Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante">
+            <End Role="Comprobante" EntitySet="Comprobante" />
+            <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="FormaDePago">
@@ -568,64 +740,6 @@
           <Property Name="IdTipoComprobante" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="TipoComprobante" ToRole="Comprobante" />
         </EntityType>
-        <EntityType Name="Comprobante">
-          <Key>
-            <PropertyRef Name="IdComprobante" />
-          </Key>
-          <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <Property Name="IdComprobante" Type="Guid" Nullable="false" />
-          <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdFormaDePago" Type="Int32" />
-          <Property Name="IdTipoComprobante" Type="Int32" />
-          <Property Name="Total" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="Cobrada" Type="Binary" MaxLength="50" FixedLength="true" />
-          <Property Name="IdCliente" Type="Guid" />
-          <Property Name="IdProveedor" Type="Guid" />
-          <Property Name="FechaPago" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Comprobante1" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante" ToRole="Comprobante1" />
-          <NavigationProperty Name="Comprobante2" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante1" ToRole="Comprobante" />
-          <NavigationProperty Name="FormaDePago" Relationship="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" FromRole="Comprobante" ToRole="FormaDePago" />
-          <NavigationProperty Name="TipoComprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="Comprobante" ToRole="TipoComprobante" />
-          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Comprobante" ToRole="Cliente" />
-          <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" FromRole="Comprobante" ToRole="DetalleComprobante" />
-          <NavigationProperty Name="Proveedor" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Comprobante" ToRole="Proveedor" />
-        </EntityType>
-        <Association Name="FK_Comprobante_Comprobante">
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Comprobante">
-              <PropertyRef Name="IdComprobante" />
-            </Principal>
-            <Dependent Role="Comprobante1">
-              <PropertyRef Name="IdComprobante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comprobante_FormaDePago">
-          <End Type="AnimaliaPetShopModel.FormaDePago" Role="FormaDePago" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FormaDePago">
-              <PropertyRef Name="IdFormaDePago" />
-            </Principal>
-            <Dependent Role="Comprobante">
-              <PropertyRef Name="IdFormaDePago" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comprobante_TipoComprobante">
-          <End Type="AnimaliaPetShopModel.TipoComprobante" Role="TipoComprobante" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoComprobante">
-              <PropertyRef Name="IdTipoComprobante" />
-            </Principal>
-            <Dependent Role="Comprobante">
-              <PropertyRef Name="IdTipoComprobante" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -754,21 +868,9 @@
           <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Dias" Type="Int32" />
           <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Cliente" ToRole="Comprobante" />
           <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Cliente" FromRole="Cliente" ToRole="IdClienteIdProducto" />
+          <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Cliente" ToRole="Comprobante" />
         </EntityType>
-        <Association Name="FK_Comprobante_Cliente">
-          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="IdCliente" />
-            </Principal>
-            <Dependent Role="Comprobante">
-              <PropertyRef Name="IdCliente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_IdClienteIdProducto_Cliente">
           <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
           <End Type="AnimaliaPetShopModel.IdClienteIdProducto" Role="IdClienteIdProducto" Multiplicity="*" />
@@ -794,15 +896,48 @@
           <Property Name="IdComprobante" Type="Guid" />
           <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" FromRole="DetalleComprobante" ToRole="Comprobante" />
         </EntityType>
-        <Association Name="FK_DetalleComprobante_Comprobante">
-          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.DetalleComprobante" Role="DetalleComprobante" Multiplicity="*" />
+        <EntityType Name="IdProveedorProducto">
+          <Key>
+            <PropertyRef Name="IdProveedorIdproducto" />
+          </Key>
+          <Property Name="IdProveedorIdproducto" Type="Guid" Nullable="false" />
+          <Property Name="IdProveedor" Type="Guid" />
+          <Property Name="IdProducto" Type="Guid" />
+          <NavigationProperty Name="Proveedor" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor" FromRole="IdProveedorProducto" ToRole="Proveedor" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Product" FromRole="IdProveedorProducto" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="IdCategory" />
+          </Key>
+          <Property Name="IdCategory" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Proveedor">
+          <Key>
+            <PropertyRef Name="IdProveedor" />
+          </Key>
+          <Property Name="IdProveedor" Type="Guid" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="IdProveedorProducto" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor" FromRole="Proveedor" ToRole="IdProveedorProducto" />
+          <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Proveedor" ToRole="Comprobante" />
+        </EntityType>
+        <Association Name="FK_IdProveedorProducto_Proveedor">
+          <End Type="AnimaliaPetShopModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.IdProveedorProducto" Role="IdProveedorProducto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Comprobante">
-              <PropertyRef Name="IdComprobante" />
+            <Principal Role="Proveedor">
+              <PropertyRef Name="IdProveedor" />
             </Principal>
-            <Dependent Role="DetalleComprobante">
-              <PropertyRef Name="IdComprobante" />
+            <Dependent Role="IdProveedorProducto">
+              <PropertyRef Name="IdProveedor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -810,7 +945,7 @@
           <Key>
             <PropertyRef Name="IdProducto" />
           </Key>
-          <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Codigo" Type="Double" />
           <Property Name="Marca" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Descripcion1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Cantidad" Type="Decimal" Precision="18" Scale="4" />
@@ -826,11 +961,23 @@
           <Property Name="PrecioVenta" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="PrecioCosto" Type="Decimal" Precision="18" Scale="4" />
           <Property Name="TotalKg" Type="Decimal" Precision="18" Scale="4" />
-          <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" FromRole="Product" ToRole="IdClienteIdProducto" />
-          <NavigationProperty Name="SubCategory" Relationship="AnimaliaPetShopModel.FK_Product_SubCategory" FromRole="Product" ToRole="SubCategory" />
-          <NavigationProperty Name="IdProveedorProducto" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Product" FromRole="Product" ToRole="IdProveedorProducto" />
           <NavigationProperty Name="Category" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="IdClienteIdProducto" Relationship="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" FromRole="Product" ToRole="IdClienteIdProducto" />
+          <NavigationProperty Name="IdProveedorProducto" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Product" FromRole="Product" ToRole="IdProveedorProducto" />
+          <NavigationProperty Name="SubCategory" Relationship="AnimaliaPetShopModel.FK_Product_SubCategory" FromRole="Product" ToRole="SubCategory" />
         </EntityType>
+        <Association Name="FK_Product_Category">
+          <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="IdCategory" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IdClienteIdProducto_Product">
           <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
           <End Type="AnimaliaPetShopModel.IdClienteIdProducto" Role="IdClienteIdProducto" Multiplicity="*" />
@@ -839,6 +986,18 @@
               <PropertyRef Name="IdProducto" />
             </Principal>
             <Dependent Role="IdClienteIdProducto">
+              <PropertyRef Name="IdProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdProveedorProducto_Product">
+          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.IdProveedorProducto" Role="IdProveedorProducto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProducto" />
+            </Principal>
+            <Dependent Role="IdProveedorProducto">
               <PropertyRef Name="IdProducto" />
             </Dependent>
           </ReferentialConstraint>
@@ -855,63 +1014,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="IdProveedorProducto">
+        <EntityType Name="Comprobante">
           <Key>
-            <PropertyRef Name="IdProveedorIdproducto" />
+            <PropertyRef Name="IdComprobante" />
           </Key>
-          <Property Name="IdProveedorIdproducto" Type="Guid" Nullable="false" />
-          <Property Name="IdProveedor" Type="Guid" />
-          <Property Name="IdProducto" Type="Guid" />
-          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Product" FromRole="IdProveedorProducto" ToRole="Product" />
-          <NavigationProperty Name="Proveedor" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor" FromRole="IdProveedorProducto" ToRole="Proveedor" />
-        </EntityType>
-        <Association Name="FK_IdProveedorProducto_Product">
-          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.IdProveedorProducto" Role="IdProveedorProducto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProducto" />
-            </Principal>
-            <Dependent Role="IdProveedorProducto">
-              <PropertyRef Name="IdProducto" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="IdCategory" />
-          </Key>
-          <Property Name="IdCategory" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Product" Relationship="AnimaliaPetShopModel.FK_Product_Category" FromRole="Category" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_Product_Category">
-          <End Type="AnimaliaPetShopModel.Category" Role="Category" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Category">
-              <PropertyRef Name="IdCategory" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="IdCategory" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Proveedor">
-          <Key>
-            <PropertyRef Name="IdProveedor" />
-          </Key>
-          <Property Name="IdProveedor" Type="Guid" Nullable="false" />
-          <Property Name="RazonSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Codigo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Fecha" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Comprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Proveedor" ToRole="Comprobante" />
-          <NavigationProperty Name="IdProveedorProducto" Relationship="AnimaliaPetShopModel.FK_IdProveedorProducto_Proveedor" FromRole="Proveedor" ToRole="IdProveedorProducto" />
+          <Property Name="IdComprobante" Type="Guid" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdFormaDePago" Type="Int32" />
+          <Property Name="IdTipoComprobante" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Cobrada" Type="Binary" MaxLength="50" FixedLength="true" />
+          <Property Name="IdCliente" Type="Guid" />
+          <Property Name="IdProveedor" Type="Guid" />
+          <Property Name="FechaPago" Type="DateTime" Precision="3" />
+          <Property Name="Comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Comprobante" ToRole="Cliente" />
+          <NavigationProperty Name="Comprobante1" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante" ToRole="Comprobante1" />
+          <NavigationProperty Name="Comprobante2" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante1" ToRole="Comprobante" />
+          <NavigationProperty Name="FormaDePago" Relationship="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" FromRole="Comprobante" ToRole="FormaDePago" />
+          <NavigationProperty Name="Proveedor" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Comprobante" ToRole="Proveedor" />
+          <NavigationProperty Name="TipoComprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="Comprobante" ToRole="TipoComprobante" />
+          <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" FromRole="Comprobante" ToRole="DetalleComprobante" />
         </EntityType>
+        <Association Name="FK_Comprobante_Cliente">
+          <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_Comprobante">
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Comprobante">
+              <PropertyRef Name="IdComprobante" />
+            </Principal>
+            <Dependent Role="Comprobante1">
+              <PropertyRef Name="IdComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comprobante_FormaDePago">
+          <End Type="AnimaliaPetShopModel.FormaDePago" Role="FormaDePago" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FormaDePago">
+              <PropertyRef Name="IdFormaDePago" />
+            </Principal>
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdFormaDePago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comprobante_Proveedor">
           <End Type="AnimaliaPetShopModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
           <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
@@ -924,15 +1086,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_IdProveedorProducto_Proveedor">
-          <End Type="AnimaliaPetShopModel.Proveedor" Role="Proveedor" Multiplicity="0..1" />
-          <End Type="AnimaliaPetShopModel.IdProveedorProducto" Role="IdProveedorProducto" Multiplicity="*" />
+        <Association Name="FK_Comprobante_TipoComprobante">
+          <End Type="AnimaliaPetShopModel.TipoComprobante" Role="TipoComprobante" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Proveedor">
-              <PropertyRef Name="IdProveedor" />
+            <Principal Role="TipoComprobante">
+              <PropertyRef Name="IdTipoComprobante" />
             </Principal>
-            <Dependent Role="IdProveedorProducto">
-              <PropertyRef Name="IdProveedor" />
+            <Dependent Role="Comprobante">
+              <PropertyRef Name="IdTipoComprobante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleComprobante_Comprobante">
+          <End Type="AnimaliaPetShopModel.Comprobante" Role="Comprobante" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.DetalleComprobante" Role="DetalleComprobante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comprobante">
+              <PropertyRef Name="IdComprobante" />
+            </Principal>
+            <Dependent Role="DetalleComprobante">
+              <PropertyRef Name="IdComprobante" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -955,22 +1129,6 @@
               <MappingFragment StoreEntitySet="TipoComprobante">
                 <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Comprobante">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Comprobante">
-              <MappingFragment StoreEntitySet="Comprobante">
-                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
-                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
-                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
-                <ScalarProperty Name="Cobrada" ColumnName="Cobrada" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
-                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
-                <ScalarProperty Name="Numero" ColumnName="Numero" />
-                <ScalarProperty Name="IdComprobante" ColumnName="IdComprobante" />
-                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1088,28 +1246,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Product">
-            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="TotalKg" ColumnName="TotalKg" />
-                <ScalarProperty Name="PrecioCosto" ColumnName="PrecioCosto" />
-                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
-                <ScalarProperty Name="Rentabilidad" ColumnName="Rentabilidad" />
-                <ScalarProperty Name="RentabilidadPesos" ColumnName="RentabilidadPesos" />
-                <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
-                <ScalarProperty Name="Descripcion2" ColumnName="Descripcion2" />
-                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
-                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
-                <ScalarProperty Name="CodigoBarra" ColumnName="CodigoBarra" />
-                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
-                <ScalarProperty Name="Kg" ColumnName="Kg" />
-                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-                <ScalarProperty Name="Descripcion1" ColumnName="Descripcion1" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IdProveedorProducto">
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.IdProveedorProducto">
               <MappingFragment StoreEntitySet="IdProveedorProducto">
@@ -1138,6 +1274,46 @@
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="TotalKg" ColumnName="TotalKg" />
+                <ScalarProperty Name="PrecioCosto" ColumnName="PrecioCosto" />
+                <ScalarProperty Name="PrecioVenta" ColumnName="PrecioVenta" />
+                <ScalarProperty Name="Rentabilidad" ColumnName="Rentabilidad" />
+                <ScalarProperty Name="RentabilidadPesos" ColumnName="RentabilidadPesos" />
+                <ScalarProperty Name="Presentacion" ColumnName="Presentacion" />
+                <ScalarProperty Name="Descripcion2" ColumnName="Descripcion2" />
+                <ScalarProperty Name="IdSubCategory" ColumnName="IdSubCategory" />
+                <ScalarProperty Name="IdCategory" ColumnName="IdCategory" />
+                <ScalarProperty Name="CodigoBarra" ColumnName="CodigoBarra" />
+                <ScalarProperty Name="IdProducto" ColumnName="IdProducto" />
+                <ScalarProperty Name="Kg" ColumnName="Kg" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Descripcion1" ColumnName="Descripcion1" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comprobante">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Comprobante">
+              <MappingFragment StoreEntitySet="Comprobante">
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
+                <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Cobrada" ColumnName="Cobrada" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IdTipoComprobante" ColumnName="IdTipoComprobante" />
+                <ScalarProperty Name="IdFormaDePago" ColumnName="IdFormaDePago" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="IdComprobante" ColumnName="IdComprobante" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

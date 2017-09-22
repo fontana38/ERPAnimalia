@@ -27,7 +27,7 @@ namespace ERPAnimalia.Models
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                product = product.Where(p => p.Descripcion1.Contains(searchString) || p.Codigo.Contains(searchString)|| p.Descripcion2.Contains(searchString)).ToList();
+                product = product.Where(p => p.Descripcion1.Contains(searchString) || p.Codigo.ToString().Contains(searchString)|| p.Descripcion2.Contains(searchString)).ToList();
             }
 
             total = product.Count();

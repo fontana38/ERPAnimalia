@@ -47,10 +47,8 @@ namespace ERPAnimalia.Models.Manager
 
             if (!string.IsNullOrWhiteSpace(searchString))
             {
-                listProvider = listProvider.Where(p => (p.Nombre.ToUpper().StartsWith(searchString.ToUpper()) || p.Nombre.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Apellido.ToUpper().StartsWith(searchString.ToUpper()) || p.Apellido.ToUpper().EndsWith(searchString.ToUpper()))).ToList();
-                
+                listProvider = listProvider.Where(p => (p.RazonSocial.ToUpper().StartsWith(searchString.ToUpper()) || p.RazonSocial.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper()))).ToList();               
             }
 
             total = listProvider.Count();

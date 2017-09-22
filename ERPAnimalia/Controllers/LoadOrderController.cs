@@ -41,13 +41,12 @@ namespace ERPAnimalia.Controllers
             LoadOrderModel.ProveedorModel = listProveedor;
 
 
-
+         
             var proveedorName = (from N in listProveedor
-                                 where N.Nombre.StartsWith(term) || N.Apellido.StartsWith(term)
-                                 select new { N.NombreCompleto}).ToList();
+                                 where (N.RazonSocial.ToUpper().StartsWith(term.ToUpper()) || N.RazonSocial.ToUpper().EndsWith(term.ToUpper()))
+                                 select new { N.RazonSocial }).ToList();
 
             return Json(proveedorName, JsonRequestBehavior.AllowGet);
-
         }
 
         [HttpGet]

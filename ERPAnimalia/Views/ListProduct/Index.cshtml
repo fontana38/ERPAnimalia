@@ -48,10 +48,18 @@
                     }
                 }
                 ],
-                pager: { limit: 5, sizes: [2, 5, 10, 20] }
+                pager: { limit: 15, sizes: [2, 5, 10, 20] }
             });
 
             $("#btnSearch").on("click", Search);
+
+            $('#search').keypress(function (event) {
+                debugger;
+                if (event.keyCode == 13) {
+                    $("#btnSearch").click();
+                }
+            });
+
         });
 
       
@@ -73,7 +81,7 @@
         <div class="panel-heading">Producto</div>
         <div class="panel-body">
             <div class="form-group row">
-                <div class="col-md-3 col-md-offset-1">
+                <div class="col-md-2">
                     <div class="input-group">
                         <input type="text" id="search" class="form-control" placeholder="Search for...">
                         <span class="input-group-btn">

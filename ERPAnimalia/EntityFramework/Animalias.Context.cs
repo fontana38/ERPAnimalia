@@ -27,7 +27,6 @@ namespace ERPAnimalia.EntityFramework
     
         public virtual DbSet<FormaDePago> FormaDePago { get; set; }
         public virtual DbSet<TipoComprobante> TipoComprobante { get; set; }
-        public virtual DbSet<Comprobante> Comprobante { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
@@ -37,9 +36,10 @@ namespace ERPAnimalia.EntityFramework
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<DetalleComprobante> DetalleComprobante { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<IdProveedorProducto> IdProveedorProducto { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Proveedor> Proveedor { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Comprobante> Comprobante { get; set; }
     }
 }

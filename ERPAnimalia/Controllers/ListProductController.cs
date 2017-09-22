@@ -44,6 +44,8 @@ namespace ERPAnimalia.Controllers
         public JsonResult GetProduct(int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
             int total;
+            sortBy =(sortBy==null) ? "Codigo" : sortBy;
+            direction = (direction == null) ? "asc" : direction;
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
@@ -54,6 +56,8 @@ namespace ERPAnimalia.Controllers
         {
            
             int total=0;
+            sortBy = (sortBy == null) ? "Codigo" : sortBy;
+            direction = (direction == null) ? "asc" : direction;
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
             
           
@@ -70,6 +74,8 @@ namespace ERPAnimalia.Controllers
         public JsonResult GetProductLoose(int? page, int? limit, string sortBy, string direction, string searchString = null)
         {
             int total=0;
+            sortBy = (sortBy == null) ? "Codigo" : sortBy;
+            direction = (direction == null) ? "asc" : direction;
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
             records = ProductManagers.GetProducLooseList(records);
             foreach (var item in records)

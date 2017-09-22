@@ -37,6 +37,13 @@
              $("#btnSearchGridProduct").on("click", SearchProduct);
              $("#btnSave").on("click", Save);
 
+             $('#search').keypress(function (event) {
+                 debugger;
+                 if (event.keyCode == 13) {
+                     $("#btnSearchGridProduct").click();
+                 }
+             });
+
          });
 
 
@@ -46,7 +53,7 @@
              gridProduct.reload({ searchString: $("#search").val() });
          }
 
-
+       
 
          function Save() {
            
@@ -56,7 +63,7 @@
              var precioVenta=new Array();
 
              var selections = gridProduct.getSelections();
-             if ($('#NombreCompleto').val() == "")
+             if ($('#RazonSocial').val() == "")
              {
                  return alert("Debe Seleccionar Un Proveedor");
              }
@@ -77,14 +84,14 @@
                 return alert("Debe Seleccionar Un Producto");
              }
 
-             var  proveedor= $("#NombreCompleto").val();
+             var  proveedor= $("#RazonSocial").val();
              var  formaPago= $("#formaPago").val();
              var date= $("#date").val();
              var fechaPago = $("#fechaPago").val();
 
              $.ajax({ url: "/LoadOrder/Save", type: "POST", data: { proveedor: proveedor, date: date, fechaPago:fechaPago,formaPago: formaPago, idProducto: idProducto,precioCosto:precioCosto,cantidad:cantidad,precioVenta:precioVenta } })
                  .done(function (data) {
-                     $("#NombreCompleto").val("");
+                     $("#RazonSocial").val("");
                      gridProduct.clear();
                      alert("La orden fue guardad con éxito");
                      gridProduct.reload();

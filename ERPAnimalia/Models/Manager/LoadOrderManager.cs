@@ -23,14 +23,17 @@ namespace ERPAnimalia.Models.Manager
         public List<ProviderModel> GetProveedor()
         {
             var proveedor = GetProveedorList();
-            
+
+            var LoadOrderModel = Factory.LoadOrderFacory.CreateVoucherHeadLoadOrder();
+            LoadOrderModel.ProveedorModel = proveedor;
+
             return proveedor; 
         }
 
         public string Save(string proveedor, string date, string fechaPago, int formaDePago,string[] precioCosto, int[] cantidad, Guid[] idProducto, string[] precioVenta)
         {
             var listProveedor = GetProveedor();
-            var idProveedor = listProveedor.Where(x => x.NombreCompleto == proveedor);
+            var idProveedor = listProveedor.Where(x => x.RazonSocial == proveedor);
             
             using (var context = new AnimaliaPetShopEntities())
             {

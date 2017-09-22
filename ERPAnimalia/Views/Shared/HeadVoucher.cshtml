@@ -11,28 +11,31 @@
 
     <script type="text/javascript">
        
-    $(document).ready(function () {
-        $("#NombreCompleto").autocomplete({
-            source: function (request, response) {
-                
-                $.ajax({
-                    url: "/Voucher/GetClient",
-                    type: "POST", dataType: "json",
-                    data: { term: request.term },
-                    success: function (data) {
-                       
-                        response($.map(data, function (item) { 
-                          
-                            return { label: item.NombreCompleto, value: item.NombreCompleto };
-                           
-                        }));
-                    }
-                });
-                SaveEnabled();
-            },
-            messages: { noResults: "", results: "" }
-        });
+        $(document).ready(function () {
 
+            
+                $("#NombreCompleto").autocomplete({
+                    source: function (request, response) {              
+                        $.ajax({
+                            url: "/Voucher/GetClient",
+                            type: "POST", dataType: "json",
+                            data: { term: request.term },
+                            success: function (data) {
+                       
+                                response($.map(data, function (item) { 
+                          
+                                    return { label: item.NombreCompleto, value: item.NombreCompleto };
+                           
+                                }));
+                            }
+                        });
+                        SaveEnabled();
+                    },
+                    messages: { noResults: "", results: "" }
+                });
+
+            
+       
         var $j = jQuery.noConflict();
                 $j('#DateVoucher').datepicker({
                     dateFormat: "dd-mm-yy",
@@ -51,18 +54,18 @@
 
                 $j("#DateVoucher").datepicker("setDate", new Date());
 
-                $('#NombreCompleto').blur(function () {
-                    var term = $("#NombreCompleto").val();
-                    $.ajax({
-                        url: "/Voucher/GetClientSelect",
-                        type: "POST", dataType: "json",
-                        data: { term: term },
-                        success: function (data) {
-                            $('#idDireccion').html('Dirección: ' + data[0].Direccion);
-                            $('#idTelefono').html('Tel: ' + data[0].Telefono);
-                        }
-                    });
-        });    
+        //        $('#NombreCompleto').blur(function () {
+        //            var term = $("#NombreCompleto").val();
+        //            $.ajax({
+        //                url: "/Voucher/GetClientSelect",
+        //                type: "POST", dataType: "json",
+        //                data: { term: term },
+        //                success: function (data) {
+        //                    $('#idDireccion').html('Dirección: ' + data[0].Direccion);
+        //                    $('#idTelefono').html('Tel: ' + data[0].Telefono);
+        //                }
+        //            });
+        //});    
     });
 
 

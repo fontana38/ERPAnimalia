@@ -11,9 +11,8 @@ namespace ERPAnimalia.Models
     {
         public Guid IdProducto { get; set; }
         [Required(ErrorMessage = "Por favor Ingrese el Código")]
-        [MaxLength(50)]
         [Display(Name = "Código")]
-        public string Codigo { get; set; }
+        public double Codigo { get; set; }
 
         [MaxLength(50)]
         [Display(Name = "Marca")]

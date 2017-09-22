@@ -17,8 +17,8 @@ namespace ERPAnimalia.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Proveedor()
         {
-            this.Comprobante = new HashSet<Comprobante>();
             this.IdProveedorProducto = new HashSet<IdProveedorProducto>();
+            this.Comprobante = new HashSet<Comprobante>();
         }
     
         public System.Guid IdProveedor { get; set; }
@@ -31,8 +31,8 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<System.DateTime> Fecha { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comprobante> Comprobante { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IdProveedorProducto> IdProveedorProducto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comprobante> Comprobante { get; set; }
     }
 }

@@ -183,10 +183,10 @@ namespace ERPAnimalia.Models
             if (!string.IsNullOrWhiteSpace(searchString))
             {
                 
-                    map = map.Where(p => (p.CodigoBarra != null) ?(((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    map = map.Where(p => (p.CodigoBarra != null) ?(((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToString().ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToString().ToUpper().EndsWith(searchString.ToUpper())) ||
                     (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
                     (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
-                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))): ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                    (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))): ((p.Codigo.ToString().StartsWith(searchString.ToUpper()) || p.Codigo.ToString().ToUpper().EndsWith(searchString.ToUpper())) ||
                     (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
                     (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
                     (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
@@ -195,8 +195,9 @@ namespace ERPAnimalia.Models
             }
 
             total = map.Count();
-
+           
             var productQueryable = map.AsQueryable();
+            
 
             if (!string.IsNullOrEmpty(sortBy) && !string.IsNullOrEmpty(direction))
             {
@@ -247,10 +248,10 @@ namespace ERPAnimalia.Models
                 if (!string.IsNullOrWhiteSpace(searchString))
             {
 
-                map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToString().ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToString().ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
-                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToString().ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToString().ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
@@ -408,10 +409,10 @@ namespace ERPAnimalia.Models
             if (!string.IsNullOrWhiteSpace(searchString))
             {
 
-                map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                map = map.Where(p => (p.CodigoBarra != null) ? (((p.CodigoBarra.ToUpper().StartsWith(searchString.ToUpper()) || p.CodigoBarra.ToUpper().EndsWith(searchString.ToUpper())) || (p.Codigo.ToString().ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToString().ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
-                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToUpper().EndsWith(searchString.ToUpper())) ||
+                (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))) : ((p.Codigo.ToString().ToUpper().StartsWith(searchString.ToUpper()) || p.Codigo.ToString().ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Descripcion1.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion1.ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Marca.ToUpper().StartsWith(searchString.ToUpper()) || p.Marca.ToUpper().EndsWith(searchString.ToUpper())) ||
                 (p.Descripcion2.ToUpper().StartsWith(searchString.ToUpper()) || p.Descripcion2.ToUpper().EndsWith(searchString.ToUpper())))).ToList();
@@ -449,7 +450,7 @@ namespace ERPAnimalia.Models
         public List<ProductModels> GetProducBug(List<ProductModels> list)
         {
 
-            var listProduct = list.Where(x => x.IdSubCategory == (int)Enumeration.Subcategory.Bolsa && x.IdCategory == (int)Enumeration.Category.Alimento).ToList();
+            var listProduct = list.Where(x => x.IdSubCategory == (int)Enumeration.Subcategory.Bolsa && x.IdCategory == (int)Enumeration.Category.Alimento && x.Cantidad >=1).ToList();
             return listProduct;
 
         }

@@ -27,9 +27,7 @@
                         type: "POST", dataType: "json",
                         data: { term: request.term },
                         success: function (data) {
-                            response($.map(data, function (item) {
-                              
-                               
+                            response($.map(data, function (item) {                             
                                 var res = item.Descripcion1.concat(", ").concat(item.Marca).concat(", ").concat(item.SubCategoryName).concat(", ").concat( item.kg);
                                 
                                 return { label: res, value: item.IdProducto, };
@@ -83,7 +81,6 @@
 
             $('#Descripcion1').keypress(function (event) {
 
-               
                 if (event.keyCode == 13) {
                     if ($("#Descripcion1").val() != "") {
                       
@@ -140,8 +137,9 @@
                 var dateVoucher = $("#DateVoucher").val();             
                 var tipoComprobante = $("#TipoComprobante").val();
                 var formaPago = $("#formaDePago").val();
+                var notes = $("#notes").val();
                 
-                $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago } })
+                $.ajax({ url: "/Voucher/Save", type: "POST", data: { cliente: client, date: dateVoucher, comprobante: tipoComprobante, formaDePago: formaPago, notes:notes } })
                     .done(function (data) {
                         if (data != 'El comprobante fue guardado')
                         {
@@ -149,11 +147,8 @@
                         }
                         else
                         { 
-                            gridDetail.clear();
-                            $("#NombreCompleto").val("");
+                            gridDetail.clear();                          
                             $("#DateVoucher").val("");
-                            $("#idTelefono").html("");
-                            $("#idDireccion").html("");
                             $('#Descripcion1').val("");
                             $('#totalVoucher').val("");
                             
@@ -212,10 +207,10 @@
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#productTab" aria-controls="productoTab" role="tab" data-toggle="tab">Product</a>
+                    <a href="#productTab" aria-controls="productoTab" role="tab" data-toggle="tab">Producto</a>
                 </li>
                 <li role="presentation">
-                    <a href="#informationTab" aria-controls="informationTab" role="tab" data-toggle="tab">Informacion</a>
+                    <a href="#informationTab" aria-controls="informationTab" role="tab" data-toggle="tab">Información</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -234,18 +229,25 @@
                         </br>
                         <div class="row">
                             <div class="col-md-12">
-                                <table id="gridDetail" ></table>
+                                <table id="gridDetail"></table>
                                 </br>
                                 <div id="total">
-                                  <input type="text" id="totalVoucher" readonly>
+                                    <input type="text" id="totalVoucher" readonly>
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="informationTab">
-
-                        </div>
                     </form>
                 </div>
+                    <div role="tabpanel" class="tab-pane" id="informationTab">
+                        </br>
+                        <h4>Notas</h4>
+                        <div class="col-md-12">
+                         <textarea class="textareaNote" id="notes" rows="6" cols="50">
+                        </textarea>
+                        </div>
+                    </div>
+                    
+                
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

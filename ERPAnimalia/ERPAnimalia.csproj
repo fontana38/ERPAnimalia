@@ -388,6 +388,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\css\product.css" />
     <Content Include="Content\css\Voucher.css" />
+    <Content Include="Content\images\animaliaHome.gif" />
+    <Content Include="Content\images\background.jpg" />
+    <Content Include="Content\images\Logo.jpg" />
+    <Content Include="Content\images\logoHeader.jpg" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap3.3.7.min.js" />

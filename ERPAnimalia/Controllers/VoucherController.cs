@@ -237,7 +237,7 @@ namespace ERPAnimalia.Controllers
            
 
         [HttpPost]
-        public JsonResult Save(string cliente,string date, int comprobante,int formaDePago)
+        public JsonResult Save(string cliente,string date, int comprobante,int formaDePago, string notes)
         {
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
 
@@ -249,6 +249,8 @@ namespace ERPAnimalia.Controllers
             voucherHeadModel.IdtipoComprobante = comprobante;
             voucherHeadModel.Fecha = DateTime.Parse(date).Date;
             voucherHeadModel.IdCliente = idClient;
+            voucherDetailModel.Comentario = notes;
+
             var IsSave =VoucherDetailManager.SaveVoucher(detailGridTemp,voucherHeadModel);
             var message = string.Empty;
             if (IsSave)

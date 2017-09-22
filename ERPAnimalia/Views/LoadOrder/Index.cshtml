@@ -13,7 +13,7 @@
     debugger;
    
     $(document).ready(function () {
-        $("#NombreCompleto").autocomplete({
+        $("#RazonSocial").autocomplete({
             source: function (request, response) {
                 $.ajax({
                     url: "/LoadOrder/GetProveedor",
@@ -21,7 +21,7 @@
                     data: { term: request.term },
                     success: function (data) {                      
                         response($.map(data, function (item) {
-                            return { label: item.NombreCompleto, value: item.NombreCompleto };
+                            return { label: item.RazonSocial, value: item.RazonSocial };
                         }));
                     }
                 });
@@ -73,7 +73,7 @@
     <form class="container-fluid " action="LoadOrder">
         <div class="form-group">
             <label class="control-label col-md-3" for="proveedor">Proveedor:</label>
-            @Html.EditorFor(model => model.ProveedorModel.First().NombreCompleto, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.ProveedorModel.First().RazonSocial, new { htmlAttributes = new { @class = "form-control" } })
             <label class="label label-primary col-md-5" id="idTelefono"></label><div class="col-md-1"></div><label class="label label-primary col-md-5" id="idDireccion"></label>
         </div>
         <div class="form-group">
