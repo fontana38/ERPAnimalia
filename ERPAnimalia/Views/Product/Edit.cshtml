@@ -10,37 +10,63 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            $('#Rentabilidad').addClass('form-control');
+            $('#RentabilidadPesos').addClass('form-control');
+            $('#PrecioVenta').addClass('form-control');
+            $('#PrecioCosto').addClass('form-control');
+            $('#Cantidad').addClass('form-control');
             $('#CodigoBarra').focus();
 
             $('#PrecioVenta').blur(function () {
-               
-                idSubcategory = $('#IdSubCategory').val();
+                debugger;
+                CalculationRentabilidad();
+            });
+        })
+
+
+        function CalculationRentabilidad() {
+            debugger;
+
+           
+            var precioVenta = $('#PrecioVenta').val();
+            var precioCosto = $('#PrecioCosto').val();
+
+            precioVenta = precioVenta.toString().replace(",", ".");
+            precioCosto = precioCosto.toString().replace(",", ".");
+
+            precioVenta = parseFloat(precioVenta);
+            precioCosto = parseFloat(precioCosto);
+
+            idSubcategory = $('#IdSubCategory').val();
+            if (precioVenta != '0' && precioCosto != '0') {
+
 
                 if (idSubcategory == 1) {
-                    var precioVenta = $('#PrecioVenta').val();
-                    var precioCosto = $('#PrecioCosto').val();
+
                     var kg = $('#kg').val();
+                    kg = kg.toString().replace(",", ".");
                     var kgXP = (precioCosto / kg);
                     var rentPesos = (precioVenta - kgXP);
                     var rentPorc = (1 - (kgXP / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2));
-                    $('#Rentabilidad').val(rentPorc.toFixed(2));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+
                 }
                 else {
-                    var precioVenta = $('#PrecioVenta').val();
-                    var precioCosto = $('#PrecioCosto').val();
+
                     var rentPesos = (precioVenta - precioCosto);
                     var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2));
-                    $('#Rentabilidad').val(rentPorc.toFixed(2));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+
                 }
-
-
-            });
-        })
+                $('#PrecioVenta').val(precioVenta.toString().replace(".", ","));
+                $('#PrecioCosto').val(precioCosto.toString().replace(".", ","));
+            }
+        }
             function HideSubcategory()
             {
                 var idCategory = $('#IdCategory').val();
@@ -68,6 +94,7 @@
 
     @using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
     {
+        @Html.ValidationSummary(true)
 
         @Html.HiddenFor(m => m.IdProducto)
         <div class="form-group">
@@ -81,13 +108,13 @@
         <div class="form-group">
             <label class="col-md-4" for="desc">Categoria:</label>
             @Html.DropDownListFor(model => Model.CategoryItem.IdCategory,
-                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()"  })
+                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()", @id= "IdCategory" })
 
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Subcategoria:</label>
             @Html.DropDownListFor(model => model.SubCategoryItem.IdSubCategory,
-                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"),  new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"),  new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", @onchange = "CalculationRentabilidad()" })
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Marca:</label>
@@ -111,33 +138,33 @@
                    
 
                     <div class="form-group">
-                        <label class="col-md-4" for="cant">Kg:</label>
+                        <label class="col-md-4">Kg:</label>
                         @Html.TextBoxFor(m => m.kg, new { @class = "form-control", type = "text", placeholder = "Ingrese Kg" })
 
 
                     </div>
 
                         <div class="form-group">
-                            <label class="col-md-4" for="cant">Cantidad:</label>
-                            @Html.EditorFor(m => m.Cantidad, new { @class = "form-control", type = "number", min = "0", step = "0.01", placeholder = "Ingrese Cantidad"  })
+                            <label class="col-md-4">Cantidad:</label>
+                            @Html.EditorFor(m => m.Cantidad, new { @class = "form-control", type = "number", @min = "0", @max = "90", placeholder = "Ingrese Cantidad"  })
 
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-4" >Precio Costo</label>
-                            @Html.EditorFor(m => m.PrecioCosto,   new { @class = "form-control", type = "number", min = "0", step = "999999", placeholder = "Precio Costo"  })
+                            @Html.EditorFor(m => m.PrecioCosto,   new { @class = "form-control", type = "text",placeholder = "Precio Costo"  })
                         </div>
                         <div class="form-group">
                             <label class="col-md-4" >Precio Venta</label>
-                            @Html.EditorFor(m => m.PrecioVenta,   new { @class = "form-control", type = "number", min = "0", step = "999999", placeholder = "Precio Venta" })
+                            @Html.EditorFor(m => m.PrecioVenta,   new { @class = "form-control", type = "text", placeholder = "Precio Venta" })
                         </div>
                         <div class="form-group">
-                            <label class="col-md-4" for="rentabilidad$">Rentabilidad $</label>
-                            @Html.EditorFor(m => m.RentabilidadPesos, new { type = "number", min = "0", step = "0,01", @class = "form-control"  })
+                            <label class="col-md-4">Rentabilidad $</label>
+                            @Html.EditorFor(m => m.RentabilidadPesos, new {  @class = "form-control", type = "text" })
                         </div>
                             <div class="form-group">
-                                <label class="col-md-4" for="rentabilidad%">Rentabilidad %</label>
-                                @Html.EditorFor(m => m.Rentabilidad,  new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                                <label class="col-md-4">Rentabilidad %</label>
+                                @Html.EditorFor(m => m.Rentabilidad,  new { @class = "form-control", type = "text" })
                             </div>
 
 

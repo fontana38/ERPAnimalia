@@ -15,6 +15,8 @@ namespace ERPAnimalia.Models
         public double Codigo { get; set; }
 
         [MaxLength(50)]
+
+        [Required(ErrorMessage = "Por favor Ingrese la Marca")]
         [Display(Name = "Marca")]
         public string Marca { get; set; }
 
@@ -24,6 +26,7 @@ namespace ERPAnimalia.Models
 
         [Required(ErrorMessage = "Por favor Ingrese la Descripción1")]
         [MaxLength(50)]
+
         [Display(Name = "Descripción1")]
         public string Descripcion1 { get; set; }
 
@@ -40,17 +43,19 @@ namespace ERPAnimalia.Models
         [Required(ErrorMessage = "Por favor Ingrese la Cantidad")]
         public decimal? Cantidad { get; set; }
 
-        [Display(Name = "Rentabilidad Pesos")]
+        [Range(0, double.MaxValue, ErrorMessage = "Ingrese Valor válido")]
         public decimal? RentabilidadPesos { get; set; }
 
-        [Display(Name = "Rentabilidad %")]
+        [Range(0, double.MaxValue, ErrorMessage = "Ingrese Valor válido")]
         public decimal? Rentabilidad { get; set; }
 
+        [Range(1, double.MaxValue, ErrorMessage = "Ingrese Valor válido")]
         [Display(Name = "Precio Costo")]
-        public decimal? PrecioCosto { get; set; }
+        public decimal PrecioCosto { get; set; }
 
+        [Range(1, double.MaxValue, ErrorMessage = "Ingrese Valor válido")]
         [Display(Name = "Precio Venta")]
-        public decimal? PrecioVenta { get; set; }
+        public decimal PrecioVenta { get; set; }
 
         public decimal? TotalKg { get; set; }
 

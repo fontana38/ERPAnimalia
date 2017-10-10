@@ -20,33 +20,8 @@ namespace ERPAnimalia.Controllers
             ProductManagers = Factory.Factory.CreateProducManager();          
         }
 
-        //// GET: Product
-        //[Route("Product")]
-        //public ActionResult Index(string sortOrder, string CurrentSort, int? page, int pageSize = 25)
-        //{
-        //    ViewData["Category"] = ProductManagers.GetCategory();
 
-        //    ViewData["SubCategory"] = ProductManagers.GetSubCategory();
-
-        //    page = page > 0 ? page : 1;
-        //    pageSize = pageSize > 0 ? pageSize : 25;
-
-        //    sortOrder = String.IsNullOrEmpty(sortOrder) ? "date" : sortOrder;
-
-
-        //    ViewBag.CurrentSort = sortOrder;
-
-        //    //var model = ProductManagers.SortGrid(sortOrder, CurrentSort);
-
-            
-        //    int pageNumber = (page ?? 1);
-          
-        //    IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(model, pageSize + 1, 5, 25);
-            
-        //    return View(productModel);
-            
-        //}
-
+      
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {
@@ -61,13 +36,17 @@ namespace ERPAnimalia.Controllers
             {
                 product.Category = ProductManagers.GetCategory();
                 product.SubCategory = ProductManagers.GetSubCategory();
-               
+
+                ModelState.Remove("RentabilidadPesos");
+                ModelState.Remove("Rentabilidad");
                 ModelState.Remove("Codigo");
                 ModelState.Remove("Descripcion1");
                 ModelState.Remove("Cantidad");
                 ModelState.Remove("IdCategory");
                 ModelState.Remove("Descripcion2");
                 ModelState.Remove("marca");
+                ModelState.Remove("precioCosto");
+                ModelState.Remove("precioVenta");
 
                 return View("Add", product);
             }
@@ -82,10 +61,13 @@ namespace ERPAnimalia.Controllers
         
         public ActionResult SaveProduct(ProductModels product)
         {
+            ModelState.Remove("RentabilidadPesos");
+            ModelState.Remove("IdSubCategory");
             if (ModelState.IsValid)
-            {
-                ProductManagers.SaveProduct(product);
-                return RedirectToAction("Index", "ListProduct");
+            {               
+                    ProductManagers.SaveProduct(product);
+                    return RedirectToAction("Index", "ListProduct");
+
             }
             product.Category = ProductManagers.GetCategory();
             product.SubCategory = ProductManagers.GetSubCategory();
@@ -126,9 +108,22 @@ namespace ERPAnimalia.Controllers
         {
             try
             {
-                ProductManagers.EditProduct(product);
+                ModelState.Remove("IdCategory");
+                ModelState.Remove("Rentabilidad");
+                if (ModelState.IsValid)
+                {
+                    ProductManagers.EditProduct(product);
+                    product.Category = ProductManagers.GetCategory();
+                    product.SubCategory = ProductManagers.GetSubCategory();
+                    
 
-                return RedirectToAction("Index", "ListProduct");
+                    return RedirectToAction("Index", "ListProduct");
+                }
+                product.Category = ProductManagers.GetCategory();
+                product.SubCategory = ProductManagers.GetSubCategory();
+
+                return View();
+
             }
             catch
             {
@@ -136,12 +131,6 @@ namespace ERPAnimalia.Controllers
             }
         }
 
-        [HttpPost]
-        private ActionResult ReadBarcodeFromFile(string _Filepath)
-        {
-            String[] barcodes = BarcodeScanner.Scan(_Filepath, BarcodeType.Code39);
-            return View();
-        }
 
 
         // GET: Product/Delete/5
@@ -151,27 +140,7 @@ namespace ERPAnimalia.Controllers
             return RedirectToAction("Index", "ListProduct");
         }
 
-        //public ActionResult SearchProduct(ProductModels product)
-        //{
-        //    ViewData["Category"] = ProductManagers.GetCategory();
-        //    ViewData["SubCategory"] = ProductManagers.GetSubCategory();
-        //    product.Category= ViewData["Category"] as List<CategoryModel>;
-        //    product.SubCategory= ViewData["SubCategory"] as List<SubCategoryModel>;
-        //    var productList = ProductManagers.SearchProduct(product);
-
-        //    int pageSize = 25;
-
-            
-        //    IPagedList<ProductModels> productModel = new StaticPagedList<ProductModels>(productList, pageSize + 1, 5, 25);
-        //    if(productModel.Count == 0)
-        //    {
-        //        RedirectToAction("Index");
-        //    }
-           
-        //        return View("Index", productModel);
-            
-            
-        //}
+      
         // POST: Product/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)

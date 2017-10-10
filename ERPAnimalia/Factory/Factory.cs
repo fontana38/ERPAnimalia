@@ -16,6 +16,11 @@ namespace ERPAnimalia.Factory
             return new ProviderManager();
         }
 
+        public static HomeManager NewHomeManager()
+        {
+            return new HomeManager();
+        }
+
         public static PersonModels NewClienteModels()
         {
             return new PersonModels();

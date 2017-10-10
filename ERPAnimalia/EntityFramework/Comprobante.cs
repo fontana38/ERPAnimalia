@@ -30,7 +30,6 @@ namespace ERPAnimalia.EntityFramework
         public Nullable<System.Guid> IdCliente { get; set; }
         public Nullable<System.Guid> IdProveedor { get; set; }
         public Nullable<System.DateTime> FechaPago { get; set; }
-        public string Comentarios { get; set; }
         public string Comentario { get; set; }
     
         public virtual Cliente Cliente { get; set; }

@@ -1,9 +1,50 @@
-﻿@{
+﻿
+<!DOCTYPE html>
+<html>
+@{
     ViewBag.Title = "Home Page";
 }
-<link href="~/Content/css/Voucher.css" rel="stylesheet" />
-<table id="wrapper">
-    <tr>
-        <td><img src="~/Content/images/animaliaHome.gif" alt="" /></td>
-    </tr>
-</table>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/gijgo.js"></script>
+    <link href="~/Content/css/Voucher.css" rel="stylesheet" />
+
+</head>
+<body>
+    <script type="text/javascript">
+
+
+ $(document).ready(function () {
+
+            var gridVenta = $("#gridVenta").grid({
+                
+                uiLibrary: "bootstrap",
+                width: 400,
+                columns: [
+                { field: "Dia", title: "Venta Diaria",type:'decimal', sortable: true, width: 30},
+                { field: "Mes", title: "Venta del Mes", type:'decimal',sortable: true, width: 30 },
+               
+                 ],
+                  
+             });
+ });
+
+
+ </script>
+
+    <div id="homeVenta" class="row">
+        <div class="col-md-6 ">
+            <span class="pull-right"></span>
+            <table id="gridVenta" data-source="@Url.Action("GetSell")"></table>
+        </div>
+    </div>
+        <div class="row">
+        <div class="col-md-6 ">
+            <img class="center-block" src="~/Content/images/animaliaHome.gif" alt="" />
+        </div>
+        </div>
+
+</body>
+</html>
+

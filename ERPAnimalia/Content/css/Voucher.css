@@ -31,10 +31,10 @@ input{
 }
 
 img {
-   position: absolute;
+  
   
    margin-top: 50px; /* Half the height */
-   margin-left:-400px; /* Half the width */
+    /* Half the width */
 }
 
 html, body, #wrapper {

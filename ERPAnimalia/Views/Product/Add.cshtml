@@ -17,33 +17,94 @@
             $('#CodigoBarra').focus();
 
             $('#PrecioVenta').blur(function () {
-             
-                idSubcategory = $('#IdSubCategory').val();
+                CalculateRentabilidadDropDown();
+            });
+        })
+
+
+        function CalculateRentabilidadDropDown()
+        {
+            debugger;
+            
+            var precioVenta = $('#PrecioVenta').val();
+            var precioCosto = $('#PrecioCosto').val();
+            precioVenta = precioVenta.toString().replace(",", ".");
+            precioCosto = precioCosto.toString().replace(",", ".");
+            precioVenta = parseFloat(precioVenta);
+            precioCosto = parseFloat(precioCosto);
+
+            idSubcategory = $('#IdSubCategory').val();
+            if (precioVenta != '0' && precioCosto != '0') {
+
 
                 if (idSubcategory == 1) {
-                    var precioVenta = $('#PrecioVenta').val();
-                    var precioCosto = $('#PrecioCosto').val();
+
                     var kg = $('#kg').val();
+                    kg = kg.toString().replace(",", ".");
                     var kgXP = (precioCosto / kg);
                     var rentPesos = (precioVenta - kgXP);
                     var rentPorc = (1 - (kgXP / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2));
-                    $('#Rentabilidad').val(rentPorc.toFixed(2));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+
                 }
                 else {
-                    var precioVenta = $('#PrecioVenta').val();
-                    var precioCosto = $('#PrecioCosto').val();
+
                     var rentPesos = (precioVenta - precioCosto);
                     var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2));
-                    $('#Rentabilidad').val(rentPorc.toFixed(2));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+
                 }
+                $('#PrecioVenta').val(precioVenta.toString().replace(".", ","));
+                $('#PrecioCosto').val(precioCosto.toString().replace(".", ","));
+            }
+        }
 
 
-            });
-        })
+        //function CalculationRentabilidad()
+        //{
+        //    debugger;
+        //    var precioVenta = $('#PrecioVenta').val();
+        //    var precioCosto = $('#PrecioCosto').val();
+        //    //precioVenta = precioVenta.toString().replace(".", ".");
+        //    //precioCosto = precioCosto.toString().replace(",", ".");
+        //    precioVenta = parseFloat(precioVenta);
+        //    precioCosto = parseFloat(precioCosto);
+
+        //    idSubcategory = $('#IdSubCategory').val();
+        //    if (precioVenta != '0' && precioCosto != '0')
+        //    {
+
+           
+        //    if (idSubcategory == 1 ) {
+                
+        //        var kg = $('#kg').val();
+        //        var kgXP = (precioCosto / kg);
+        //        var rentPesos = (precioVenta - kgXP);
+        //        var rentPorc = (1 - (kgXP / precioVenta)) * 100;
+
+        //        $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+        //        $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+                
+        //    }
+        //    else {
+                
+        //        var rentPesos = (precioVenta - precioCosto);
+        //        var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
+
+        //        $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+
+        //        $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+
+        //    }
+        //    $('#PrecioVenta').val(precioVenta.toString().replace(".", ","));
+        //    $('#PrecioCosto').val(precioCosto.toString().replace(".", ","));
+        //  }
+        //}
 
         function MyFunction() {
           
@@ -88,13 +149,16 @@
     </br>
     <div class="container-fluid">
 
-        <form action="SaveProduct" class="form-horizontal">
+       
+@using (Html.BeginForm("SaveProduct", "Product", FormMethod.Post, new { @class = "form-horizontal" }))
+{
 
             <div class="form-group">
-                @Html.ValidationSummary();
+                @Html.ValidationSummary(true);
             </div>
 
             <div class="col-md-6">
+               
                 <div class="form-group">
                     <label class="col-md-4" for="pwd">Código de barra:</label>
                     @Html.TextBoxFor(m => m.CodigoBarra, new { @class = "form-control", type = "text", placeholder = "Ingrese Codigo Barra", onkeyPress = "MyFunction();" })
@@ -107,12 +171,12 @@
                 <div class="form-group">
                     <label class="col-md-4" for="desc">Categoria:</label>
                     @Html.DropDownListFor(model => Model.IdCategory,
-                        new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()" })
+             new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()" })
 
                 </div><div class="form-group">
                     <label class="col-md-4" for="desc">Subcategoria:</label>
                     @Html.DropDownListFor(model => model.IdSubCategory,
-                        new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" })
+             new SelectList(Model.SubCategory, "IdSubCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria" , @onchange = "CalculateRentabilidadDropDown()" })
                 </div>
                 <div class="form-group">
                     <label class="col-md-4" for="desc">Marca:</label>
@@ -144,36 +208,32 @@
 
                 <div class="form-group">
                     <label class="col-md-4" for="cant">Cantidad:</label>
-                    @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "text", placeholder = "Ingrese Cantidad" })
+                    @Html.TextBoxFor(m => m.Cantidad, new { @class = "form-control", type = "number", @min = "0", @max = "90", placeholder = "Ingrese Cantidad" })
 
                 </div>
 
                 <div class="form-group">
                     <label class="col-md-4" for="pwd">Precio Costo</label>
-                    @Html.TextBoxFor(m => m.PrecioCosto, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                    @Html.TextBoxFor(m => m.PrecioCosto, "{0:F2}", new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label class="col-md-4" for="pwd">Precio Venta</label>
-                    @Html.TextBoxFor(m => m.PrecioVenta, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                    @Html.TextBoxFor(m => m.PrecioVenta, "{0:F2}", new {  @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label class="col-md-4" for="rentabilidad$">Rentabilidad $</label>
-                    @Html.TextBoxFor(m => m.RentabilidadPesos, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                    @Html.TextBoxFor(m => m.RentabilidadPesos,  new { @class = "form-control" })
                 </div>
                 <div class="form-group">
                     <label class="col-md-4" for="rentabilidad%">Rentabilidad %</label>
-                    @Html.TextBoxFor(m => m.Rentabilidad, new { type = "number", min = "0", step = "0.01", @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Rentabilidad, "{0:c}" ,new { @class = "form-control" })
                 </div>
 
 
             </div>
-
-        </form>
-
-        </br>
-        <button type="submit" name="SaveProduct" value="save" class="btn btn-primary">Agregar Producto</button>
-        </br>
-
+        <button type="submit" class="btn btn-primary">Agregar Producto</button>
+        
+}
     </div>
 </body>
 </html>

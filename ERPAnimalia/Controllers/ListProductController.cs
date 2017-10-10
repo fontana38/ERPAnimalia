@@ -47,7 +47,11 @@ namespace ERPAnimalia.Controllers
             sortBy =(sortBy==null) ? "Codigo" : sortBy;
             direction = (direction == null) ? "asc" : direction;
             var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
-
+            foreach (var item in records)
+            {
+                item.PrecioCosto = Math.Round(item.PrecioCosto, 2);
+                item.PrecioVenta = Math.Round(item.PrecioVenta, 2);
+            }
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
 
@@ -64,8 +68,8 @@ namespace ERPAnimalia.Controllers
             records = ProductManagers.GetProducBug(records);
             foreach (var item in records)
             {
-                item.PrecioCosto = Math.Round(item.PrecioCosto.Value, 2);
-                item.PrecioVenta = Math.Round(item.PrecioVenta.Value, 2);
+                item.PrecioCosto = Math.Round(item.PrecioCosto, 2);
+                item.PrecioVenta = Math.Round(item.PrecioVenta, 2);
             }
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }
@@ -80,8 +84,8 @@ namespace ERPAnimalia.Controllers
             records = ProductManagers.GetProducLooseList(records);
             foreach (var item in records)
             {
-                item.PrecioCosto = Math.Round(item.PrecioCosto.Value, 2);
-                item.PrecioVenta = Math.Round(item.PrecioVenta.Value, 2);
+                item.PrecioCosto = Math.Round(item.PrecioCosto, 2);
+                item.PrecioVenta = Math.Round(item.PrecioVenta, 2);
             }
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);

@@ -59,18 +59,18 @@
                 uiLibrary: "bootstrap",
                 columns: [
                      { field: "IdProduct", hidden: true },
-                    { field: "Codigo", title: "Código", sortable: true,align: 'center', width:100 },
-                    { field: "Descripcion1", title: "Descripcion1", sortable: true, width: 150 },
-                    { field: "Marca", title: "Marca", sortable: true,align: 'center', width: 150 },
-                    { field: "Category", title: "Categoria", sortable: true,align: 'center', width: 100 },
-                     { field:"SubCategory", title: "SubCategoría", sortable: true,align: 'center', width: 100 },
-                    { field: "kg", title: "Kg", sortable: true,align: 'center', width: 100 },
-                    { field: "PrecioVenta", title: "Precio Venta", sortable: true,align: 'center', width: 100 },
-                    { field: "Cantidad", title: "Cantidad", editor: true, align: 'center',width: 100 },
-                    { field: "Descuento", title: "Descuento", editor: true, align: 'center', width: 100 },
-                    { field: "Porcentage", title: "%", sortable: true, align: 'center',width: 100},
-                    { field: "Subtotal", title: "Subtotal", sortable: true,align: 'center', width: 100},
-                    { width: 80, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
+                    { field: "Codigo", title: "Código", sortable: true,align: 'center', width:50 },
+                    { field: "Descripcion1", title: "Descripcion1", sortable: true, width: 50 },
+                    { field: "Marca", title: "Marca", sortable: true,align: 'center', width: 50 },
+                    { field: "Category", title: "Categoria", sortable: true,align: 'center', width: 50 },
+                     { field:"SubCategory", title: "SubCategoría", sortable: true,align: 'center', width: 50 },
+                    { field: "kg", title: "Kg", sortable: true,align: 'center', width: 20 },
+                    { field: "PrecioVenta", title: "Precio Venta", sortable: true,align: 'center', width: 50 },
+                    { field: "Cantidad", title: "Cantidad", editor: true, align: 'center',width: 20 },
+                    { field: "Descuento", title: "Descuento", editor: true, align: 'center', width: 20 },
+                    { field: "Porcentage", title: "%", sortable: true, align: 'center',width: 20},
+                    { field: "Subtotal", title: "Subtotal", sortable: true,align: 'center', width: 50},
+                    { width: 50, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
                 ],
                 optimisticPersistence: { sessionStorage: ["page", "limit"] },
                 pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
@@ -147,10 +147,10 @@
                         }
                         else
                         { 
-                            gridDetail.clear();                          
-                            $("#DateVoucher").val("");
+                            gridDetail.clear();                                                
                             $('#Descripcion1').val("");
                             $('#totalVoucher').val("");
+
                             
                             alert(data);
                         }
@@ -227,16 +227,18 @@
                         </div>
                         </br>
                         </br>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table id="gridDetail"></table>
-                                </br>
-                                <div id="total">
-                                    <input type="text" id="totalVoucher" readonly>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table id="gridDetail"></table>
+                                    </br>
+                                    <div id="total">
+                                        <input type="text" id="totalVoucher" readonly>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
+</form>
                 </div>
                     <div role="tabpanel" class="tab-pane" id="informationTab">
                         </br>

@@ -316,14 +316,36 @@
     <Compile Include="EntityFramework\Proveedor.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\Rol.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
     <Compile Include="EntityFramework\SubCategory.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
     <Compile Include="EntityFramework\TipoComprobante.cs">
       <DependentUpon>Animalias.tt</DependentUpon>
     </Compile>
+    <Compile Include="EntityFramework\Usuario.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\UsuarioRoles.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VentaDiariaMes_Result.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VentaDiaria_Result.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VentaMes_Result.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFramework\VentaMes_Result1.cs">
+      <DependentUpon>Animalias.tt</DependentUpon>
+    </Compile>
     <Compile Include="Enumeration.cs" />
     <Compile Include="Factory\LoadOrderFacory.cs" />
+    <Compile Include="Factory\ReportFactory.cs" />
     <Compile Include="Factory\VoucherFactory.cs" />
     <Compile Include="Factory\Factory.cs" />
     <Compile Include="Global.asax.cs">
@@ -341,11 +363,14 @@
     <Compile Include="Mapper\AutoMapperConfig.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DetailGrid.cs" />
+    <Compile Include="Models\Manager\HomeManager.cs" />
     <Compile Include="Models\Manager\LoadOrderManager.cs" />
     <Compile Include="Models\Manager\ProviderManager.cs" />
+    <Compile Include="Models\Manager\ReportVentas.cs" />
     <Compile Include="Models\Manager\VoucherDetailManager.cs" />
     <Compile Include="Models\NotaPedidoModel.cs" />
     <Compile Include="Models\ProviderModel.cs" />
+    <Compile Include="Models\VentaDiariaMesModel.cs" />
     <Compile Include="Models\VoucherHeadGeneral.cs" />
     <Compile Include="Models\VoucherHeadLoadOrder.cs" />
     <Compile Include="Models\VoucherHeadModel.cs" />

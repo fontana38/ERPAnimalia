@@ -8,21 +8,25 @@
 {
     background-color: #ffffff !important;
     padding: 0 15px;
-    width: 100%;
+   
+}
+#homeVenta
+{
+    margin-left:729px;
 }
 
-.container {
+/*.container {
     width: 100% !important;
-}
+}*/
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-.panel {
-    width:130% !important;
-}
+/*.panel {
+    width:80% !important;
+}*/
 .error{
 	display: none;
 	margin-left: 10px;
@@ -52,7 +56,7 @@ input.valid{
 }
 
 .panel-primary {
-    width: 2000px;
+    width:108%;
 }
 
 .panel-primary-factura {

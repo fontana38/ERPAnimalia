@@ -296,15 +296,15 @@ namespace ERPAnimalia
                 NewProduct.Codigo = product.Codigo;
                 NewProduct.IdCategory = product.IdCategory;
                 NewProduct.IdSubCategory = product.IdSubCategory;
-                NewProduct.PrecioVenta = Math.Round(product.PrecioVenta.Value,2);
+                NewProduct.PrecioVenta = Math.Round(product.PrecioVenta,2);
                 if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
                 {
-                    product.PrecioCosto = Math.Round(product.PrecioCosto.Value, 2);
+                    product.PrecioCosto = Math.Round(product.PrecioCosto, 2);
                     NewProduct.PrecioCosto = product.PrecioCosto;
                 }
                 else if(product.IdSubCategory == (int)Enumeration.Subcategory.Suelto)
                 {
-                    product.PrecioCosto = Math.Round(product.PrecioCosto.Value, 2);
+                    product.PrecioCosto = Math.Round(product.PrecioCosto, 2);
                     NewProduct.PrecioCosto = product.PrecioCosto / product.kg;
                 }
 

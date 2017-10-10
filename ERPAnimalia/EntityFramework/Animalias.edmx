@@ -107,7 +107,6 @@
           <Property Name="IdCliente" Type="uniqueidentifier" />
           <Property Name="IdProveedor" Type="uniqueidentifier" />
           <Property Name="FechaPago" Type="datetime" />
-          <Property Name="Comentarios" Type="nvarchar(max)" />
           <Property Name="Comentario" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="DetalleComprobante">
@@ -145,176 +144,6 @@
           <Property Name="IdProveedor" Type="uniqueidentifier" />
           <Property Name="IdProducto" Type="uniqueidentifier" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="planilla">
-          <Property Name="F1" Type="float" />
-          <Property Name="F2" Type="nvarchar" MaxLength="255" />
-          <Property Name="F3" Type="nvarchar" MaxLength="255" />
-          <Property Name="F4" Type="float" />
-          <Property Name="F5" Type="float" />
-          <Property Name="F6" Type="nvarchar" MaxLength="255" />
-          <Property Name="F7" Type="nvarchar" MaxLength="255" />
-          <Property Name="F8" Type="float" />
-          <Property Name="F9" Type="float" />
-          <Property Name="F10" Type="nvarchar" MaxLength="255" />
-          <Property Name="F11" Type="nvarchar" MaxLength="255" />
-          <Property Name="F12" Type="money" />
-          <Property Name="F13" Type="float" />
-          <Property Name="F14" Type="money" />
-          <Property Name="F15" Type="money" />
-          <Property Name="F16" Type="nvarchar" MaxLength="255" />
-          <Property Name="F17" Type="nvarchar" MaxLength="255" />
-          <Property Name="F18" Type="nvarchar" MaxLength="255" />
-          <Property Name="F19" Type="nvarchar" MaxLength="255" />
-          <Property Name="F20" Type="nvarchar" MaxLength="255" />
-          <Property Name="F21" Type="nvarchar" MaxLength="255" />
-          <Property Name="F22" Type="nvarchar" MaxLength="255" />
-          <Property Name="F23" Type="nvarchar" MaxLength="255" />
-          <Property Name="F24" Type="nvarchar" MaxLength="255" />
-          <Property Name="F25" Type="nvarchar" MaxLength="255" />
-          <Property Name="F26" Type="nvarchar" MaxLength="255" />
-          <Property Name="F27" Type="nvarchar" MaxLength="255" />
-          <Property Name="F28" Type="nvarchar" MaxLength="255" />
-          <Property Name="F29" Type="nvarchar" MaxLength="255" />
-          <Property Name="F30" Type="nvarchar" MaxLength="255" />
-          <Property Name="F31" Type="nvarchar" MaxLength="255" />
-          <Property Name="F32" Type="nvarchar" MaxLength="255" />
-          <Property Name="F33" Type="nvarchar" MaxLength="255" />
-          <Property Name="F34" Type="nvarchar" MaxLength="255" />
-          <Property Name="F35" Type="nvarchar" MaxLength="255" />
-          <Property Name="F36" Type="nvarchar" MaxLength="255" />
-          <Property Name="F37" Type="nvarchar" MaxLength="255" />
-          <Property Name="F38" Type="nvarchar" MaxLength="255" />
-          <Property Name="F39" Type="nvarchar" MaxLength="255" />
-          <Property Name="F40" Type="nvarchar" MaxLength="255" />
-          <Property Name="F41" Type="nvarchar" MaxLength="255" />
-          <Property Name="F42" Type="nvarchar" MaxLength="255" />
-          <Property Name="F43" Type="nvarchar" MaxLength="255" />
-          <Property Name="F44" Type="nvarchar" MaxLength="255" />
-          <Property Name="F45" Type="nvarchar" MaxLength="255" />
-          <Property Name="F46" Type="nvarchar" MaxLength="255" />
-          <Property Name="F47" Type="nvarchar" MaxLength="255" />
-          <Property Name="F48" Type="nvarchar" MaxLength="255" />
-          <Property Name="F49" Type="nvarchar" MaxLength="255" />
-          <Property Name="F50" Type="nvarchar" MaxLength="255" />
-          <Property Name="F51" Type="nvarchar" MaxLength="255" />
-          <Property Name="F52" Type="nvarchar" MaxLength="255" />
-          <Property Name="F53" Type="nvarchar" MaxLength="255" />
-          <Property Name="F54" Type="nvarchar" MaxLength="255" />
-          <Property Name="F55" Type="nvarchar" MaxLength="255" />
-          <Property Name="F56" Type="nvarchar" MaxLength="255" />
-          <Property Name="F57" Type="nvarchar" MaxLength="255" />
-          <Property Name="F58" Type="nvarchar" MaxLength="255" />
-          <Property Name="F59" Type="nvarchar" MaxLength="255" />
-          <Property Name="F60" Type="nvarchar" MaxLength="255" />
-          <Property Name="F61" Type="nvarchar" MaxLength="255" />
-          <Property Name="F62" Type="nvarchar" MaxLength="255" />
-          <Property Name="F63" Type="nvarchar" MaxLength="255" />
-          <Property Name="F64" Type="nvarchar" MaxLength="255" />
-          <Property Name="F65" Type="nvarchar" MaxLength="255" />
-          <Property Name="F66" Type="nvarchar" MaxLength="255" />
-          <Property Name="F67" Type="nvarchar" MaxLength="255" />
-          <Property Name="F68" Type="nvarchar" MaxLength="255" />
-          <Property Name="F69" Type="nvarchar" MaxLength="255" />
-          <Property Name="F70" Type="nvarchar" MaxLength="255" />
-          <Property Name="F71" Type="nvarchar" MaxLength="255" />
-          <Property Name="F72" Type="nvarchar" MaxLength="255" />
-          <Property Name="F73" Type="nvarchar" MaxLength="255" />
-          <Property Name="F74" Type="nvarchar" MaxLength="255" />
-          <Property Name="F75" Type="nvarchar" MaxLength="255" />
-          <Property Name="F76" Type="nvarchar" MaxLength="255" />
-          <Property Name="F77" Type="nvarchar" MaxLength="255" />
-          <Property Name="F78" Type="nvarchar" MaxLength="255" />
-          <Property Name="F79" Type="nvarchar" MaxLength="255" />
-          <Property Name="F80" Type="nvarchar" MaxLength="255" />
-          <Property Name="F81" Type="nvarchar" MaxLength="255" />
-          <Property Name="F82" Type="nvarchar" MaxLength="255" />
-          <Property Name="F83" Type="nvarchar" MaxLength="255" />
-          <Property Name="F84" Type="nvarchar" MaxLength="255" />
-          <Property Name="F85" Type="nvarchar" MaxLength="255" />
-          <Property Name="F86" Type="nvarchar" MaxLength="255" />
-          <Property Name="F87" Type="nvarchar" MaxLength="255" />
-          <Property Name="F88" Type="nvarchar" MaxLength="255" />
-          <Property Name="F89" Type="nvarchar" MaxLength="255" />
-          <Property Name="F90" Type="nvarchar" MaxLength="255" />
-          <Property Name="F91" Type="nvarchar" MaxLength="255" />
-          <Property Name="F92" Type="nvarchar" MaxLength="255" />
-          <Property Name="F93" Type="nvarchar" MaxLength="255" />
-          <Property Name="F94" Type="nvarchar" MaxLength="255" />
-          <Property Name="F95" Type="nvarchar" MaxLength="255" />
-          <Property Name="F96" Type="nvarchar" MaxLength="255" />
-          <Property Name="F97" Type="nvarchar" MaxLength="255" />
-          <Property Name="F98" Type="nvarchar" MaxLength="255" />
-          <Property Name="F99" Type="nvarchar" MaxLength="255" />
-          <Property Name="F100" Type="nvarchar" MaxLength="255" />
-          <Property Name="F101" Type="nvarchar" MaxLength="255" />
-          <Property Name="F102" Type="nvarchar" MaxLength="255" />
-          <Property Name="F103" Type="nvarchar" MaxLength="255" />
-          <Property Name="F104" Type="nvarchar" MaxLength="255" />
-          <Property Name="F105" Type="nvarchar" MaxLength="255" />
-          <Property Name="F106" Type="nvarchar" MaxLength="255" />
-          <Property Name="F107" Type="nvarchar" MaxLength="255" />
-          <Property Name="F108" Type="nvarchar" MaxLength="255" />
-          <Property Name="F109" Type="nvarchar" MaxLength="255" />
-          <Property Name="F110" Type="nvarchar" MaxLength="255" />
-          <Property Name="F111" Type="nvarchar" MaxLength="255" />
-          <Property Name="F112" Type="nvarchar" MaxLength="255" />
-          <Property Name="F113" Type="nvarchar" MaxLength="255" />
-          <Property Name="F114" Type="nvarchar" MaxLength="255" />
-          <Property Name="F115" Type="nvarchar" MaxLength="255" />
-          <Property Name="F116" Type="nvarchar" MaxLength="255" />
-          <Property Name="F117" Type="nvarchar" MaxLength="255" />
-          <Property Name="F118" Type="nvarchar" MaxLength="255" />
-          <Property Name="F119" Type="nvarchar" MaxLength="255" />
-          <Property Name="F120" Type="nvarchar" MaxLength="255" />
-          <Property Name="F121" Type="nvarchar" MaxLength="255" />
-          <Property Name="F122" Type="nvarchar" MaxLength="255" />
-          <Property Name="F123" Type="nvarchar" MaxLength="255" />
-          <Property Name="F124" Type="nvarchar" MaxLength="255" />
-          <Property Name="F125" Type="nvarchar" MaxLength="255" />
-          <Property Name="F126" Type="nvarchar" MaxLength="255" />
-          <Property Name="F127" Type="nvarchar" MaxLength="255" />
-          <Property Name="F128" Type="nvarchar" MaxLength="255" />
-          <Property Name="F129" Type="nvarchar" MaxLength="255" />
-          <Property Name="F130" Type="nvarchar" MaxLength="255" />
-          <Property Name="F131" Type="nvarchar" MaxLength="255" />
-          <Property Name="F132" Type="nvarchar" MaxLength="255" />
-          <Property Name="F133" Type="nvarchar" MaxLength="255" />
-          <Property Name="F134" Type="nvarchar" MaxLength="255" />
-          <Property Name="F135" Type="nvarchar" MaxLength="255" />
-          <Property Name="F136" Type="nvarchar" MaxLength="255" />
-          <Property Name="F137" Type="nvarchar" MaxLength="255" />
-          <Property Name="F138" Type="nvarchar" MaxLength="255" />
-          <Property Name="F139" Type="nvarchar" MaxLength="255" />
-          <Property Name="F140" Type="nvarchar" MaxLength="255" />
-          <Property Name="F141" Type="nvarchar" MaxLength="255" />
-          <Property Name="F142" Type="nvarchar" MaxLength="255" />
-          <Property Name="F143" Type="nvarchar" MaxLength="255" />
-          <Property Name="F144" Type="nvarchar" MaxLength="255" />
-          <Property Name="F145" Type="nvarchar" MaxLength="255" />
-          <Property Name="F146" Type="nvarchar" MaxLength="255" />
-          <Property Name="F147" Type="nvarchar" MaxLength="255" />
-          <Property Name="F148" Type="nvarchar" MaxLength="255" />
-          <Property Name="F149" Type="nvarchar" MaxLength="255" />
-          <Property Name="F150" Type="nvarchar" MaxLength="255" />
-          <Property Name="F151" Type="nvarchar" MaxLength="255" />
-          <Property Name="F152" Type="nvarchar" MaxLength="255" />
-          <Property Name="F153" Type="nvarchar" MaxLength="255" />
-          <Property Name="F154" Type="nvarchar" MaxLength="255" />
-          <Property Name="F155" Type="nvarchar" MaxLength="255" />
-          <Property Name="F156" Type="nvarchar" MaxLength="255" />
-          <Property Name="F157" Type="nvarchar" MaxLength="255" />
-          <Property Name="F158" Type="nvarchar" MaxLength="255" />
-          <Property Name="F159" Type="nvarchar" MaxLength="255" />
-          <Property Name="F160" Type="nvarchar" MaxLength="255" />
-          <Property Name="F161" Type="nvarchar" MaxLength="255" />
-          <Property Name="F162" Type="nvarchar" MaxLength="255" />
-          <Property Name="F163" Type="nvarchar" MaxLength="255" />
-          <Property Name="F164" Type="nvarchar" MaxLength="255" />
-          <Property Name="F165" Type="nvarchar" MaxLength="255" />
-          <Property Name="F166" Type="nvarchar" MaxLength="255" />
-        </EntityType>-->
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProducto" />
@@ -349,6 +178,14 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
           <Property Name="Apellido" Type="nvarchar" MaxLength="50" />
           <Property Name="Fecha" Type="datetime" />
         </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nombre" Type="nchar" MaxLength="10" />
+          <Property Name="Visibilidad" Type="int" />
+        </EntityType>
         <EntityType Name="SubCategory">
           <Key>
             <PropertyRef Name="IdSubCategory" />
@@ -362,6 +199,25 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
           </Key>
           <Property Name="Descripcion" Type="nvarchar(max)" />
           <Property Name="IdTipoComprobante" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="40" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="40" />
+          <Property Name="Mail" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefono" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="IdRole" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="UsuarioRoles">
+          <Key>
+            <PropertyRef Name="IdUsuarioRoles" />
+          </Key>
+          <Property Name="IdUsuarioRoles" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="IdUsuario" Type="uniqueidentifier" />
+          <Property Name="IdRol" Type="uniqueidentifier" />
         </EntityType>
         <Association Name="FK_AspNetUserRoles_AspNetRoles">
           <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
@@ -559,6 +415,32 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UsuarioRoles_Rol">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="UsuarioRoles" Type="Self.UsuarioRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="UsuarioRoles">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRoles_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="UsuarioRoles" Type="Self.UsuarioRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioRoles">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="VentaDiariaMes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="VentaMes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AnimaliaPetShopModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -575,8 +457,11 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
           <EntitySet Name="IdProveedorProducto" EntityType="Self.IdProveedorProducto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoComprobante" EntityType="Self.TipoComprobante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioRoles" EntityType="Self.UsuarioRoles" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
@@ -641,6 +526,14 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRoles_Rol" Association="Self.FK_UsuarioRoles_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRoles_Usuario" Association="Self.FK_UsuarioRoles_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -699,6 +592,9 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <EntitySet Name="Comprobante" EntityType="AnimaliaPetShopModel.Comprobante" />
+          <EntitySet Name="Rol" EntityType="AnimaliaPetShopModel.Rol" />
+          <EntitySet Name="Usuario" EntityType="AnimaliaPetShopModel.Usuario" />
+          <EntitySet Name="UsuarioRoles" EntityType="AnimaliaPetShopModel.UsuarioRoles" />
           <AssociationSet Name="FK_Comprobante_Cliente" Association="AnimaliaPetShopModel.FK_Comprobante_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Comprobante" EntitySet="Comprobante" />
@@ -723,6 +619,16 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
             <End Role="Comprobante" EntitySet="Comprobante" />
             <End Role="DetalleComprobante" EntitySet="DetalleComprobante" />
           </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRoles_Rol" Association="AnimaliaPetShopModel.FK_UsuarioRoles_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsuarioRoles_Usuario" Association="AnimaliaPetShopModel.FK_UsuarioRoles_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
+          </AssociationSet>
+          <FunctionImport Name="VentaDiariaMes" ReturnType="Collection(AnimaliaPetShopModel.VentaDiariaMes_Result)" />
+          <FunctionImport Name="VentaMes" ReturnType="Collection(AnimaliaPetShopModel.VentaMes_Result1)" />
           </EntityContainer>
         <EntityType Name="FormaDePago">
           <Key>
@@ -1028,7 +934,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
           <Property Name="IdCliente" Type="Guid" />
           <Property Name="IdProveedor" Type="Guid" />
           <Property Name="FechaPago" Type="DateTime" Precision="3" />
-          <Property Name="Comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Cliente" Relationship="AnimaliaPetShopModel.FK_Comprobante_Cliente" FromRole="Comprobante" ToRole="Cliente" />
           <NavigationProperty Name="Comprobante1" Relationship="AnimaliaPetShopModel.FK_Comprobante_Comprobante" FromRole="Comprobante" ToRole="Comprobante1" />
@@ -1037,6 +942,37 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
           <NavigationProperty Name="Proveedor" Relationship="AnimaliaPetShopModel.FK_Comprobante_Proveedor" FromRole="Comprobante" ToRole="Proveedor" />
           <NavigationProperty Name="TipoComprobante" Relationship="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" FromRole="Comprobante" ToRole="TipoComprobante" />
           <NavigationProperty Name="DetalleComprobante" Relationship="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" FromRole="Comprobante" ToRole="DetalleComprobante" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="IdRol" />
+          </Key>
+          <Property Name="IdRol" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Visibilidad" Type="Int32" />
+          <NavigationProperty Name="UsuarioRoles" Relationship="AnimaliaPetShopModel.FK_UsuarioRoles_Rol" FromRole="Rol" ToRole="UsuarioRoles" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Guid" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="IdRole" Type="Guid" />
+          <NavigationProperty Name="UsuarioRoles" Relationship="AnimaliaPetShopModel.FK_UsuarioRoles_Usuario" FromRole="Usuario" ToRole="UsuarioRoles" />
+        </EntityType>
+        <EntityType Name="UsuarioRoles">
+          <Key>
+            <PropertyRef Name="IdUsuarioRoles" />
+          </Key>
+          <Property Name="IdUsuarioRoles" Type="Guid" Nullable="false" />
+          <Property Name="IdUsuario" Type="Guid" />
+          <Property Name="IdRol" Type="Guid" />
+          <NavigationProperty Name="Rol" Relationship="AnimaliaPetShopModel.FK_UsuarioRoles_Rol" FromRole="UsuarioRoles" ToRole="Rol" />
+          <NavigationProperty Name="Usuario" Relationship="AnimaliaPetShopModel.FK_UsuarioRoles_Usuario" FromRole="UsuarioRoles" ToRole="Usuario" />
         </EntityType>
         <Association Name="FK_Comprobante_Cliente">
           <End Type="AnimaliaPetShopModel.Cliente" Role="Cliente" Multiplicity="0..1" />
@@ -1110,6 +1046,42 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UsuarioRoles_Rol">
+          <End Type="AnimaliaPetShopModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.UsuarioRoles" Role="UsuarioRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="IdRol" />
+            </Principal>
+            <Dependent Role="UsuarioRoles">
+              <PropertyRef Name="IdRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsuarioRoles_Usuario">
+          <End Type="AnimaliaPetShopModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="AnimaliaPetShopModel.UsuarioRoles" Role="UsuarioRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioRoles">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="VentaDiaria_Result">
+          <Property Type="Decimal" Name="Dia" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="VentaMes_Result">
+          <Property Type="Decimal" Name="Mes" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="VentaDiariaMes_Result">
+          <Property Type="Decimal" Name="Dia" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="VentaMes_Result1">
+          <Property Type="Decimal" Name="Mes" Nullable="true" Precision="38" Scale="4" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1303,7 +1275,6 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
             <EntityTypeMapping TypeName="AnimaliaPetShopModel.Comprobante">
               <MappingFragment StoreEntitySet="Comprobante">
                 <ScalarProperty Name="Comentario" ColumnName="Comentario" />
-                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
                 <ScalarProperty Name="FechaPago" ColumnName="FechaPago" />
                 <ScalarProperty Name="IdProveedor" ColumnName="IdProveedor" />
                 <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
@@ -1317,6 +1288,50 @@ warning 6013: The table/view 'AnimaliaPetShop.dbo.planilla' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="Visibilidad" ColumnName="Visibilidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdRole" ColumnName="IdRole" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioRoles">
+            <EntityTypeMapping TypeName="AnimaliaPetShopModel.UsuarioRoles">
+              <MappingFragment StoreEntitySet="UsuarioRoles">
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdUsuarioRoles" ColumnName="IdUsuarioRoles" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="VentaDiariaMes" FunctionName="AnimaliaPetShopModel.Store.VentaDiariaMes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AnimaliaPetShopModel.VentaDiariaMes_Result">
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VentaMes" FunctionName="AnimaliaPetShopModel.Store.VentaMes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AnimaliaPetShopModel.VentaMes_Result1">
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

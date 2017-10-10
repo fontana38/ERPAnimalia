@@ -12,6 +12,8 @@ namespace ERPAnimalia.EntityFramework
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AnimaliaPetShopEntities : DbContext
     {
@@ -41,5 +43,18 @@ namespace ERPAnimalia.EntityFramework
         public virtual DbSet<Proveedor> Proveedor { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Comprobante> Comprobante { get; set; }
+        public virtual DbSet<Rol> Rol { get; set; }
+        public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<UsuarioRoles> UsuarioRoles { get; set; }
+    
+        public virtual ObjectResult<VentaDiariaMes_Result> VentaDiariaMes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VentaDiariaMes_Result>("VentaDiariaMes");
+        }
+    
+        public virtual ObjectResult<VentaMes_Result1> VentaMes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<VentaMes_Result1>("VentaMes");
+        }
     }
 }

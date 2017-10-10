@@ -22,6 +22,6 @@ namespace ERPAnimalia.Models
      public int SubCategoryItem { get; set; }
      public string Category { get; set; }
      public string SubCategory { get; set; }
-        public string Marca { get; set; }
+     public string Marca { get; set; }
     }
 }

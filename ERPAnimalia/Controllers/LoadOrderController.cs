@@ -59,8 +59,8 @@ namespace ERPAnimalia.Controllers
             records = ProductManagers.GetProducBugtList(records);
             foreach (var item in records)
             {
-                item.PrecioCosto= Math.Round(item.PrecioCosto.Value, 2);
-                item.PrecioVenta=Math.Round(item.PrecioVenta.Value, 2);
+                item.PrecioCosto= Math.Round(item.PrecioCosto, 2);
+                item.PrecioVenta=Math.Round(item.PrecioVenta, 2);
             }
 
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);

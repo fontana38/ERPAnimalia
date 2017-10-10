@@ -29,13 +29,18 @@
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdClienteIdProducto_Product" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_IdProveedorProducto_Product" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Product_SubCategory" />
-        <EntityTypeShape EntityType="AnimaliaPetShopModel.Comprobante" Width="1.5" PointX="10.625" PointY="10.75" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Comprobante" Width="1.5" PointX="10.625" PointY="10.875" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Rol" Width="1.5" PointX="5.375" PointY="1" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.Usuario" Width="1.5" PointX="5.375" PointY="16" />
+        <EntityTypeShape EntityType="AnimaliaPetShopModel.UsuarioRoles" Width="1.5" PointX="7.625" PointY="0.875" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Cliente" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Comprobante" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_FormaDePago" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_Proveedor" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_Comprobante_TipoComprobante" />
         <AssociationConnector Association="AnimaliaPetShopModel.FK_DetalleComprobante_Comprobante" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_UsuarioRoles_Rol" />
+        <AssociationConnector Association="AnimaliaPetShopModel.FK_UsuarioRoles_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

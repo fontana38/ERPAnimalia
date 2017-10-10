@@ -69,6 +69,7 @@ namespace ERPAnimalia.Models
                 {
                     try
                     {
+                       
                         var productDb = MapperObject.CreateProductDb(product);
   
                         //AddNewProduct
@@ -120,6 +121,9 @@ namespace ERPAnimalia.Models
             
             var  productById = db.Product.Find(id);
             var  productMap =MapperObject.CreateProductModel(productById);
+
+            productMap.kg= Math.Round(productMap.kg.Value, 2);
+              
             productMap.Category = GetCategoryList();
             productMap.SubCategory = GetSubCategoryList();
             return productMap;
@@ -131,6 +135,7 @@ namespace ERPAnimalia.Models
             var id = product.IdProducto;
             var productById = db.Product.Find(id);
             var productDb = MapperObject.EditProductDb(product, productById);
+
 
             db.SaveChanges();
 
@@ -526,6 +531,36 @@ namespace ERPAnimalia.Models
                 }
             }
          }
+
+
+        public ProductModels CalculteRentabilidad(ProductModels product)
+        {
+   
+            if (product.PrecioVenta != '0' && product.PrecioCosto != '0')
+            {
+                if (product.IdSubCategory == 1)
+                {
+                    var kgXP = (product.PrecioCosto / product.kg );
+                    var rentPesos = (product.PrecioVenta - kgXP);
+                    var rentPorc = (1 - (kgXP / product.PrecioVenta)) * 100;
+                     product.Rentabilidad = Math.Round(rentPorc.Value,2);
+                    product.RentabilidadPesos = Math.Round(rentPesos.Value,2);
+
+                }
+                else
+                {
+                    var rentPesos = (product.PrecioVenta - product.PrecioCosto);
+                    var rentPorc = (1 - (product.PrecioCosto / product.PrecioVenta)) * 100;
+                    product.Rentabilidad = Math.Round( rentPorc,2);
+                    product.RentabilidadPesos = Math.Round(rentPesos,2);
+
+                }
+
+               
+
+            }
+            return product;
+        }
 
 
            

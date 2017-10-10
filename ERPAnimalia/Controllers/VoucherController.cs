@@ -126,8 +126,8 @@ namespace ERPAnimalia.Controllers
                     detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
                     detailGrid.Codigo = Descripcion1[0].N.Codigo;
                     detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
-                    detailGrid.PrecioVenta = Descripcion1[0].N.PrecioVenta.Value;
-                    detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto.Value;
+                    detailGrid.PrecioVenta = Descripcion1[0].N.PrecioVenta;
+                    detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto;
                     detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
                     detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
                     detailGrid.Category= Descripcion1[0].N.CategoryItem.Name;
@@ -249,7 +249,7 @@ namespace ERPAnimalia.Controllers
             voucherHeadModel.IdtipoComprobante = comprobante;
             voucherHeadModel.Fecha = DateTime.Parse(date).Date;
             voucherHeadModel.IdCliente = idClient;
-            voucherDetailModel.Comentario = notes;
+            voucherHeadModel.comentario = notes;
 
             var IsSave =VoucherDetailManager.SaveVoucher(detailGridTemp,voucherHeadModel);
             var message = string.Empty;
