@@ -6,7 +6,8 @@
    
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/gijgo.js"></script>
-    
+
+    <link href="~/Content/css/product.css" rel="stylesheet" />
 </head>
 <body>
     <script type="text/javascript">
@@ -15,7 +16,8 @@
         $(document).ready(function () {
 
              gridProduct = $("#gridProduct").grid({
-                dataKey: "IdProducto",
+                 dataKey: "IdProducto",
+                 fixedHeader: true,
                 uiLibrary: "bootstrap",
                 columns: [
                 { field: "IdProducto", hidden: true },
@@ -28,8 +30,8 @@
                 { field:"CategoryName", title: "Categoria", sortable: true, width: 80 },
                 { field: "kg", title: "Kg", sortable: true, width: 30 },
                 { field: "Cantidad", title: "Cant.", sortable: true, width: 40 },
-                { field: "PrecioCosto", title: "Precio Costo", sortable: true, width: 50 },
-                { field: "PrecioVenta", title: "Precio Venta", sortable: true, width: 50 },
+                 { field: "PrecioVenta", title: "Precio Venta", cssClass: 'colVenta', sortable: true, width: 50 },
+                { field: "PrecioCosto", title: "Precio Costo",cssClass: 'colCosto', sortable: true, width: 50 },
                 { field: "RentabilidadPesos", title: "Renab$", sortable: true, width: 50 },
                 { field: "Rentabilidad", title: "Renab%", sortable: true, width: 50 },
                 {
@@ -53,11 +55,19 @@
             });
 
             $("#btnSearch").on("click", Search);
+            $("#btnSearchDescription2").on("click", SearchDescription2);
 
             $('#search').keypress(function (event) {
                 debugger;
                 if (event.keyCode == 13) {
                     $("#btnSearch").click();
+                }
+            });
+
+            $('#searchDescription2').keypress(function (event) {
+                debugger;
+                if (event.keyCode == 13) {
+                    $("#btnSearchDescription2").click();
                 }
             });
 
@@ -67,13 +77,15 @@
 
         function Search() {
            
-            gridProduct.reload({ searchString: $("#search").val() });
+            gridProduct.reload({ searchString: $("#search").val(),searchStringSub: $("#searchDescription2").val() });
         }
 
-        function Delete(e) {
+        function SearchDescription2() {
 
-
+            gridProduct.reload({ searchStringSub: $("#searchDescription2").val(), searchString: $("#search").val() });
         }
+
+       
 
     </script>
 
@@ -93,6 +105,16 @@
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
                 </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="text" id="searchDescription2" class="form-control" placeholder="Descripción 2 (correa,collar,perro,gato)...">
+                        <span class="input-group-btn">
+                            <button type="button" id="btnSearchDescription2" class="btn btn-default">Go!</button>
+                        </span>
+                    </div>
+                </div>      
             </div>
         </div>
         <br />

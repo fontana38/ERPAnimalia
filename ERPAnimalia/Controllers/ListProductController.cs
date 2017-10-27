@@ -41,12 +41,12 @@ namespace ERPAnimalia.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetProduct(int? page, int? limit, string sortBy, string direction, string searchString = null)
+        public JsonResult GetProduct(int? page, int? limit, string sortBy, string direction, string searchString = null, string searchStringSub = null)
         {
             int total;
             sortBy =(sortBy==null) ? "Codigo" : sortBy;
             direction = (direction == null) ? "asc" : direction;
-            var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, out total);
+            var records = ProductManagers.GetProductList(page, limit, sortBy, direction, searchString, searchStringSub, out total);
             foreach (var item in records)
             {
                 item.PrecioCosto = Math.Round(item.PrecioCosto, 2);

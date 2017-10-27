@@ -21,12 +21,12 @@ namespace ERPAnimalia.Controllers
             int total=20;
             var manager = Factory.Factory.NewHomeManager();
             var records = manager.GetVentasDiaria();
-            foreach (var item in records)
-            {
-                item.Dia = Math.Round(item.Dia.Value, 2);
-                item.Mes = Math.Round(item.Mes.Value, 2);
-            }
-           
+
+                foreach (var item in records)
+                {
+                    item.Dia =(item.Dia != null)? Math.Round(item.Dia.Value, 2):0;
+                    item.Mes = Math.Round(item.Mes.Value, 2);
+                }
             
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
         }

@@ -97,7 +97,8 @@ namespace ERPAnimalia.Controllers
 
         [HttpGet]
         public JsonResult GetProductDetail(int? page, int? limit, string term, Guid? idProducto, decimal cantidad = 0, decimal descuento = 0)
-        {      
+        {
+
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
             var detailGridList = new List<DetailGrid>();
             int total;
@@ -123,17 +124,21 @@ namespace ERPAnimalia.Controllers
 
                 if (listProduct.Count != 0 && term != string.Empty)
                 {
-                    detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
-                    detailGrid.Codigo = Descripcion1[0].N.Codigo;
-                    detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
-                    detailGrid.PrecioVenta = Descripcion1[0].N.PrecioVenta;
-                    detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto;
-                    detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
-                    detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
-                    detailGrid.Category= Descripcion1[0].N.CategoryItem.Name;
-                    detailGrid.SubCategory = Descripcion1[0].N.SubCategoryItem.Name;
-                    detailGrid.Marca = Descripcion1[0].N.Marca;
-                    detailGrid.kg = Descripcion1[0].N.kg;
+                    if(Descripcion1.Count>0)
+                    {
+                        detailGrid.IdProduct = Descripcion1[0].N.IdProducto;
+                        detailGrid.Codigo = Descripcion1[0].N.Codigo;
+                        detailGrid.Descripcion1 = Descripcion1[0].N.Descripcion1;
+                        detailGrid.PrecioVenta = Descripcion1[0].N.PrecioVenta;
+                        detailGrid.PrecioCosto = Descripcion1[0].N.PrecioCosto;
+                        detailGrid.CategoryItem = Descripcion1[0].N.CategoryItem.IdCategory;
+                        detailGrid.SubCategoryItem = Descripcion1[0].N.SubCategoryItem.IdSubCategory;
+                        detailGrid.Category = Descripcion1[0].N.CategoryItem.Name;
+                        detailGrid.SubCategory = Descripcion1[0].N.SubCategoryItem.Name;
+                        detailGrid.Marca = Descripcion1[0].N.Marca;
+                        detailGrid.kg = Descripcion1[0].N.kg;
+                    }
+                    
 
                     detailGrid = VoucherDetailManager.SetValuesNewRowTable(detailGrid, cantidad, descuento);
                 }

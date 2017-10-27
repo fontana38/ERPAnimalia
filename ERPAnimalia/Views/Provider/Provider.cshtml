@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Proveedores</title>
+
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/jquery.1.10.1.js"></script>
+    <script src="~/Scripts/gijgo.js"></script>
+
+    <script type="text/javascript">
+
+            ids = new Array();
+            var grid;
+            var gridProduct;
+            var gridProductDetail;
+            var idCheck;
+
+            $(document).ready(function () {
+
+
+               
+                var $j = jQuery.noConflict();
+                gridProduct = $j("#gridProduct").grid({
+                    dataKey: "IdProducto",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                        { field: "IdProducto", hidden: true },
+                        { field: "Codigo", title: "Código", sortable: true, width: 80 },
+                        { field: "Marca", title: "Marca", sortable: true, width: 150 },
+                        { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
+                        { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200}
+                    ],
+                    selectionMethod: 'checkbox',
+                    selectionType: 'multiple',
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+
+                gridProductDetail = $("#gridProductDetail").grid({
+                    dataKey: "Id",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                        { field: "id", hidden: true },
+                        { field: "IdProducto", hidden: true },
+                        { field: "Codigo", title: "Código", sortable: true, width: 80 },
+                        { field: "Marca", title: "Marca", sortable: true, width: 150 },
+                        { field: "Descripcion1", title: "Descripcion 1", sortable: true, width: 200 },
+                        { field: "Descripcion2", title: "Descripcion 2", sortable: true, width: 200 },
+                    { title: "", field: "Delete", width: 34, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": RemoveProduct } }
+                    ],
+
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+
+                grid = $("#grid").grid({
+                    dataKey: "idProvider",
+                    uiLibrary: "bootstrap",
+                    columns: [
+                         { field: "IdProveedor", hidden: true },
+                        { field: "Codigo", title: "Código", sortable: true, width: 20 },
+                        { field: "RazonSocial", title: "Razon Social",sortable: true, width: 50 },
+                        { field: "Direccion", title: "Dirección", sortable: true, width: 50 },
+                        { field: "Telefono", sortable: true, width: 20 },
+                         { field: "Mail", sortable: true, width: 50 },                       
+                        { title: "", field: "Edit", width: 10, type: "icon", icon: "glyphicon-pencil", tooltip: "Edit", events: { "click": Edit } },
+                        { title: "", field: "Delete", width: 10, type: "icon", icon: "glyphicon-remove", tooltip: "Delete", events: { "click": Remove } }
+                    ],
+                    pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+                });
+                grid.on('rowSelect', function (e, $row, id, record) {
+                    debugger;
+                    idCheck = record.IdProveedor;
+                    gridProductDetail.clear();
+                    gridProductDetail.reload({ idProvider: record.IdProveedor, page: 1 });
+                });
+
+               
+
+                $("#btnAddProvider").on("click", Add);
+                $("#btnSave").on("click", Save);
+                $("#btnSearch").on("click", Search);
+                $("#btnSearchGridProduct").on("click", SearchProduct);
+
+
+                $('#search').keypress(function (event) {
+                    debugger;
+                    if (event.keyCode == 13) {
+                        debugger;
+                        $("#btnSearch").click();
+                    }
+                });
+
+                $('#searchProduct').keypress(function (event) {
+                    if (event.keyCode == 13) {
+                        $("#btnSearchGridProduct").click();
+                    }
+                });
+            });
+
+            function Edit(e) {            
+                $("#idProvider").val(e.data.record.IdProveedor);
+                $("#codigo").val(e.data.record.Codigo);  
+                $("#razonSocial").val(e.data.record.RazonSocial);
+                $("#address").val(e.data.record.Direccion);
+                $("#phone").val(e.data.record.Telefono);
+                $("#mail").val(e.data.record.Mail);
+                $("#idProduct").val(e.data.record.IdProducto);
+              
+                gridProduct.clear();
+                gridProduct.reload({ idProvider: e.data.record.IdProveedor });
+                $("#providerModal").modal("show");
+            }
+
+            function Search() {
+
+                grid.reload({ searchString: $("#search").val() });
+            }
+
+            function SearchProduct() {
+            
+                gridProduct.reload({ searchString: $("#searchProduct").val() });
+            }
+           
+
+
+            function Add() {
+           
+                $("#idProvider").val("");
+                $("#codigo").val("");
+                $("#razonSocial").val("");
+                $("#address").val("");
+                $("#phone").val("");
+                $("#mail").val("");
+                gridProduct.clear();
+                gridProduct.reload({ idProvider: $("#idProvider").val() });
+                $("#providerModal").modal("show");
+            }
+
+            function Save() {
+                debugger;
+                if (SaveValidation())
+                {
+                    var idProducto = new Array();
+                    var selections = gridProduct.getSelections();
+                    if (selections.length != 0) {
+
+                        $(selections).each(function (index, element) {
+                            debugger;
+                            var row = gridProduct.get(element);
+                            idProducto[index] = row.IdProducto;
+                        });
+                    }
+                    var provider = {
+                        IdProveedor: $("#idProvider").val(),
+                        Codigo: $("#codigo").val(),                     
+                        RazonSocial: $("#razonSocial").val(),
+                        Direccion: $("#address").val(),
+                        Telefono: $("#phone").val(),
+                        Mail: $("#mail").val(),                    
+                        IdsProduct: idProducto
+                    };
+                    $.ajax({ url: "Provider/Save", type: "POST", data: { provider: provider } })
+                        .done(function () {
+                            debugger;
+                            grid.reload();
+                            gridProductDetail.reload();
+                            $("#providerModal").modal("hide");
+                        })
+                        .fail(function () {
+                          
+                            alert("Ocurrió un error al guardar el Proveedor ");
+                            $("#providerModal").modal("hide");
+                        });
+                }
+            }
+
+
+            function Remove(e) {
+                debugger;
+                $.ajax({ url: "Provider/Remove", type: "POST", data: { idProvider: e.data.record.IdProveedor } })
+                    .done(function () {
+                        grid.reload();
+                        gridProductDetail.reload();
+                    })
+                    .fail(function () {
+                        alert("Ocurrio un error al eliminar");
+                    });
+            }
+
+
+
+            function  SaveValidation()
+            {
+                if($("#codigo").val()==""  || $("#razonSocial").val()=="" || $("#direccion").val()=="")
+                {
+                   alert("Complete los campos necesarios para poder guardar. Código, Razon Social, direccion")
+                    return false;
+                }
+                else
+                {
+
+                    return true;
+                }
+
+            }
+
+            function RemoveProduct(e) {
+                debugger;
+                $.ajax({ url: "Provider/RemoveProduct", type: "POST", data: { idProvider: idCheck, idProducto: e.data.record.IdProducto } })
+
+                    .done(function () {
+                        debugger;
+                        gridProductDetail.reload();
+                    })
+                    .fail(function () {
+                        alert("Error al eleiminar");
+                    });
+            }
+    </script>
+
+</head>
+<body>
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">Proveedor</div>
+        <br class="panel-body">
+        <div class="form-group row">
+            <div id="providerTable" class="col-md-2">
+                <div class="input-group">
+                    <input type="text" id="search" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button type="button" id="btnSearch" class="btn btn-default">Go!</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button type="button" id="btnAddProvider" class="btn btn-primary pull-right">Agregar Proveedor</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div id="providerTable" class="col-md-8">
+                <table id="grid" data-source="@Url.Action("GetProvider")"></table>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div id="providerTable" class="col-md-8">
+                <table id="gridProductDetail" data-source="@Url.Action("GetProductByIdProvider")"></table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="providerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div id="modalDialog" class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Proveedor</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Nav tabs -->
+                    <div role="tabpanel">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#providerTab" aria-controls="clienteTab" role="tab" data-toggle="tab">Proveedor</a>
+
+                            </li>
+                            <li role="presentation">
+                                <a href="#productoTab" aria-controls="productoTab" role="tab" data-toggle="tab">Producto</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="providerTab">
+                                <form id="loginForm">
+                                    <input type="hidden" id="idProvider" />
+                                    <div class="form-group">
+                                        <label for="name">Código</label>
+                                        <input type="text" class="form-control" id="codigo" placeholder="Ingrese el Código">
+                                        <span class="error">Debe ingresar un código</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Razón Social</label>
+                                        <input type="text" class="form-control" id="razonSocial" placeholder="Ingrese una razón Social">
+                                        <span class="error">Debe ingresar una razón social</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="direccion">Dirección</label>
+                                        <input type="text" class="form-control" id="address" placeholder="Ingrese la dirección">
+                                        <span class="error">Debe ingresar una dirección</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion">Mail</label>
+                                        <input type="text" class="form-control" id="mail" placeholder="Ingrese mail">
+                                        <span class="error">Debe ingresar una dirección</span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="telefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="phone" placeholder="Ingrese Teléfono">
+                                        <span class="error">Debe ingresar un teléfono</span>
+                                    </div>
+
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="productoTab">
+                                </br>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="input-group col-md-offset-4">
+                                            <input type="text" id="searchProduct" class="form-control" placeholder="Search for...">
+                                            <span class="input-group-btn">
+                                                <button type="button" id="btnSearchGridProduct" class="btn btn-default">Go!</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </br>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" id="btnSave" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
