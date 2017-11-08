@@ -297,6 +297,10 @@ namespace ERPAnimalia
                 NewProduct.IdCategory = product.IdCategory;
                 NewProduct.IdSubCategory = product.IdSubCategory;
                 NewProduct.PrecioVenta = Math.Round(product.PrecioVenta,2);
+                if (product.IdSubCategory==0)
+                {
+                    product.IdSubCategory = 3;
+                }
                 if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
                 {
                     product.PrecioCosto = Math.Round(product.PrecioCosto, 2);
@@ -342,8 +346,8 @@ namespace ERPAnimalia
                 }
                     productDb.CodigoBarra = product.CodigoBarra;
                 productDb.Codigo = product.Codigo;
-                productDb.IdCategory = product.CategoryItem.IdCategory;
-                productDb.IdSubCategory = product.SubCategoryItem.IdSubCategory;
+                productDb.IdCategory = product.IdCategory;
+                productDb.IdSubCategory = product.IdSubCategory;
                 productDb.RentabilidadPesos = product.RentabilidadPesos;
                 productDb.Rentabilidad = product.Rentabilidad;
 

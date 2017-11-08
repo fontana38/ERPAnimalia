@@ -4,12 +4,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Agregar Clientes</title>
- 
-    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
-     <script src="~/Scripts/jquery.1.10.1.js"></script>
-    <script src="~/Scripts/gijgo.min.js"></script>
-    <script src="~/Scripts/gijgo.js"></script>
-    
+    <script src="~/Scripts/gijgo/combined/gijgo.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
      <script type="text/javascript">
 
          ids = new Array();
@@ -20,8 +16,8 @@
             var gridProduct;
            
             $(document).ready(function () {
-                $('#fechaCompra')
-                .datepicker({
+                debugger;
+                $('#fechaCompra').datepicker({
                     dateFormat: "dd/mm/yy",
                     firstDay: 1,
                     dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
@@ -34,8 +30,7 @@
                         "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
                 });
 
-                $('#fechaProximaCompra')
-                .datepicker({
+                $('#fechaProximaCompra').datepicker({
                     dateFormat: "dd/mm/yy",
                     firstDay: 1,
                     dayNamesMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"],
@@ -49,9 +44,9 @@
                 });
 
                 $.datepicker.setDefaults($.datepicker.regional["es"]);
+                
 
-                var $j = jQuery.noConflict();
-                gridProduct = $j("#gridProduct").grid({
+                gridProduct = $("#gridProduct").grid({
                     dataKey: "Id",
                     uiLibrary: "bootstrap",
                     columns: [
@@ -67,7 +62,7 @@
                     pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
                 });
                 
-                grid = $j("#grid").grid({
+                grid = $("#grid").grid({
                     dataKey: "Id",
                     uiLibrary: "bootstrap",
                     columns: [
@@ -190,10 +185,8 @@
 
             function Add() {
                 debugger;
-                $("#idCliene").val("");
-                $("#codigo").val("");
-                $("#fechaCompra").val("");
-                $("#fechaProximaCompra").val("");
+                $("#idCliene").val("");              
+                $("#codigo").val("");             
                 $("#nombre").val("");
                 $("#apellido").val("");
                 $("#direccion").val(""); 
@@ -238,6 +231,7 @@
                         dias: $("#dias").val()
 
                     };
+
                     $.ajax({ url: "Cliente/Save", type: "POST", data: { cliente: cliente } })
                         .done(function () {
                           
@@ -405,7 +399,7 @@
 
                                         <div class="form-group">
                                             <label for="fechaCompra">Fecha de Compra</label></br>
-                                            <input size="50" type="text" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaCompra" placeholder="Ingrese Fecha de Compra">
+                                            <input size="50" type="text" class="datepicker"  id="fechaCompra" placeholder="Ingrese Fecha de Compra">
                                             <span class="error">Debe ingresar una fecha</span>
                                         </div>
                                         <div class="form-group">
@@ -415,7 +409,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="fechaProximaCompra">Fecha Próxima Compra</label></br>
-                                            <input type="text" size="50" class="datepicker" data-date-format="mm/dd/yyyy" id="fechaProximaCompra" placeholder="Ingrese Fecha Próxima Compra">
+                                            <input type="text" size="50" class="datepicker"  id="fechaProximaCompra" placeholder="Ingrese Fecha Próxima Compra">
 
                                         </div>
 

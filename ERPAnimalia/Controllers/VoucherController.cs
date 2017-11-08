@@ -177,9 +177,10 @@ namespace ERPAnimalia.Controllers
                 }
 
             }
-            
 
-             var records= (detailGridTemp!=null) ? detailGridTemp: detailGridList;
+            TempData["DetailGrid"] = (detailGridTemp != null) ?  detailGridTemp : detailGridList;
+
+            var records= (detailGridTemp!=null) ? detailGridTemp: detailGridList;
            
             total = (detailGridTemp != null) ? detailGridTemp.Count() : detailGridList.Count();
             return Json(new { records, total }, JsonRequestBehavior.AllowGet);
@@ -218,7 +219,7 @@ namespace ERPAnimalia.Controllers
                
                 product.Total = CalculateTotal(detailGridTemp);
                 product.Porcentage = VoucherDetailManager.CalculateDiscountPorcentage(product, descuento);
-
+                product.Porcentage = Math.Round(product.Porcentage, 2);
                 TempData["DetailGrid"] = detailGridTemp;
                 records = detailGridTemp;
                 total = detailGridTemp.Count;
@@ -266,6 +267,7 @@ namespace ERPAnimalia.Controllers
             else
             {
                 message = "El stock es insuficiente";
+                message =string.Concat(message,VoucherDetailManager.errorStock);
                 TempData["DetailGrid"] = detailGridTemp;
             }
             
@@ -275,6 +277,7 @@ namespace ERPAnimalia.Controllers
         [HttpPost]
         public JsonResult Delete(Guid idProduct)
         {
+            string count = string.Empty; 
             TempData["isDelete"] = "true";
             var detailGridTemp = TempData["DetailGrid"] as List<DetailGrid>;
 
@@ -283,9 +286,10 @@ namespace ERPAnimalia.Controllers
                 var product = detailGridTemp.Find(x => x.IdProduct == idProduct);
                 detailGridTemp.Remove(product);
                 TempData["DetailGrid"] = detailGridTemp;
+               count= detailGridTemp.Count().ToString();
             }
            
-            return Json(true);
+            return Json(count);
         }
 
 

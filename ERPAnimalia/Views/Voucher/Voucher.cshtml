@@ -7,9 +7,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
-    <script src="~/Scripts/1.3.1-js-gijgo.js"></script>
 
+
+    <link href="~/Content/gijgo/combined/gijgo.css" rel="stylesheet" />
+     <script src="~/Scripts/gijgo/combined/gijgo.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+   
+   
+    <script src="~/Scripts/gijgo/combined/gijgo.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <title>Factura</title>
 </head>
 <body>
@@ -32,9 +38,9 @@
                         success: function (data) {
                             response($.map(data, function (item) {                             
                                 var res = item.Descripcion1.concat(", ").concat(item.Marca).concat(", ").concat(item.SubCategoryName).concat(", ").concat( item.kg);
-                                debugger;
+                             
                                 return { label: res, value: item.IdProducto, };
-                                GetTotal();
+                               
                                 SaveEnabled();
                             }));
                         }
@@ -43,15 +49,12 @@
                     });
                 },
                 select: function (event, ui) {
-                    debugger;
                     $("#Descripcion1").val(ui.item.label); // display the selected text
                     $("#IdProducto").val(ui.item.value);
                     AddGrid();
-                    return false;
-                   
+                    return false; 
                 },
                 focus: function (event, ui) {
-                    debugger;
                     $("#Descripcion1").val(ui.item.label);
                     $("#IdProducto").val(ui.item.value);
                     return false;
@@ -61,7 +64,7 @@
 
          
             gridDetail = $("#gridDetail").grid({
-                dataSource: "/Voucher/GetProductDetail",
+                dataSource: "/Voucher/GetProductDetail",         
                 dataKey: "IdProduct",
                 uiLibrary: "bootstrap",
                 columns: [
@@ -76,10 +79,11 @@
                     { field: "Cantidad", title: "Cantidad", editor: true, align: 'center',width: 20 },
                     { field: "Descuento", title: "Descuento", editor: true, align: 'center', width: 20 },
                     { field: "Porcentage", title: "%", sortable: true, align: 'center',width: 20},
-                    { field: "Subtotal", title: "Subtotal", sortable: true,align: 'center', width: 50},
-                    { width: 50, align: 'center', tmpl: '<u class="gj-cursor-pointer">Delete</u>', events: { 'click': Delete } }
+                    { field: "Subtotal", title: "Subtotal", sortable: true, align: 'center', width: 50 },
+                    { width: 30, type: "icon", icon: "glyphicon-remove", align: 'center', events: { 'click': Delete } }
+                    
                 ],
-                optimisticPersistence: { sessionStorage: ["page", "limit"] },
+              
                 pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
             });
             gridDetail.on('cellDataChanged', function (e, $cell, column, record, oldValue, newValue) {
@@ -89,7 +93,6 @@
             $('#Descripcion1').keypress(function (event) {
 
                 if (event.keyCode == 13) {
-                    debugger;
                     if ($("#Descripcion1").val() != "") {
                       
                         gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
@@ -102,32 +105,19 @@
             function AddGrid()
             {
                 if ($("#Descripcion1").val() != "") {
-
                     gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
                     SaveEnabled();
                     $("#Descripcion1").val("");
                 }
             }
-            function reloadGrid(e) {
-               
-                if (e.keyCode == 13) {
-                    if ($("#Descripcion1").val() != "") {
-                        
-                        gridDetail.reload({ IdProducto: $("#IdProducto").val(), term: $("#Descripcion1").val(), cantidad: $("#Cantidad").val(), descuento: $("#Descuento").val() });
-                        SaveEnabled();
-                        $("#Descripcion1").val("");
-                    }
-                }
-            }
-
            
-
             gridDetail.on('dataBound', function (e, records, totalRecords) {
                 GetTotal();
                 SaveEnabled();
             });
-            $("#btnSave").on("click", Save);
-        });
+
+           $("#btnSave").on("click", Save);
+       });
            
             function CalculateRow(record) {
                 $.ajax({
@@ -135,15 +125,17 @@
                     type: "GET", dataType: "json",
                     data: { idProduct: record.IdProduct, cantidad: record.Cantidad, descuento: record.Descuento },
                     success: function (data) {
+                        debugger;
                         gridDetail.reload();
-                        GetTotal();
+                        GetTotal(data);
                     }
                 });
             }
 
             function GetTotal()
-            {             
-                    if (gridDetail.count() != 0) {
+            {
+                
+                if (gridDetail.count() != 0) {
                         var totalRows = gridDetail.count();
                         var row = gridDetail.get(totalRows);
                         $("#totalVoucher").val(row.Total);
@@ -199,22 +191,53 @@
                 }
                 
             }
-
+            
             function Delete(e) {
-                if (confirm('Esta seguro que quiere eliminar?')) { 
-                $.ajax({
-                    url: "/Voucher/Delete",
-                    type: "post", dataType: "json",
-                    data: { idProduct: e.data.record.IdProduct },
-                    success: function (data) {
-                        gridDetail.reload();
-                        GetTotal();
-                    }
-                
-                });
-                GetTotal();
-               }
+                debugger;
+                if (confirm('Esta Seguro que va a eliminar?')) {
+                    e.stopImmediatePropagation();
+                    e.preventDefault();
+                    $.ajax({ url: '/Voucher/Delete', data: { idProduct: e.data.record.IdProduct }, method: 'POST' })
+                        .done(function (data) {
+                            debugger;
+                            gridDetail.reload();
+                            if (data == '0')
+                            {
+                                 $("#totalVoucher").val(0);
+                             }
+                               else {
+                            
+                                  GetTotal(data);
+                               }
+                        })
+                        .fail(function () {
+                            alert('Error al borrar.');
+                        });
+                    GetTotal();
+                }
             }
+            //    if (confirm('Esta seguro que quiere eliminar?')) {
+            //        debugger;
+            //    $.ajax({
+            //        url: "/Voucher/Delete",
+            //        type: "post", dataType: "json",
+            //        data: { idProduct: e.data.record.IdProduct },
+            //        .done: function (data) {
+            //            debugger;
+            //            gridDetail.reload();
+            //            if (data == '0') {
+            //                $("#totalVoucher").val(0);
+            //            }
+            //            else {
+                            
+            //                //GetTotal(data);
+            //            }
+                        
+            //        }                   
+            //    });
+            //    //GetTotal();
+            //   }
+            //}
     </script>
     <div class="container-fluid">
         @{

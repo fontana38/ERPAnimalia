@@ -9,7 +9,7 @@ using OnBarcode.Barcode.BarcodeScanner;
 
 namespace ERPAnimalia.Models
 {
-    public  class ProductManager
+    public class ProductManager
     {
         public static AnimaliaPetShopEntities db { get; set; }
 
@@ -22,9 +22,9 @@ namespace ERPAnimalia.Models
 
         public ProductManager()
         {
-            
-                db = Factory.Factory.CreateContextDataBase();
-            
+
+            db = Factory.Factory.CreateContextDataBase();
+
         }
 
         public void AddProduct(Product product)
@@ -33,21 +33,21 @@ namespace ERPAnimalia.Models
             {
                 db = Factory.Factory.CreateContextDataBase();
                 db.Product.Add(product);
-                
+
                 db.SaveChanges();
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message.ToString());
             }
-            
+
         }
 
         public void CreateProduct(ProductModels product)
         {
             try
             {
-               
+
                 var productDb = MapperObject.CreateProductDb(product);
                 db.Product.Add(productDb);
 
@@ -58,7 +58,7 @@ namespace ERPAnimalia.Models
 
                 throw;
             }
-            
+
         }
 
         public void SaveProduct(ProductModels product)
@@ -69,9 +69,9 @@ namespace ERPAnimalia.Models
                 {
                     try
                     {
-                       
+
                         var productDb = MapperObject.CreateProductDb(product);
-  
+
                         //AddNewProduct
                         AddProduct(productDb);
 
@@ -87,12 +87,12 @@ namespace ERPAnimalia.Models
                 }
             }
         }
-            
-     
+
+
         public void DeleteProduct(ProductModels product)
         {
-           
-            var deleteProduct =db.Product.Find(product);
+
+            var deleteProduct = db.Product.Find(product);
             db.Product.Remove(deleteProduct);
             db.SaveChanges();
 
@@ -100,7 +100,7 @@ namespace ERPAnimalia.Models
 
         public List<CategoryModel> GetCategoryList()
         {
-           
+
             var CategoryList = db.Category.ToList();
             var map = MapperObject.CreateCategoryList(CategoryList);
             return map;
@@ -109,21 +109,24 @@ namespace ERPAnimalia.Models
 
         public List<SubCategoryModel> GetSubCategoryList()
         {
-           
+
             var CategoryList = db.SubCategory.ToList();
             var map = MapperObject.CreateSubCategoryList(CategoryList);
             return map;
 
         }
 
-        public virtual ProductModels GetProductById (Guid id)
+        public virtual ProductModels GetProductById(Guid id)
         {
-            
-            var  productById = db.Product.Find(id);
-            var  productMap =MapperObject.CreateProductModel(productById);
 
-            productMap.kg= Math.Round(productMap.kg.Value, 2);
-              
+            var productById = db.Product.Find(id);
+            var productMap = MapperObject.CreateProductModel(productById);
+
+            if (productMap.kg != null)
+            {
+                productMap.kg = Math.Round(productMap.kg.Value, 2);
+            }
+
             productMap.Category = GetCategoryList();
             productMap.SubCategory = GetSubCategoryList();
             return productMap;
@@ -131,19 +134,16 @@ namespace ERPAnimalia.Models
 
         public void EditProduct(ProductModels product)
         {
-            
+
             var id = product.IdProducto;
             var productById = db.Product.Find(id);
             var productDb = MapperObject.EditProductDb(product, productById);
 
-
             db.SaveChanges();
 
         }
-
         public List<CategoryModel> GetCategory()
-        {
-           
+        {        
             var category = db.Category.ToList();
            
             return MapperObject.CreateCategoryList(category);

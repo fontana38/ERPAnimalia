@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using ERPAnimalia.Mapper;
+using System.Globalization;
+using System.Threading;
 
 namespace ERPAnimalia
 {
@@ -20,8 +22,24 @@ namespace ERPAnimalia
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfig.RegisterMappings();
-          
+            var currentCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                currentCulture.NumberFormat.NumberDecimalSeparator = ".";
+               currentCulture.NumberFormat.NumberGroupSeparator = " ";
+               currentCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+
+               Thread.CurrentThread.CurrentCulture = currentCulture;
+
 
         }
+        //protected void Application_BeginRequest()
+        //{
+        //    var currentCulture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+        //    currentCulture.NumberFormat.NumberDecimalSeparator = ".";
+        //    currentCulture.NumberFormat.NumberGroupSeparator = " ";
+        //    currentCulture.NumberFormat.CurrencyDecimalSeparator = ".";
+
+        //    Thread.CurrentThread.CurrentCulture = currentCulture;
+        //    //Thread.CurrentThread.CurrentUICulture = currentCulture;
+        //}
     }
 }

@@ -19,5 +19,6 @@ namespace ERPAnimalia.Interfaces
         decimal CalculateDiscountPorcentage(DetailGrid row, decimal discount);
         
         DetailGrid SetValuesNewRowTable(DetailGrid detailGrid, decimal cantidad, decimal descuento);
+         string  errorStock { get; set; }
     }
 }

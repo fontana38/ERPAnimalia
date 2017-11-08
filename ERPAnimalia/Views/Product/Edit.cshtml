@@ -31,8 +31,8 @@
             var precioVenta = $('#PrecioVenta').val();
             var precioCosto = $('#PrecioCosto').val();
 
-            precioVenta = precioVenta.toString().replace(",", ".");
-            precioCosto = precioCosto.toString().replace(",", ".");
+            //precioVenta = precioVenta.toString().replace(",", ".");
+            //precioCosto = precioCosto.toString().replace(",", ".");
 
             precioVenta = parseFloat(precioVenta);
             precioCosto = parseFloat(precioCosto);
@@ -49,8 +49,8 @@
                     var rentPesos = (precioVenta - kgXP);
                     var rentPorc = (1 - (kgXP / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
-                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString());
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString());
 
                 }
                 else {
@@ -58,13 +58,13 @@
                     var rentPesos = (precioVenta - precioCosto);
                     var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString());
 
-                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString());
 
                 }
-                $('#PrecioVenta').val(precioVenta.toString().replace(".", ","));
-                $('#PrecioCosto').val(precioCosto.toString().replace(".", ","));
+                //$('#PrecioVenta').val(precioVenta.toString().replace(".", ","));
+                //$('#PrecioCosto').val(precioCosto.toString().replace(".", ","));
             }
         }
             function HideSubcategory()
@@ -107,13 +107,13 @@
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Categoria:</label>
-            @Html.DropDownListFor(model => Model.CategoryItem.IdCategory,
+            @Html.DropDownListFor(model => Model.IdCategory,
                         new SelectList(Model.Category, "IdCategory", "Name"), new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", onchange = "HideSubcategory()", @id= "IdCategory" })
 
         </div>
         <div class="form-group">
             <label class="col-md-4" for="desc">Subcategoria:</label>
-            @Html.DropDownListFor(model => model.SubCategoryItem.IdSubCategory,
+            @Html.DropDownListFor(model => model.IdSubCategory,
                         new SelectList(Model.SubCategory, "IdSubCategory", "Name"),  new { @class = "form-control", type = "text", placeholder = "Seleccione Categoria", @onchange = "CalculationRentabilidad()" })
         </div>
         <div class="form-group">

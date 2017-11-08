@@ -11,7 +11,7 @@ namespace ERPAnimalia.Models.Manager
     {
         public AnimaliaPetShopEntities db { get; set; }
         public ProductManager _ProducManager { get; set; }
-      
+        public string errorStock { get; set; }
 
         public VoucherDetailManager()
         {
@@ -145,6 +145,7 @@ namespace ERPAnimalia.Models.Manager
 
         private bool verifyQuantyty(DetalleComprobante comprobante,Product product)
         {
+           
             if(product.IdCategory == (int)Enumeration.Category.Alimento)
             {
                 if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
@@ -155,6 +156,7 @@ namespace ERPAnimalia.Models.Manager
                     }
                     else
                     {
+                        errorStock = String.Concat(product.Descripcion1);
                         return false;
                     }
                 }
@@ -166,6 +168,7 @@ namespace ERPAnimalia.Models.Manager
                     }
                     else
                     {
+                        errorStock = String.Concat(product.Descripcion1);
                         return false;
                     }
                 }
@@ -178,6 +181,7 @@ namespace ERPAnimalia.Models.Manager
                 }
                 else
                 {
+                    errorStock = String.Concat(product.Descripcion1);
                     return false;
                 }
             }

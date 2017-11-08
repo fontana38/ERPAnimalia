@@ -28,8 +28,8 @@
             
             var precioVenta = $('#PrecioVenta').val();
             var precioCosto = $('#PrecioCosto').val();
-            precioVenta = precioVenta.toString().replace(",", ".");
-            precioCosto = precioCosto.toString().replace(",", ".");
+            //precioVenta = precioVenta.toString().replace(",", ".");
+            //precioCosto = precioCosto.toString().replace(",", ".");
             precioVenta = parseFloat(precioVenta);
             precioCosto = parseFloat(precioCosto);
 
@@ -45,8 +45,8 @@
                     var rentPesos = (precioVenta - kgXP);
                     var rentPorc = (1 - (kgXP / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
-                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString());
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString());
 
                 }
                 else {
@@ -54,13 +54,12 @@
                     var rentPesos = (precioVenta - precioCosto);
                     var rentPorc = (1 - (precioCosto / precioVenta)) * 100;
 
-                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString().replace(".", ","));
+                    $('#RentabilidadPesos').val(rentPesos.toFixed(2).toString());
 
-                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString().replace(".", ","));
+                    $('#Rentabilidad').val(rentPorc.toFixed(2).toString());
 
                 }
-                $('#PrecioVenta').val(precioVenta.toString().replace(".", ","));
-                $('#PrecioCosto').val(precioCosto.toString().replace(".", ","));
+               
             }
         }
 
@@ -130,7 +129,7 @@
            
             var idCategory = $('#IdCategory').val();
             if (idCategory == 2) {
-                $('#IdSubCategory').val(1);
+                $('#IdSubCategory').val(3);
                 $('#IdSubCategory').attr('disabled', 'disabled');
                 $('#kg').hide();
                 $('#kgLabel').hide();
