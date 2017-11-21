@@ -10,8 +10,10 @@
  <script type="text/javascript">
 
      $(document).ready(function () {
+        
          gridProduct = $("#gridProduct").grid({
              dataKey: "IdProducto",
+             guid: '58d47231-ac7b-e6d2-ddba-5e0195b31f2f',
              uiLibrary: "bootstrap",
              columns: [
              { field: "IdProducto", hidden: true },
@@ -31,9 +33,11 @@
              ],
              selectionMethod: 'checkbox',
              selectionType: 'multiple',
-             pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+             optimisticPersistence: { sessionStorage: ["page", "limit"] },
+             pager: { enable: true, limit: 30, sizes: [2, 5, 10, 20] }
          });
 
+        
              $("#btnSearchGridProduct").on("click", SearchProduct);
              $("#btnSave").on("click", Save);
 
@@ -44,14 +48,24 @@
                  }
              });
 
+             function SearchProduct() {
+                 debugger;
+                 $.ajax({ url: "/LoadOrder/GetProduct", type: "POST", data: { searchString: $("#search").val()}})
+                .done(function (data) {
+                    
+                })
+                .fail(function () {
+                    alert("A ocurrido un error.");
+
+                });
+                
+             }
+
          });
 
 
 
-         function SearchProduct() {
-           
-             gridProduct.reload({ searchString: $("#search").val() });
-         }
+         
 
        
 
@@ -65,8 +79,9 @@
              var selections = gridProduct.getSelections();
              if ($('#RazonSocial').val() == "")
              {
-                 return alert("Debe Seleccionar Un Proveedor");
+                 return alert("Debe Seleccionar un proveedor");
              }
+
              if (selections.length!= 0)
              {           
                  $(selections).each(function (index, element) {
@@ -97,7 +112,7 @@
                      gridProduct.reload();
                  })
                  .fail(function () {
-                     alert("Unable to save.");
+                     alert("A ocurrido un error.");
 
                  });
          }

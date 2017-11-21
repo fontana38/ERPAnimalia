@@ -51,7 +51,7 @@
                     }
                 }
                 ],
-                pager: { limit: 15, sizes: [2, 5, 10, 20] }
+                pager: { limit: 40, sizes: [2, 5, 10, 20] }
             });
 
             $("#btnSearch").on("click", Search);
@@ -120,7 +120,7 @@
         <br />
         <div class="container-fluid">
             <div class="row">
-                <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
+                <table  id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
             </div>
         </div>
         
