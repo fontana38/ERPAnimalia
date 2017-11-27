@@ -76,7 +76,7 @@
                      { field:"SubCategory", title: "SubCategoría", sortable: true,align: 'center', width: 50 },
                     { field: "kg", title: "Kg", sortable: true,align: 'center', width: 20 },
                     { field: "PrecioVenta", title: "Precio Venta", sortable: true,align: 'center', width: 50 },
-                    { field: "Cantidad", title: "Cantidad", editor: true, align: 'center',width: 20 },
+                    { field: "Cantidad", title: "Cantidad", editor: true, align: 'center',width: 50 },
                     { field: "Descuento", title: "Descuento", editor: true, align: 'center', width: 20 },
                     { field: "Porcentage", title: "%", sortable: true, align: 'center',width: 20},
                     { field: "Subtotal", title: "Subtotal", sortable: true, align: 'center', width: 50 },
@@ -84,14 +84,16 @@
                     
                 ],
               
-                pager: { enable: true, limit: 5, sizes: [2, 5, 10, 20] }
+               
             });
             gridDetail.on('cellDataChanged', function (e, $cell, column, record, oldValue, newValue) {
                 CalculateRow(record)
             });
 
-            $('#Descripcion1').keypress(function (event) {
 
+
+            $('#Descripcion1').keypress(function (event) {
+                debugger;
                 if (event.keyCode == 13) {
                     if ($("#Descripcion1").val() != "") {
                       
@@ -124,11 +126,16 @@
                     url: "/Voucher/GetSubtotal",
                     type: "GET", dataType: "json",
                     data: { idProduct: record.IdProduct, cantidad: record.Cantidad, descuento: record.Descuento },
+                   
                     success: function (data) {
                         debugger;
                         gridDetail.reload();
                         GetTotal(data);
                     }
+                })
+                .fail(function (data) {
+                    debugger;
+                    alert('Error al borrar.');
                 });
             }
 

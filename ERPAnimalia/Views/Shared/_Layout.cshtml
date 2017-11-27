@@ -43,6 +43,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Ventas <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>@Html.ActionLink("Producto","Index", "ListProduct")</li>
+                       
                         <li>@Html.ActionLink("Cliente","Index", "Cliente")</li>
                         <li>@Html.ActionLink("Pasar a suelto", "Suelto", "Producto")</li>
                         <li>@Html.ActionLink("Factura", "CrearFactura", "Factura")</li>
@@ -57,6 +58,7 @@
                         <li>@Html.ActionLink("Nota de Pedido", "Index", "LoadOrder")</li>                 
                     </ul>
                 </li>
+                <li class="active">@Html.ActionLink("Lista de Productos", "ListaPrecio", "Producto")</li>
                
             </ul>
            

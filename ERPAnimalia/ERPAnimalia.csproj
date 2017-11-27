@@ -239,6 +239,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ListProductController.cs" />
+    <Compile Include="Controllers\ListVoucherController.cs" />
     <Compile Include="Controllers\LoadOrderController.cs" />
     <Compile Include="Controllers\ProviderController.cs" />
     <Compile Include="Controllers\SearchProductController.cs" />
@@ -731,6 +732,8 @@
     <Content Include="Views\LoadOrder\DetailLoadOrder.cshtml" />
     <Content Include="Views\Provider\Provider.cshtml" />
     <Content Include="Views\ListProduct\PassToLoose.cshtml" />
+    <Content Include="Views\ListProduct\ListSeller.cshtml" />
+    <Content Include="Views\Voucher\ListVoucher\ListVoucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Producto</title>
-   
+    <title>Lista de Produtos</title>
+
     <script src="~/Scripts/gijgo/combined/gijgo.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>
 
@@ -34,22 +35,6 @@
                 { field: "PrecioCosto", title: "Precio Costo",cssClass: 'colCosto', sortable: true, width: 50 },
                 { field: "RentabilidadPesos", title: "Renab$", sortable: true, width: 50 },
                 { field: "Rentabilidad", title: "Renab%", sortable: true, width: 50 },
-                {
-                    width: 30,icon: "glyphicon-pencil", type: "icon", align: 'center', events: {
-                        'click': function (e) {
-                            id = e.data.record.IdProducto;
-                            location.href='@Url.Action("Edit","Product")?ids=' + id;
-                        }
-                    }
-                },
-                {
-                    width: 30,  type: "icon", icon: "glyphicon-remove", align: 'center', events: {
-                        'click': function (e) {
-                            id = e.data.record.IdProducto;
-                            location.href = '@Url.Action("Delete","Product")?id=' + id;
-                        }
-                    }
-                }
                 ],
                 pager: { limit: 40, sizes: [2, 5, 10, 20] }
             });
@@ -71,10 +56,10 @@
 
         });
 
-      
+
 
         function Search() {
-           
+
             gridProduct.reload({ searchString: $("#search").val(),searchStringSub: $("#searchDescription2").val() });
         }
 
@@ -83,11 +68,11 @@
             gridProduct.reload({ searchStringSub: $("#searchDescription2").val(), searchString: $("#search").val() });
         }
 
-       
+
 
     </script>
 
-    
+
     <div class="panel panel-primary">
         <div class="panel-heading">Producto</div>
         <div class="panel-body">
@@ -100,9 +85,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Product")'">Agregar Producto</button>
-                </div>
+               
             </div>
             <div class="form-group row">
                 <div class="col-md-3">
@@ -112,16 +95,16 @@
                             <button type="button" id="btnSearchDescription2" class="btn btn-default">Go!</button>
                         </span>
                     </div>
-                </div>      
+                </div>
             </div>
         </div>
         <br />
         <div class="container-fluid">
             <div class="row">
-                <table  id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
+                <table id="gridProduct" data-source="@Url.Action("GetProduct")"></table>
             </div>
         </div>
-        
+
     </div>
 
 </body>

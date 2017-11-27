@@ -55,13 +55,8 @@ namespace ERPAnimalia.Models.Manager
                         db = Factory.Factory.CreateContextDataBase();
                         decimal total =0;
 
-                       
+                        total =detail.Sum(item => item.Subtotal);
 
-                        foreach (var item in detail)
-                        {
-                            total =+ item.Subtotal;
-                        }
-                        
                         head.Total = total;
                          var headDb = MapperObject.CreateVoucherHeadDb(head);
                         var voucherDetailDb = MapperObject.CreateVoucherDetailDb(detail);

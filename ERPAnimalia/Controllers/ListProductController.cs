@@ -33,6 +33,14 @@ namespace ERPAnimalia.Controllers
         {
             return View();
         }
+
+        // GET: ListProduct
+        [Route("ListaPrecio")]
+        public ActionResult ListSeller()
+        {
+            return View();
+        }
+
         // GET: ListProduct
         [Route("Suelto")]
         public ActionResult Suelto ()

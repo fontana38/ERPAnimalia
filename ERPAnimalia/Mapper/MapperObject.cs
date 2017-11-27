@@ -292,15 +292,22 @@ namespace ERPAnimalia
                     NewProduct.Kg = product.kg;
                     NewProduct.TotalKg = Helper.CalCulos.CalculateTotalKg(NewProduct.Kg.Value, NewProduct.Cantidad.Value);
                 }
+                else if (product.IdCategory == (int)Enumeration.Category.Accesorios)
+                {
+                     NewProduct.IdSubCategory = 3;
+                }
+
                 NewProduct.CodigoBarra = product.CodigoBarra;
                 NewProduct.Codigo = product.Codigo;
                 NewProduct.IdCategory = product.IdCategory;
-                NewProduct.IdSubCategory = product.IdSubCategory;
-                NewProduct.PrecioVenta = Math.Round(product.PrecioVenta,2);
-                if (product.IdSubCategory==0)
+
+                if(product.IdSubCategory != null)
                 {
-                    product.IdSubCategory = 3;
+                    NewProduct.IdSubCategory = product.IdSubCategory;
                 }
+                
+                NewProduct.PrecioVenta = Math.Round(product.PrecioVenta,2);
+                
                 if (product.IdSubCategory != (int)Enumeration.Subcategory.Suelto)
                 {
                     product.PrecioCosto = Math.Round(product.PrecioCosto, 2);
