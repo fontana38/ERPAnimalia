@@ -49,12 +49,12 @@
              });
 
              function SearchProduct() {
+
                  debugger;
-                 $.ajax({ url: "/LoadOrder/GetProduct", type: "POST", data: { searchString: $("#search").val()}})
+                 $.ajax({ url: "/LoadOrder/GetProduct", type: "GET", data: { searchString: $("#search").val()}})
                 .done(function (data) {
-                    
                 })
-                .fail(function () {
+                .fail(function (data) {
                     alert("A ocurrido un error.");
 
                 });
